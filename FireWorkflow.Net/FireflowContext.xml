@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<objects xmlns="http://www.springframework.net"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.net
+        http://www.springframework.net/xsd/spring-objects.xsd">
+
+  <object id="runtimeContext"
+        type="FireWorkflow.Net.Engine.RuntimeContext, FireWorkflow.Net">
+    <!--init-method="initialize">-->
+    <!--是否打开流程跟踪，如果打开，则会往T_FF_HIST_TRACE表中插入纪录。-->
+    <property name="IsEnableTrace">
+      <value>true</value>
+    </property>
+    <!--转移条件表达式解析服务-->
+    <property name="ConditionResolver">
+      <ref local="ConditionResolver"/>
+    </property>
+    <!--实例对象存取服务-->
+    <property name="PersistenceService">
+      <ref local="PersistenceService"/>
+    </property>
+    <!--流程定义服务，通过该服务获取流程定义-->
+    <property name="DefinitionService">
+      <ref local="DefinitionService"/>
+    </property>
+    <!--内核管理器-->
+    <property name="KernelManager">
+      <ref local="KernelManager"/>
+    </property>
+    <!--TaskInstance 管理器，负责TaskInstance的创建、运行、结束。-->
+    <property name="TaskInstanceManager">
+      <ref local="TaskInstanceManager"/>
+    </property>
+    <!--日历服务-->
+    <property name="CalendarService">
+      <ref local="CalendarService"/>
+    </property>
+    <!--bean工厂，fire workflow默认使用spring作为其实现-->
+    <property name="BeanFactory">
+      <ref local="SpringBeanFactory"/>
+    </property>
+  </object>
+  
+  <!--转移条件表达式解析服务-->
+  <object id="ConditionResolver" type="FireWorkflow.Net.Engine.Condition.ConditionResolver, FireWorkflow.Net"></object>
+  
+  <!-- **************Persistence Begin 实例对象存取服务******************** -->
+  <object id="PersistenceService" type="FireWorkflow.Net.Persistence.OracleDAL.PersistenceServiceDAL, FireWorkflow.Net.Persistence.OracleDAL">
+    <constructor-arg name="connName" value="OracleServer"></constructor-arg>
+  </object>
+  <!-- ***************Persistence End******************* -->
+  
+  <!-- **************workflow Definitions Begin 流程定义服务，通过该服务获取流程定义*******  -->
+  <object id="DefinitionService" type="FireWorkflow.Net.Engine.Definition.DefinitionService4FileSystem, FireWorkflow.Net">
+    <property name="DefinitionFiles">
+      <list>
+        <value>
+           /org/fireflow/example/workflowdefinition/demo_workflow.xml
+        </value>
+        <value>
+          /org/fireflow/example/workflowdefinition/demo_workflow.xml
+        </value>
+      </list>
+    </property>
+  </object>
+  <!-- **************workflow Definitions End*******  -->
+  
+  <!-- **************Kernel Manager Begin内核管理器*************** -->
+  <object id="KernelManager" type="FireWorkflow.Net.Kernel.KernelManager, FireWorkflow.Net">
+  </object>
+  <!-- **************Kernel Manager End*************** -->
+  
+  <!-- ************ TaskInstance Manager Begin TaskInstance 管理器，负责TaskInstance的创建、运行、结束。*************************** -->
+  <object id="TaskInstanceManager" type="FireWorkflow.Net.Engine.Taskinstance.BasicTaskInstanceManager">
+    <property name="DefaultTaskInstanceCreator">
+      <ref local="DefaultTaskInstanceCreator"/>
+    </property>
+    <property name="DefaultFormTaskInstanceRunner">
+      <ref local="DefaultFormTaskInstanceRunner"/>
+    </property>
+    <property name="DefaultToolTaskInstanceRunner">
+      <ref local="DefaultToolTaskInstanceRunner"/>
+    </property>
+    <property name="DefaultSubflowTaskInstanceRunner">
+      <ref local="DefaultSubflowTaskInstanceRunner"/>
+    </property>
+    <property name="DefaultFormTaskInstanceCompletionEvaluator">
+      <ref local="DefaultFormTaskInstanceCompletionEvaluator"/>
+    </property>
+    <property name="DefaultToolTaskInstanceCompletionEvaluator">
+      <ref local="DefaultToolTaskInstanceCompletionEvaluator"/>
+    </property>
+    <property name="DefaultSubflowTaskInstanceCompletionEvaluator">
+      <ref local="DefaultSubflowTaskInstanceCompletionEvaluator"/>
+    </property>
+    <property name="DefaultTaskInstanceEventListener">
+      <ref local="DefaultTaskInstanceEventListener"/>
+    </property>
+  </object>
+  <object id="DefaultTaskInstanceCreator" type="FireWorkflow.Net.Engine.Taskinstance.DefaultTaskInstanceCreator"></object>
+  <object id="DefaultFormTaskInstanceRunner" type="FireWorkflow.Net.Engine.Taskinstance.DefaultFormTaskInstanceRunner"></object>
+  <object id="DefaultToolTaskInstanceRunner" type="FireWorkflow.Net.Engine.Taskinstance.DefaultToolTaskInstanceRunner"></object>
+  <object id="DefaultSubflowTaskInstanceRunner" type="FireWorkflow.Net.Engine.Taskinstance.DefaultSubflowTaskInstanceRunner"></object>
+  <object id="DefaultFormTaskInstanceCompletionEvaluator" type="FireWorkflow.Net.Engine.Taskinstance.DefaultFormTaskInstanceCompletionEvaluator"></object>
+  <object id="DefaultToolTaskInstanceCompletionEvaluator" type="FireWorkflow.Net.Engine.Taskinstance.DefaultToolTaskInstanceCompletionEvaluator"></object>
+  <object id="DefaultSubflowTaskInstanceCompletionEvaluator" type="FireWorkflow.Net.Engine.Taskinstance.DefaultSubflowTaskInstanceCompletionEvaluator"></object>
+  <object id="DefaultTaskInstanceEventListener" type="FireWorkflow.Net.Engine.Taskinstance.DefaultTaskInstanceEventListener"></object>
+  <!-- ************ TaskInstance Manager End*************************** -->
+  
+  <!-- **************CalendarService Begin 日历服务******************** -->
+  <object id="CalendarService" type="FireWorkflow.Net.Engine.Calendar.DefaultCalendarService"></object>
+  <!-- ***************CalendarService End******************* -->
+
+  <!--bean工厂，fire workflow默认使用spring作为其实现-->
+  <object id="SpringBeanFactory" type="FireWorkflow.Net.Engine.Beanfactory.SpringBeanFactory"></object>
+  
+</objects>

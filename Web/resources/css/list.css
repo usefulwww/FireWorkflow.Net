@@ -1,0 +1,70 @@
+﻿body {
+	font-family: 'lucida grande' ,tahoma,arial,sans-serif;
+	font-size: 11px;
+}
+div.thumb-wrap {
+	border-color: #555;
+	float: left;
+	margin: 5px 5px 5px 10px;
+	width: 300px;
+	cursor: pointer;
+	height: 100px;
+}
+
+div.thumb-wrap img {
+	float: left;
+	margin: 5px 0px 0px 5px;
+	width: 120px;
+	height: 90px;
+	border: 1px solid silver;
+}
+
+div.thumb-wrap div
+{
+    float: left;
+    margin-left: 10px;
+    width: 160px;
+    margin-top: 10px;
+}
+
+div.thumb-wrap h4 {
+	font-weight: bold;
+	font-size: 11px;
+	color: #555;
+	font-family: tahoma,arial,san-serif;
+	margin: 5px 0px;
+}
+
+div.thumb-wrap h6 {
+	font-weight: normal;
+	font-size: 11px;
+	color: #555;
+	font-family: tahoma,arial,san-serif;
+	margin: 5px 0px 2px 0px;
+}
+
+div.thumb-wrap p {
+	color: #777;
+	font: 11px tahoma,arial,helvetica,sans-serif;
+	margin-right: 5px;
+}
+.images-view .x-view-over { background: url(../images/list/sample-over.gif) #d4e4fa no-repeat; }
+
+#sample-ct { padding: 6px 12px 24px 12px; }
+
+#sample-ct h2 {
+    border-bottom: 2px solid #99bbe8;
+    cursor:pointer;
+    padding-top:6px;
+}
+
+#sample-ct h2 div {
+    background:transparent url(../images/list/group-expand-sprite.gif) no-repeat 3px -47px;
+    padding:4px 4px 4px 17px;
+    color:#3764a0;
+    font:bold 11px tahoma, arial, helvetica, sans-serif;
+}
+
+#sample-ct .collapsed h2 div { background-position: 3px 3px; }
+#sample-ct dl { margin-left: 2px; }
+#sample-ct .collapsed dl { display:none; }

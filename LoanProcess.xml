@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fpdl:WorkflowProcess PUBLIC "-//Nieyun Chen//ProcessDefinition//CN" "FireFlow_Process_Definition_Language.dtd">
+
+<fpdl:WorkflowProcess xmlns:fpdl="http://www.fireflow.org/Fireflow_Process_Definition_Language" Id="LoanProcess" Name="LoanProcess" DisplayName="某银行贷款流程" ResourceFile="" ResourceManager="" TaskInstanceCreator="WebDemo.Example.LoanProcess.WorkflowExtension.LoanTaskInstanceCreator, WebDemo">
+    <fpdl:Description></fpdl:Description>
+    <fpdl:DataFields>
+        <fpdl:DataField Id="LoanProcess.RiskFlag" Name="RiskFlag" DisplayName="风险标志" DataType="BOOLEAN" InitialValue="true">
+            <fpdl:Description>1标示有风险，0表示无风险</fpdl:Description>
+        </fpdl:DataField>
+        <fpdl:DataField Id="LoanProcess.Decision" Name="Decision" DisplayName="审批标志" DataType="BOOLEAN" InitialValue="false">
+            <fpdl:Description>1表示审批通过，0表示审批不通过</fpdl:Description>
+        </fpdl:DataField>
+    </fpdl:DataFields>
+    <fpdl:StartNode Id="LoanProcess.START_NODE" Name="START_NODE" DisplayName="">
+        <fpdl:ExtendedAttributes>
+            <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="20"/>
+            <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="20"/>
+            <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="52"/>
+            <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="15"/>
+        </fpdl:ExtendedAttributes>
+    </fpdl:StartNode>
+    <fpdl:Tasks>
+        <fpdl:Task Id="LoanProcess.Submit_appliation_info_task" Name="Submit_appliation_info_task" DisplayName="录入申请资料" Type="FORM" CompletionStrategy="ANY" DefaultView="EDITFORM" Priority="1" LoopStrategy="REDO">
+            <fpdl:Performer Name="Loanteller" DisplayName="信贷员">
+                <fpdl:Description></fpdl:Description>
+                <fpdl:AssignmentHandler>WebDemo.Example.WorkflowExtension.CurrentUserAssignmentHandler, WebDemo</fpdl:AssignmentHandler>
+            </fpdl:Performer>
+            <fpdl:EditForm Name="SubmitApplicationInfo" DisplayName="贷款申请资料录入页面">
+                <fpdl:Description></fpdl:Description>
+                <fpdl:Uri>~/Example/LoanProcess/SubmitApplicationInfo.aspx</fpdl:Uri>
+            </fpdl:EditForm>
+            <fpdl:Description></fpdl:Description>
+        </fpdl:Task>
+        <fpdl:Task Id="LoanProcess.Evaluate_risk_task" Name="Evaluate_risk_task" DisplayName="核查信用和还款能力" Type="FORM" CompletionStrategy="ANY" DefaultView="EDITFORM" Priority="1" LoopStrategy="REDO">
+            <fpdl:Performer Name="RiskEvaluator" DisplayName="风险核查员">
+                <fpdl:Description></fpdl:Description>
+                <fpdl:AssignmentHandler>WebDemo.Example.WorkflowExtension.RoleBasedAssignmentHandler, WebDemo</fpdl:AssignmentHandler>
+            </fpdl:Performer>
+            <fpdl:EditForm Name="RiskEvaluateInfo" DisplayName="风险核查信息界面">
+                <fpdl:Description></fpdl:Description>
+                <fpdl:Uri>~/Example/LoanProcess/RiskEvaluateInfo.aspx</fpdl:Uri>
+            </fpdl:EditForm>
+            <fpdl:Description></fpdl:Description>
+        </fpdl:Task>
+        <fpdl:Task Id="LoanProcess.Approve_application_task" Name="Approve_application_task" DisplayName="审批" Type="FORM" CompletionStrategy="ALL" DefaultView="EDITFORM" Priority="1" TaskInstanceCompletionEvaluator="WebDemo.Example.LoanProcess.WorkflowExtension.ApproveApplicationTaskCompletionEvaluator, WebDemo" LoopStrategy="REDO">
+            <fpdl:Performer Name="Approver" DisplayName="审批人">
+                <fpdl:Description></fpdl:Description>
+                <fpdl:AssignmentHandler>WebDemo.Example.WorkflowExtension.RoleBasedAssignmentHandler, WebDemo</fpdl:AssignmentHandler>
+            </fpdl:Performer>
+            <fpdl:EditForm Name="ApproveInfo" DisplayName="审批界面">
+                <fpdl:Description></fpdl:Description>
+                <fpdl:Uri>~/Example/LoanProcess/ApproveInfo.aspx</fpdl:Uri>
+            </fpdl:EditForm>
+            <fpdl:Description></fpdl:Description>
+            <fpdl:EventListeners>
+                <fpdl:EventListener ClassName="WebDemo.Example.LoanProcess.WorkflowExtension.ApproveTaskInstanceEventListener, WebDemo"/>
+            </fpdl:EventListeners>
+        </fpdl:Task>
+        <fpdl:Task Id="LoanProcess.Lend_money_task" Name="Lend_money_task" DisplayName="放款" Type="FORM" CompletionStrategy="ANY" DefaultView="EDITFORM" Priority="1" LoopStrategy="REDO">
+            <fpdl:Performer Name="LendMoneyOfficer" DisplayName="放款操作员">
+                <fpdl:Description></fpdl:Description>
+                <fpdl:AssignmentHandler>WebDemo.Example.WorkflowExtension.RoleBasedAssignmentHandler, WebDemo</fpdl:AssignmentHandler>
+            </fpdl:Performer>
+            <fpdl:EditForm Name="LendMoneyInfo" DisplayName="放宽信息录入界面">
+                <fpdl:Description></fpdl:Description>
+                <fpdl:Uri>~/Example/LoanProcess/LendMoneyInfo.aspx</fpdl:Uri>
+            </fpdl:EditForm>
+            <fpdl:Description></fpdl:Description>
+        </fpdl:Task>
+        <fpdl:Task Id="LoanProcess.Reject_task" Name="Reject_task" DisplayName="拒绝贷款申请" Type="FORM" CompletionStrategy="ANY" DefaultView="EDITFORM" Priority="1" LoopStrategy="REDO">
+            <fpdl:Performer Name="Loanteller" DisplayName="信贷员">
+                <fpdl:Description></fpdl:Description>
+                <fpdl:AssignmentHandler>WebDemo.Example.WorkflowExtension.ProcessInstanceCreator, WebDemo</fpdl:AssignmentHandler>
+            </fpdl:Performer>
+            <fpdl:EditForm Name="RejectInfo" DisplayName="拒绝贷款信息录入页面">
+                <fpdl:Description></fpdl:Description>
+                <fpdl:Uri>~/Example/LoanProcess/RejectInfo.aspx</fpdl:Uri>
+            </fpdl:EditForm>
+            <fpdl:Description></fpdl:Description>
+        </fpdl:Task>
+    </fpdl:Tasks>
+    <fpdl:Activities>
+        <fpdl:Activity Id="LoanProcess.Submit_application_activity" Name="Submit_application_activity" DisplayName="提交申请" CompletionStrategy="ALL">
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="60"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="100"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="10"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="59"/>
+            </fpdl:ExtendedAttributes>
+            <fpdl:Tasks/>
+            <fpdl:TaskRefs>
+                <fpdl:TaskRef Reference="LoanProcess.Submit_appliation_info_task"/>
+            </fpdl:TaskRefs>
+        </fpdl:Activity>
+        <fpdl:Activity Id="LoanProcess.Evaluate_risk_activity" Name="Evaluate_risk_activity" DisplayName="风险核查" CompletionStrategy="ALL">
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="60"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="136"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="16"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="179"/>
+            </fpdl:ExtendedAttributes>
+            <fpdl:Tasks/>
+            <fpdl:TaskRefs>
+                <fpdl:TaskRef Reference="LoanProcess.Evaluate_risk_task"/>
+            </fpdl:TaskRefs>
+        </fpdl:Activity>
+        <fpdl:Activity Id="LoanProcess.Approve_application_activity" Name="Approve_application_activity" DisplayName="审批" CompletionStrategy="ALL">
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="60"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="65"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="262"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="102"/>
+            </fpdl:ExtendedAttributes>
+            <fpdl:Tasks/>
+            <fpdl:TaskRefs>
+                <fpdl:TaskRef Reference="LoanProcess.Approve_application_task"/>
+            </fpdl:TaskRefs>
+        </fpdl:Activity>
+        <fpdl:Activity Id="LoanProcess.Lend_money_acitivty" Name="Lend_money_acitivty" DisplayName="放款" CompletionStrategy="ALL">
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="60"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="100"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="442"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="101"/>
+            </fpdl:ExtendedAttributes>
+            <fpdl:Tasks/>
+            <fpdl:TaskRefs>
+                <fpdl:TaskRef Reference="LoanProcess.Lend_money_task"/>
+            </fpdl:TaskRefs>
+        </fpdl:Activity>
+        <fpdl:Activity Id="LoanProcess.Reject_activity_1" Name="Reject_activity_1" DisplayName="拒绝" CompletionStrategy="ALL">
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="54"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="105"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="280"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="181"/>
+            </fpdl:ExtendedAttributes>
+            <fpdl:Tasks/>
+            <fpdl:TaskRefs>
+                <fpdl:TaskRef Reference="LoanProcess.Reject_task"/>
+            </fpdl:TaskRefs>
+        </fpdl:Activity>
+        <fpdl:Activity Id="LoanProcess.Reject_activity_2" Name="Reject_activity_2" DisplayName="拒绝" CompletionStrategy="ALL">
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="59"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="103"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="440"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="25"/>
+            </fpdl:ExtendedAttributes>
+            <fpdl:Tasks/>
+            <fpdl:TaskRefs>
+                <fpdl:TaskRef Reference="LoanProcess.Reject_task"/>
+            </fpdl:TaskRefs>
+        </fpdl:Activity>
+    </fpdl:Activities>
+    <fpdl:Synchronizers>
+        <fpdl:Synchronizer Id="LoanProcess.Synchronizer1" Name="Synchronizer1" DisplayName="">
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="20"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="20"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="52"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="141"/>
+            </fpdl:ExtendedAttributes>
+        </fpdl:Synchronizer>
+        <fpdl:Synchronizer Id="LoanProcess.Synchronizer2" Name="Synchronizer2" DisplayName="">
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="20"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="20"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="178"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="199"/>
+            </fpdl:ExtendedAttributes>
+        </fpdl:Synchronizer>
+        <fpdl:Synchronizer Id="LoanProcess.Synchronizer3" Name="Synchronizer3" DisplayName="">
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="20"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="20"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="349"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="122"/>
+            </fpdl:ExtendedAttributes>
+        </fpdl:Synchronizer>
+    </fpdl:Synchronizers>
+    <fpdl:EndNodes>
+        <fpdl:EndNode Id="LoanProcess.EndNode1" Name="EndNode1" DisplayName="">
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="20"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="20"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="572"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="121"/>
+            </fpdl:ExtendedAttributes>
+        </fpdl:EndNode>
+    </fpdl:EndNodes>
+    <fpdl:Transitions>
+        <fpdl:Transition Id="LoanProcess.Transition1" From="LoanProcess.START_NODE" To="LoanProcess.Submit_application_activity" Name="Transition1" DisplayName="">
+            <fpdl:Condition></fpdl:Condition>
+        </fpdl:Transition>
+        <fpdl:Transition Id="LoanProcess.Transition2" From="LoanProcess.Submit_application_activity" To="LoanProcess.Synchronizer1" Name="Transition2" DisplayName="">
+            <fpdl:Condition></fpdl:Condition>
+        </fpdl:Transition>
+        <fpdl:Transition Id="LoanProcess.Transition3" From="LoanProcess.Synchronizer1" To="LoanProcess.Evaluate_risk_activity" Name="Transition3" DisplayName="">
+            <fpdl:Condition></fpdl:Condition>
+        </fpdl:Transition>
+        <fpdl:Transition Id="LoanProcess.Transition4" From="LoanProcess.Evaluate_risk_activity" To="LoanProcess.Synchronizer2" Name="Transition4" DisplayName="">
+            <fpdl:Condition></fpdl:Condition>
+        </fpdl:Transition>
+        <fpdl:Transition Id="LoanProcess.Transition5" From="LoanProcess.Synchronizer2" To="LoanProcess.Approve_application_activity" Name="Transition5" DisplayName="通过">
+            <fpdl:Condition>RiskFlag==false</fpdl:Condition>
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.edgePointList" Value="(231,132)"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.labelPosition" Value="(199,157)"/>
+            </fpdl:ExtendedAttributes>
+        </fpdl:Transition>
+        <fpdl:Transition Id="LoanProcess.Transition6" From="LoanProcess.Approve_application_activity" To="LoanProcess.Synchronizer3" Name="Transition6" DisplayName="">
+            <fpdl:Condition></fpdl:Condition>
+        </fpdl:Transition>
+        <fpdl:Transition Id="LoanProcess.Transition7" From="LoanProcess.Synchronizer3" To="LoanProcess.Lend_money_acitivty" Name="Transition7" DisplayName="通过">
+            <fpdl:Condition>Decision==true</fpdl:Condition>
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.labelPosition" Value="(403,143)"/>
+            </fpdl:ExtendedAttributes>
+        </fpdl:Transition>
+        <fpdl:Transition Id="LoanProcess.Transition8" From="LoanProcess.Lend_money_acitivty" To="LoanProcess.EndNode1" Name="Transition8" DisplayName="">
+            <fpdl:Condition></fpdl:Condition>
+        </fpdl:Transition>
+        <fpdl:Transition Id="LoanProcess.Transition9" From="LoanProcess.Reject_activity_1" To="LoanProcess.EndNode1" Name="Transition9" DisplayName="">
+            <fpdl:Condition></fpdl:Condition>
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.edgePointList" Value="(540,207)"/>
+            </fpdl:ExtendedAttributes>
+        </fpdl:Transition>
+        <fpdl:Transition Id="LoanProcess.Transition10" From="LoanProcess.Synchronizer3" To="LoanProcess.Reject_activity_2" Name="Transition10" DisplayName="拒绝">
+            <fpdl:Condition>Decision==false</fpdl:Condition>
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.edgePointList" Value="(408,54)"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.labelPosition" Value="(366,85)"/>
+            </fpdl:ExtendedAttributes>
+        </fpdl:Transition>
+        <fpdl:Transition Id="LoanProcess.Transition11" From="LoanProcess.Reject_activity_2" To="LoanProcess.EndNode1" Name="Transition11" DisplayName="">
+            <fpdl:Condition></fpdl:Condition>
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.edgePointList" Value="(559,55)"/>
+            </fpdl:ExtendedAttributes>
+        </fpdl:Transition>
+        <fpdl:Transition Id="LoanProcess.Transition12" From="LoanProcess.Synchronizer2" To="LoanProcess.Reject_activity_1" Name="Transition12" DisplayName="拒绝">
+            <fpdl:Condition>RiskFlag==true</fpdl:Condition>
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.edgePointList" Value=""/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.labelPosition" Value="(239,221)"/>
+            </fpdl:ExtendedAttributes>
+        </fpdl:Transition>
+    </fpdl:Transitions>
+    <fpdl:ExtendedAttributes>
+        <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="20"/>
+        <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="20"/>
+        <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="6"/>
+        <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="123"/>
+    </fpdl:ExtendedAttributes>
+</fpdl:WorkflowProcess>

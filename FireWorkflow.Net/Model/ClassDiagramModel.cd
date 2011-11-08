@@ -1,0 +1,400 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FireWorkflow.Net.Base.EventObject" Collapsed="true">
+    <Position X="13" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Base\EventObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Engine.Definition.WorkflowDefinition" Collapsed="true">
+    <Position X="15" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAABAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Definition\WorkflowDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Engine.Definition.WorkflowDefinitionInfo" Collapsed="true">
+    <Position X="15" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAASEAAAAAAgAEAAEAQAAAQAAAAAEACAIAABBEAAAAA=</HashCode>
+      <FileName>Engine\Definition\WorkflowDefinitionInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Engine.EngineException" Collapsed="true">
+    <Position X="15" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\EngineException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Engine.Kernelextensions.EndNodeInstanceExtension" Collapsed="true">
+    <Position X="11.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAEAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Engine\Kernelextensions\EndNodeInstanceExtension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Engine.Kernelextensions.StartNodeInstanceExtension" Collapsed="true">
+    <Position X="13.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAEAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Engine\Kernelextensions\StartNodeInstanceExtension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Engine.Kernelextensions.SynchronizerInstanceExtension" Collapsed="true">
+    <Position X="12.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAEBAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Engine\Kernelextensions\SynchronizerInstanceExtension.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FireWorkflow.Net.Kernel.Event.EdgeInstanceEvent" Collapsed="true">
+    <Position X="11.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Kernel\Event\EdgeInstanceEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Kernel.Event.NodeInstanceEvent" Collapsed="true">
+    <Position X="14" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Kernel\Event\NodeInstanceEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Kernel.KernelException" Collapsed="true">
+    <Position X="15" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAACAAQEEAAgAAAAAAAAAEAAAAACAAAAAAAA=</HashCode>
+      <FileName>Kernel\KernelException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Kernel.Impl.AbstractNodeInstance" Collapsed="true">
+    <Position X="3" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgACAAAAAAAAAAABAAQAEACAABAAAAAABIQAIQBAgAA=</HashCode>
+      <FileName>Kernel\Impl\AbstractNodeInstance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FireWorkflow.Net.Kernel.Impl.ActivityInstance" Collapsed="true">
+    <Position X="4" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAgAAAAAEAAgAAAAAAAAgAAAABIAAAUBAgAA=</HashCode>
+      <FileName>Kernel\Impl\ActivityInstance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FireWorkflow.Net.Kernel.Impl.EdgeInstance" Collapsed="true">
+    <Position X="8.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAACAAAAACAAAAAgAAQAAAABAAA=</HashCode>
+      <FileName>Kernel\Impl\EdgeInstance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FireWorkflow.Net.Kernel.Impl.EndNodeInstance" Collapsed="true">
+    <Position X="5.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgACAAAAAAAAAAAEAAgAAAAAAAAgAAAAJIIgAQBCgAA=</HashCode>
+      <FileName>Kernel\Impl\EndNodeInstance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FireWorkflow.Net.Kernel.Impl.LoopInstance" Collapsed="true">
+    <Position X="7.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAIAAAACAAAQAggAAAAACAgAAAAAIAAAABBgAA=</HashCode>
+      <FileName>Kernel\Impl\LoopInstance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FireWorkflow.Net.Kernel.Impl.StartNodeInstance" Collapsed="true">
+    <Position X="0.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAEEAAgAAAAAAAAgAAAAJIIAAQBCgAA=</HashCode>
+      <FileName>Kernel\Impl\StartNodeInstance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FireWorkflow.Net.Kernel.Impl.SynchronizerInstance" Collapsed="true">
+    <Position X="2.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAEAAgAAAAAAAAgAAAAJIIAAQBCgAA=</HashCode>
+      <FileName>Kernel\Impl\SynchronizerInstance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FireWorkflow.Net.Kernel.Impl.TransitionInstance" Collapsed="true">
+    <Position X="9.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAgAAAAAACBgAAAAQIAAAABBgEA=</HashCode>
+      <FileName>Kernel\Impl\TransitionInstance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.AbstractWFElement" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACEAAAAAAgAAAkoAAAAAQAAAAAAIAAAAAAIAAACAA=</HashCode>
+      <FileName>Model\AbstractWFElement.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.DataField" Collapsed="true">
+    <Position X="9" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAIAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\DataField.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.FormTask" Collapsed="true">
+    <Position X="2.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABIAAAAAQAAAAAAAQAAAQAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Model\FormTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.SubflowTask" Collapsed="true">
+    <Position X="4" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\SubflowTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Task" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAIAAAAAACAgAEAAAAAAAAAAAAAAAAAAAAAAgACAA=</HashCode>
+      <FileName>Model\Task.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.TaskRef" Collapsed="true">
+    <Position X="10.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAEACAAAAgAAAEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\TaskRef.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.ToolTask" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ToolTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.WorkflowProcess" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAQIIAAIQAAABAAAAAAEAAABEAAgEAAhgQICIBQABg=</HashCode>
+      <FileName>Model\WorkflowProcess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Io.Dom4JFPDLParser" Collapsed="true">
+    <Position X="7.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAQAgAAAFAAIAAEMABkAAAxAgQAgGBBAAAIIA=</HashCode>
+      <FileName>Model\Io\Dom4JFPDLParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Io.Dom4JFPDLSerializer" Collapsed="true">
+    <Position X="9.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAIBAAAFAAACMAEgAAIIlIwIABAAIAIAAKAAAAAAAA=</HashCode>
+      <FileName>Model\Io\Dom4JFPDLSerializer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Io.FPDLNames" Collapsed="true">
+    <Position X="9.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAhCziAgCRVLoUUpQMDKoKAMIDCAOCYAOgDVBAAAK0o=</HashCode>
+      <FileName>Model\Io\FPDLNames.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Io.IFPDLParser" Collapsed="true">
+    <Position X="7.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Model\Io\IFPDLParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Io.IFPDLSerializer" Collapsed="true">
+    <Position X="9.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Io\IFPDLSerializer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Net.Activity" Collapsed="true">
+    <Position X="13" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAACCAAAIAAARAAAAAAAAA=</HashCode>
+      <FileName>Model\Net\Activity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Net.Edge" Collapsed="true">
+    <Position X="6.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAACAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Net\Edge.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Net.EndNode" Collapsed="true">
+    <Position X="13" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Model\Net\EndNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Net.Loop" Collapsed="true">
+    <Position X="7.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Net\Loop.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Net.Node" Collapsed="true">
+    <Position X="12.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Net\Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Net.StartNode" Collapsed="true">
+    <Position X="11.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Model\Net\StartNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Net.Synchronizer" Collapsed="true">
+    <Position X="11.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAEAGAA=</HashCode>
+      <FileName>Model\Net\Synchronizer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Net.Transition" Collapsed="true">
+    <Position X="5.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Net\Transition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Resource.AbstractResource" Collapsed="true">
+    <Position X="3" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAgAAAEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Resource\AbstractResource.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Resource.Application" Collapsed="true">
+    <Position X="0.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Resource\Application.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Resource.Form" Collapsed="true">
+    <Position X="2.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Model\Resource\Form.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Resource.Participant" Collapsed="true">
+    <Position X="4" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Resource\Participant.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireWorkflow.Net.Model.Resource.SubWorkflowProcess" Collapsed="true">
+    <Position X="5.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Model\Resource\SubWorkflowProcess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="FireWorkflow.Net.Engine.Calendar.ICalendarService" Collapsed="true">
+    <Position X="4" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAABAAABAAAAAAA=</HashCode>
+      <FileName>Engine\Calendar\ICalendarService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FireWorkflow.Net.Engine.Definition.IDefinitionService" Collapsed="true">
+    <Position X="2.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Definition\IDefinitionService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FireWorkflow.Net.Engine.IRuntimeContextAware" Collapsed="true">
+    <Position X="3" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\IRuntimeContextAware.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FireWorkflow.Net.Engine.Persistence.IPersistenceService" Collapsed="true">
+    <Position X="5.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gaggBASIAoQgIQAgiAggAERCxBAAREABI1ACKggJDtE=</HashCode>
+      <FileName>Engine\Persistence\IPersistenceService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FireWorkflow.Net.Engine.Taskinstance.ITaskInstanceManager" Collapsed="true">
+    <Position X="0.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAYAAAIAIAgEIEBAAAAAAAAIAAAAAAAACAAAAEA=</HashCode>
+      <FileName>Engine\Taskinstance\ITaskInstanceManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FireWorkflow.Net.Kernel.IActivityInstance" Collapsed="true">
+    <Position X="16" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Kernel\IActivityInstance.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FireWorkflow.Net.Kernel.IEdgeInstance" Collapsed="true">
+    <Position X="8.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAACAAAAACAAAAAAAAQAAAABAAA=</HashCode>
+      <FileName>Kernel\IEdgeInstance.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FireWorkflow.Net.Kernel.ILoopInstance" Collapsed="true">
+    <Position X="7.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Kernel\ILoopInstance.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FireWorkflow.Net.Kernel.INodeInstance" Collapsed="true">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgACAAAAAAAAAAABAAQAEACAABAAAAAABAAAIQAAAAA=</HashCode>
+      <FileName>Kernel\INodeInstance.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FireWorkflow.Net.Kernel.ISynchronizerInstance" Collapsed="true">
+    <Position X="14.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAIAAAAAAAA=</HashCode>
+      <FileName>Kernel\ISynchronizerInstance.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FireWorkflow.Net.Kernel.ITransitionInstance" Collapsed="true">
+    <Position X="10" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Kernel\ITransitionInstance.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Microsoft YaHei" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0E853C4E-4D97-41E3-85CE-EC4B66181D86}</ProjectGuid>
+    <!--    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>-->
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WebDemo</RootNamespace>
+    <AssemblyName>WebDemo</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Administrator\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <StartArguments>/path:"${ProjectDir}"</StartArguments>
+    <StartWorkingDirectory>${StartupPath}</StartWorkingDirectory>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <StartAction>Program</StartAction>
+    <StartProgram>D:\software\develop\CassiniDev\Release\CassiniDev.exe</StartProgram>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\DLL\Spring.net\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Coolite.Ext.Web">
+      <HintPath>..\DLL\Coolite.Ext\Coolite.Ext.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Coolite.Utilities">
+      <HintPath>..\DLL\Coolite.Ext\Coolite.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\DLL\Coolite.Ext\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core">
+      <HintPath>..\DLL\Spring.net\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AddWorkflowProcess.aspx" />
+    <Content Include="Default.aspx" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddWorkflowProcess.aspx.cs">
+      <DependentUpon>AddWorkflowProcess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddWorkflowProcess.aspx.designer.cs">
+      <DependentUpon>AddWorkflowProcess.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\RuntimeContextExamples.cs" />
+    <Compile Include="Default.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DesignerService.svc.cs">
+      <DependentUpon>DesignerService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Example\GoodsDeliverProcess\Payment.aspx.cs">
+      <DependentUpon>Payment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Example\GoodsDeliverProcess\Payment.aspx.designer.cs">
+      <DependentUpon>Payment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Example\GoodsDeliverProcess\Persistence\AbstractTradeInfo.cs" />
+    <Compile Include="Example\GoodsDeliverProcess\Persistence\TradeInfo.cs" />
+    <Compile Include="Example\GoodsDeliverProcess\Persistence\TradeInfoDAO.cs" />
+    <Compile Include="Example\GoodsDeliverProcess\PrepareGoods.aspx.cs">
+      <DependentUpon>PrepareGoods.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Example\GoodsDeliverProcess\PrepareGoods.aspx.designer.cs">
+      <DependentUpon>PrepareGoods.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Example\GoodsDeliverProcess\WorkflowExtension\GoodsDeliverTaskInstance.cs" />
+    <Compile Include="Example\GoodsDeliverProcess\WorkflowExtension\GoodsDeliverTaskInstanceCreator.cs" />
+    <Compile Include="Example\GoodsDeliverProcess\WorkflowExtension\SMSHandler.cs" />
+    <Compile Include="Example\LoanProcess\ApproveInfo.aspx.cs">
+      <DependentUpon>ApproveInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Example\LoanProcess\ApproveInfo.aspx.designer.cs">
+      <DependentUpon>ApproveInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Example\LoanProcess\LendMoneyInfo.aspx.cs">
+      <DependentUpon>LendMoneyInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Example\LoanProcess\LendMoneyInfo.aspx.designer.cs">
+      <DependentUpon>LendMoneyInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Example\LoanProcess\Persistence\ApproveInfo.cs" />
+    <Compile Include="Example\LoanProcess\Persistence\ApproveInfoDAO.cs" />
+    <Compile Include="Example\LoanProcess\Persistence\LoanInfo.cs" />
+    <Compile Include="Example\LoanProcess\Persistence\LoanInfoDAO.cs" />
+    <Compile Include="Example\LoanProcess\RejectInfo.aspx.cs">
+      <DependentUpon>RejectInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Example\LoanProcess\RejectInfo.aspx.designer.cs">
+      <DependentUpon>RejectInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Example\LoanProcess\RiskEvaluateInfo.aspx.cs">
+      <DependentUpon>RiskEvaluateInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Example\LoanProcess\RiskEvaluateInfo.aspx.designer.cs">
+      <DependentUpon>RiskEvaluateInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Example\LoanProcess\SubmitApplicationInfo.aspx.cs">
+      <DependentUpon>SubmitApplicationInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Example\LoanProcess\SubmitApplicationInfo.aspx.designer.cs">
+      <DependentUpon>SubmitApplicationInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Example\LoanProcess\WorkflowExtension\ApproveApplicationTaskCompletionEvaluator.cs" />
+    <Compile Include="Example\LoanProcess\WorkflowExtension\ApproveTaskInstanceEventListener.cs" />
+    <Compile Include="Example\LoanProcess\WorkflowExtension\LoanTaskInstance.cs" />
+    <Compile Include="Example\LoanProcess\WorkflowExtension\LoanTaskInstanceCreator.cs" />
+    <Compile Include="Example\WorkflowExtension\AddWorkItemList.aspx.cs">
+      <DependentUpon>AddWorkItemList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Example\WorkflowExtension\AddWorkItemList.aspx.designer.cs">
+      <DependentUpon>AddWorkItemList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Example\WorkflowExtension\CurrentUserAssignmentHandler.cs" />
+    <Compile Include="Example\WorkflowExtension\IExampleTaskInstance.cs" />
+    <Compile Include="Example\WorkflowExtension\InstancesDataViewerBean.aspx.cs">
+      <DependentUpon>InstancesDataViewerBean.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Example\WorkflowExtension\InstancesDataViewerBean.aspx.designer.cs">
+      <DependentUpon>InstancesDataViewerBean.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Example\WorkflowExtension\MyHaveDoneWorkItem.aspx.cs">
+      <DependentUpon>MyHaveDoneWorkItem.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Example\WorkflowExtension\MyHaveDoneWorkItem.aspx.designer.cs">
+      <DependentUpon>MyHaveDoneWorkItem.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Example\WorkflowExtension\MyWorkItem.aspx.cs">
+      <DependentUpon>MyWorkItem.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Example\WorkflowExtension\MyWorkItem.aspx.designer.cs">
+      <DependentUpon>MyWorkItem.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Example\WorkflowExtension\ProcessInstanceCreator.cs" />
+    <Compile Include="Example\WorkflowExtension\RoleBasedAssignmentHandler.cs" />
+    <Compile Include="Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IDesignerService.cs" />
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FireWorkflow.Net.Persistence.OracleDAL\FireWorkflow.Net.Persistence.OracleDAL.csproj">
+      <Project>{36D872DC-8503-4DBD-B580-2C69D851B4F5}</Project>
+      <Name>FireWorkflow.Net.Persistence.OracleDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FireWorkflow.Net.Persistence.SqlServerDAL\FireWorkflow.Net.Persistence.SqlServerDAL.csproj">
+      <Project>{21520687-37FB-47DC-87DA-67D840E70201}</Project>
+      <Name>FireWorkflow.Net.Persistence.SqlServerDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FireWorkflow.Net\FireWorkflow.Net.csproj">
+      <Project>{10D41B1F-AB41-4A4F-A2FA-415BF23869A9}</Project>
+      <Name>FireWorkflow.Net</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientBin\FireWorkflow.Net.Designer.View.xap" />
+    <Content Include="DesignerService.svc" />
+    <Content Include="Example\GoodsDeliverProcess\Payment.aspx" />
+    <Content Include="Example\GoodsDeliverProcess\PrepareGoods.aspx" />
+    <Content Include="Example\LoanProcess\ApproveInfo.aspx" />
+    <Content Include="Example\LoanProcess\LendMoneyInfo.aspx" />
+    <Content Include="Example\LoanProcess\RejectInfo.aspx" />
+    <Content Include="Example\LoanProcess\RiskEvaluateInfo.aspx" />
+    <Content Include="Example\LoanProcess\SubmitApplicationInfo.aspx" />
+    <Content Include="Example\WorkflowExtension\AddWorkItemList.aspx" />
+    <Content Include="Example\WorkflowExtension\InstancesDataViewerBean.aspx" />
+    <Content Include="Example\WorkflowExtension\MyHaveDoneWorkItem.aspx" />
+    <Content Include="Example\WorkflowExtension\MyWorkItem.aspx" />
+    <Content Include="Home.aspx" />
+    <Content Include="Login.aspx" />
+    <Content Include="resources\css\list.css" />
+    <Content Include="resources\css\main.css" />
+    <Content Include="resources\images\grid3-hrow-over.gif" />
+    <Content Include="resources\images\list\group-expand-sprite.gif" />
+    <Content Include="resources\images\list\Process\TheLoanProcess.gif" />
+    <Content Include="resources\images\logo.gif" />
+    <Content Include="resources\images\logo2.gif" />
+    <Content Include="resources\images\row-over.gif" />
+    <Content Include="resources\images\list\sample-over.gif" />
+    <Content Include="resources\images\list\Process\TheGoodsDeliverProcess.gif" />
+    <Content Include="resources\images\TheLoanProcess.gif" />
+    <Content Include="resources\images\toolbar_back24.jpg" />
+    <Content Include="Silverlight.js" />
+    <Content Include="WorkflowProcessView.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Fireflow_Process_Definition_Language.dtd" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!--<Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
+  -->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions />
+</Project>

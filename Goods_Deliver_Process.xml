@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fpdl:WorkflowProcess PUBLIC "-//Nieyun Chen//ProcessDefinition//CN" "FireFlow_Process_Definition_Language.dtd">
+
+<fpdl:WorkflowProcess xmlns:fpdl="http://www.fireflow.org/Fireflow_Process_Definition_Language" Id="Goods_Deliver_Process" Name="Goods_Deliver_Process" DisplayName="商场送货流程" ResourceFile="" ResourceManager="" TaskInstanceCreator="WebDemo.Example.GoodsDeliverProcess.WorkflowExtension.GoodsDeliverTaskInstanceCreator, WebDemo">
+    <fpdl:Description>工作流中从一个线程中的一个点拆分为在多个线程中平行执行的多个活动。</fpdl:Description>
+    <fpdl:StartNode Id="Goods_Deliver_Process.START_NODE" Name="START_NODE" DisplayName="">
+        <fpdl:ExtendedAttributes>
+            <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="20"/>
+            <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="20"/>
+            <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="11"/>
+            <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="117"/>
+        </fpdl:ExtendedAttributes>
+    </fpdl:StartNode>
+    <fpdl:Tasks>
+        <fpdl:Task Id="Goods_Deliver_Process.PrepareGoodsTask" Name="PrepareGoodsTask" DisplayName="备货" Type="FORM" CompletionStrategy="ANY" DefaultView="EDITFORM" Priority="1">
+            <fpdl:Performer Name="WarehouseKeeper" DisplayName="仓库管理岗">
+                <fpdl:Description></fpdl:Description>
+                <fpdl:AssignmentHandler>WebDemo.Example.WorkflowExtension.RoleBasedAssignmentHandler, WebDemo</fpdl:AssignmentHandler>
+            </fpdl:Performer>
+            <fpdl:EditForm Name="备货操作界面" DisplayName="备货操作界面">
+                <fpdl:Description></fpdl:Description>
+                <fpdl:Uri>~/Example/GoodsDeliverProcess/PrepareGoods.aspx</fpdl:Uri>
+            </fpdl:EditForm>
+            <fpdl:Description></fpdl:Description>
+        </fpdl:Task>
+    </fpdl:Tasks>
+    <fpdl:Activities>
+        <fpdl:Activity Id="Goods_Deliver_Process.PaymentActivity" Name="PaymentActivity" DisplayName="客户付款" CompletionStrategy="ALL">
+            <fpdl:Description></fpdl:Description>
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="60"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="100"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="53"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="95"/>
+            </fpdl:ExtendedAttributes>
+            <fpdl:Tasks>
+                <fpdl:Task Id="Goods_Deliver_Process.PaymentActivity.Payment_Task" Name="Payment_Task" DisplayName="付款" Type="FORM" CompletionStrategy="ANY" DefaultView="EDITFORM" Priority="1">
+                    <fpdl:Performer Name="Cashier" DisplayName="收银岗">
+                        <fpdl:Description></fpdl:Description>
+                        <fpdl:AssignmentHandler>WebDemo.Example.WorkflowExtension.CurrentUserAssignmentHandler, WebDemo</fpdl:AssignmentHandler>
+                    </fpdl:Performer>
+                    <fpdl:EditForm Name="收款界面" DisplayName="收款界面">
+                        <fpdl:Description></fpdl:Description>
+                        <fpdl:Uri>~/Example/GoodsDeliverProcess/Payment.aspx</fpdl:Uri>
+                    </fpdl:EditForm>
+                    <fpdl:Description></fpdl:Description>
+                </fpdl:Task>
+            </fpdl:Tasks>
+            <fpdl:TaskRefs/>
+        </fpdl:Activity>
+        <fpdl:Activity Id="Goods_Deliver_Process.PrepareGoodsActivity" Name="PrepareGoodsActivity" DisplayName="仓库备货" CompletionStrategy="ALL">
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="60"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="100"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="220"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="95"/>
+            </fpdl:ExtendedAttributes>
+            <fpdl:Tasks/>
+            <fpdl:TaskRefs>
+                <fpdl:TaskRef Reference="Goods_Deliver_Process.PrepareGoodsTask"/>
+            </fpdl:TaskRefs>
+        </fpdl:Activity>
+        <fpdl:Activity Id="Goods_Deliver_Process.DeliverGoodsActivity" Name="DeliverGoodsActivity" DisplayName="送货员送货" CompletionStrategy="ALL">
+            <fpdl:Description></fpdl:Description>
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="60"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="123"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="388"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="9"/>
+            </fpdl:ExtendedAttributes>
+            <fpdl:Tasks>
+                <fpdl:Task Id="Goods_Deliver_Process.DeliverGoodsActivity.DeliverGoodsTask" Name="DeliverGoodsTask" DisplayName="送货" Type="FORM" CompletionStrategy="ANY" DefaultView="EDITFORM" Priority="1">
+                    <fpdl:Performer Name="Deliveryman" DisplayName="送货岗">
+                        <fpdl:Description></fpdl:Description>
+                        <fpdl:AssignmentHandler>WebDemo.Example.WorkflowExtension.RoleBasedAssignmentHandler, WebDemo</fpdl:AssignmentHandler>
+                    </fpdl:Performer>
+                    <fpdl:EditForm Name="送货员操作界面" DisplayName="送货员操作界面">
+                        <fpdl:Description></fpdl:Description>
+                        <fpdl:Uri>~/Example/GoodsDeliverProcess/PrepareGoods.aspx</fpdl:Uri>
+                    </fpdl:EditForm>
+                    <fpdl:Description></fpdl:Description>
+                </fpdl:Task>
+            </fpdl:Tasks>
+            <fpdl:TaskRefs/>
+        </fpdl:Activity>
+        <fpdl:Activity Id="Goods_Deliver_Process.TZSH" Name="TZSH" DisplayName="发手机短信通知客户收货" CompletionStrategy="ALL">
+            <fpdl:Description></fpdl:Description>
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="66"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="171"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="369"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="169"/>
+            </fpdl:ExtendedAttributes>
+            <fpdl:Tasks>
+                <fpdl:Task Id="Goods_Deliver_Process.TZSH.TZSLTask" Name="TZSLTask" DisplayName="发送短信" Type="TOOL" Execution="SYNCHR" Priority="1">
+                    <fpdl:Application Name="SMSSender" DisplayName="短信发送程序">
+                        <fpdl:Description></fpdl:Description>
+                        <fpdl:Handler>WebDemo.Example.GoodsDeliverProcess.WorkflowExtension.SMSHandler, WebDemo</fpdl:Handler>
+                    </fpdl:Application>
+                    <fpdl:Description></fpdl:Description>
+                </fpdl:Task>
+            </fpdl:Tasks>
+            <fpdl:TaskRefs/>
+        </fpdl:Activity>
+    </fpdl:Activities>
+    <fpdl:Synchronizers>
+        <fpdl:Synchronizer Id="Goods_Deliver_Process.Synchronizer8" Name="Synchronizer8" DisplayName="">
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="20"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="20"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="180"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="114"/>
+            </fpdl:ExtendedAttributes>
+        </fpdl:Synchronizer>
+        <fpdl:Synchronizer Id="Goods_Deliver_Process.Synchronizer9" Name="Synchronizer9" DisplayName="">
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="20"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="20"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="351"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="115"/>
+            </fpdl:ExtendedAttributes>
+        </fpdl:Synchronizer>
+    </fpdl:Synchronizers>
+    <fpdl:EndNodes>
+        <fpdl:EndNode Id="Goods_Deliver_Process.EndNode1" Name="EndNode1" DisplayName="">
+            <fpdl:ExtendedAttributes>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="20"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="20"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="564"/>
+                <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="108"/>
+            </fpdl:ExtendedAttributes>
+        </fpdl:EndNode>
+    </fpdl:EndNodes>
+    <fpdl:Transitions>
+        <fpdl:Transition Id="Goods_Deliver_Process.transition1" From="Goods_Deliver_Process.START_NODE" To="Goods_Deliver_Process.PaymentActivity" Name="transition1" DisplayName="">
+            <fpdl:Condition></fpdl:Condition>
+        </fpdl:Transition>
+        <fpdl:Transition Id="Goods_Deliver_Process.transition2" From="Goods_Deliver_Process.PaymentActivity" To="Goods_Deliver_Process.Synchronizer8" Name="transition2" DisplayName="">
+            <fpdl:Condition></fpdl:Condition>
+        </fpdl:Transition>
+        <fpdl:Transition Id="Goods_Deliver_Process.transition3" From="Goods_Deliver_Process.Synchronizer8" To="Goods_Deliver_Process.PrepareGoodsActivity" Name="transition3" DisplayName="">
+            <fpdl:Condition></fpdl:Condition>
+        </fpdl:Transition>
+        <fpdl:Transition Id="Goods_Deliver_Process.transition4" From="Goods_Deliver_Process.PrepareGoodsActivity" To="Goods_Deliver_Process.Synchronizer9" Name="transition4" DisplayName="">
+            <fpdl:Condition></fpdl:Condition>
+        </fpdl:Transition>
+        <fpdl:Transition Id="Goods_Deliver_Process.transition5" From="Goods_Deliver_Process.Synchronizer9" To="Goods_Deliver_Process.DeliverGoodsActivity" Name="transition5" DisplayName="">
+            <fpdl:Condition></fpdl:Condition>
+        </fpdl:Transition>
+        <fpdl:Transition Id="Goods_Deliver_Process.transition6" From="Goods_Deliver_Process.Synchronizer9" To="Goods_Deliver_Process.TZSH" Name="transition6" DisplayName="">
+            <fpdl:Condition></fpdl:Condition>
+        </fpdl:Transition>
+        <fpdl:Transition Id="Goods_Deliver_Process.transition9" From="Goods_Deliver_Process.TZSH" To="Goods_Deliver_Process.EndNode1" Name="transition9" DisplayName="">
+            <fpdl:Condition></fpdl:Condition>
+        </fpdl:Transition>
+        <fpdl:Transition Id="Goods_Deliver_Process.transition8" From="Goods_Deliver_Process.DeliverGoodsActivity" To="Goods_Deliver_Process.EndNode1" Name="transition8" DisplayName="">
+            <fpdl:Condition></fpdl:Condition>
+        </fpdl:Transition>
+    </fpdl:Transitions>
+    <fpdl:ExtendedAttributes>
+        <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.height" Value="20"/>
+        <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.width" Value="20"/>
+        <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.x" Value="23"/>
+        <fpdl:ExtendedAttribute Name="FIRE_FLOW.bounds.y" Value="134"/>
+    </fpdl:ExtendedAttributes>
+</fpdl:WorkflowProcess>

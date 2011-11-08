@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{10D41B1F-AB41-4A4F-A2FA-415BF23869A9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FireWorkflow.Net</RootNamespace>
+    <AssemblyName>FireWorkflow.Net</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\FireWorkflow.Net.XML</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging, Version=1.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\Spring.net\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core, Version=1.3.0.20214, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\Spring.net\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base\BeanUtils.cs" />
+    <Compile Include="Base\Evaluator.cs" />
+    <Compile Include="Engine\Beanfactory\BeanFactory.cs" />
+    <Compile Include="Engine\Beanfactory\IBeanFactory.cs" />
+    <Compile Include="Engine\Calendar\DefaultCalendarService.cs" />
+    <Compile Include="Engine\Calendar\ICalendarService.cs" />
+    <Compile Include="Engine\Condition\ConditionConstant.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Engine\Condition\ConditionResolver.cs" />
+    <Compile Include="Engine\Condition\IConditionResolver.cs" />
+    <Compile Include="Engine\Definition\DefinitionService4DBMS.cs" />
+    <Compile Include="Engine\Definition\DefinitionService4FileSystem.cs" />
+    <Compile Include="Engine\Definition\IDefinitionService.cs" />
+    <Compile Include="Engine\Definition\WorkflowDefinition.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Engine\Definition\WorkflowDefinitionInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Engine\EngineConstant.cs" />
+    <Compile Include="Engine\EngineException.cs" />
+    <Compile Include="Engine\Event\ActivityInstanceEvent.cs" />
+    <Compile Include="Engine\Event\IActivityInstanceEvent.cs" />
+    <Compile Include="Engine\Event\IProcessInstanceEventListener.cs" />
+    <Compile Include="Engine\Event\ITaskInstanceEventListener.cs" />
+    <Compile Include="Engine\Event\ProcessInstanceEvent.cs" />
+    <Compile Include="Engine\Event\TaskInstanceEvent.cs" />
+    <Compile Include="Engine\Impl\ClassIWorkflowSessionCallbacks.cs" />
+    <Compile Include="Engine\Impl\ProcessInstance.cs" />
+    <Compile Include="Engine\Impl\ProcessInstanceTrace.cs" />
+    <Compile Include="Engine\Impl\ProcessInstanceVar.cs" />
+    <Compile Include="Engine\Impl\ProcessInstanceVarPk.cs" />
+    <Compile Include="Engine\Impl\TaskInstance.cs" />
+    <Compile Include="Engine\Impl\WorkflowSession.cs" />
+    <Compile Include="Engine\Impl\WorkItem.cs" />
+    <Compile Include="Engine\IProcessInstance.cs" />
+    <Compile Include="Engine\IRuntimeContextAware.cs" />
+    <Compile Include="Engine\ITaskInstance.cs" />
+    <Compile Include="Engine\IWorkflowSession.cs" />
+    <Compile Include="Engine\IWorkflowSessionAware.cs" />
+    <Compile Include="Engine\IWorkflowSessionCallback.cs" />
+    <Compile Include="Engine\IWorkItem.cs" />
+    <Compile Include="Engine\Kernelextensions\ActivityInstanceExtension.cs" />
+    <Compile Include="Engine\Kernelextensions\ConditionEvaluator.cs" />
+    <Compile Include="Engine\Kernelextensions\EndNodeInstanceExtension.cs" />
+    <Compile Include="Engine\Kernelextensions\LoopInstanceExtension.cs" />
+    <Compile Include="Engine\Kernelextensions\StartNodeInstanceExtension.cs" />
+    <Compile Include="Engine\Kernelextensions\SynchronizerInstanceExtension.cs" />
+    <Compile Include="Engine\Kernelextensions\TransitionInstanceExtension.cs" />
+    <Compile Include="Engine\Persistence\IPersistenceService.cs" />
+    <Compile Include="Engine\RuntimeContext.cs" />
+    <Compile Include="Engine\RuntimeContextFactory.cs" />
+    <Compile Include="Engine\Taskinstance\BasicTaskInstanceManager.cs" />
+    <Compile Include="Engine\Taskinstance\DefaultFormTaskInstanceCompletionEvaluator.cs" />
+    <Compile Include="Engine\Taskinstance\DefaultFormTaskInstanceRunner.cs" />
+    <Compile Include="Engine\Taskinstance\DefaultSubflowTaskInstanceCompletionEvaluator.cs" />
+    <Compile Include="Engine\Taskinstance\DefaultSubflowTaskInstanceRunner.cs" />
+    <Compile Include="Engine\Taskinstance\DefaultTaskInstanceCreator.cs" />
+    <Compile Include="Engine\Taskinstance\DefaultTaskInstanceEventListener.cs" />
+    <Compile Include="Engine\Taskinstance\DefaultToolTaskInstanceCompletionEvaluator.cs" />
+    <Compile Include="Engine\Taskinstance\DefaultToolTaskInstanceRunner.cs" />
+    <Compile Include="Engine\Taskinstance\DynamicAssignmentHandler.cs" />
+    <Compile Include="Engine\Taskinstance\IApplicationHandler.cs" />
+    <Compile Include="Engine\Taskinstance\IAssignable.cs" />
+    <Compile Include="Engine\Taskinstance\IAssignmentBusinessHandler.cs" />
+    <Compile Include="Engine\Taskinstance\IAssignmentHandler.cs" />
+    <Compile Include="Engine\Taskinstance\ITaskInstanceCompletionEvaluator.cs" />
+    <Compile Include="Engine\Taskinstance\ITaskInstanceCreator.cs" />
+    <Compile Include="Engine\Taskinstance\ITaskInstanceManager.cs" />
+    <Compile Include="Engine\Taskinstance\ITaskInstanceRunner.cs" />
+    <Compile Include="Base\EventObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Kernel\Event\EdgeInstanceEvent.cs" />
+    <Compile Include="Kernel\Event\IEdgeInstanceEventListener.cs" />
+    <Compile Include="Kernel\Event\INodeInstanceEventListener.cs" />
+    <Compile Include="Kernel\Event\NodeInstanceEvent.cs" />
+    <Compile Include="Kernel\Event\PetriNetEventListenerRegistry.cs" />
+    <Compile Include="Kernel\IActivityInstance.cs" />
+    <Compile Include="Kernel\IEdgeInstance.cs" />
+    <Compile Include="Kernel\IJoinPoint.cs" />
+    <Compile Include="Kernel\ILoopInstance.cs" />
+    <Compile Include="Kernel\Impl\AbstractNodeInstance.cs" />
+    <Compile Include="Kernel\Impl\ActivityInstance.cs" />
+    <Compile Include="Kernel\Impl\EdgeInstance.cs" />
+    <Compile Include="Kernel\Impl\EndNodeInstance.cs" />
+    <Compile Include="Kernel\Impl\JoinPoint.cs" />
+    <Compile Include="Kernel\Impl\LoopInstance.cs" />
+    <Compile Include="Kernel\Impl\NetInstance.cs" />
+    <Compile Include="Kernel\Impl\StartNodeInstance.cs" />
+    <Compile Include="Kernel\Impl\SynchronizerInstance.cs" />
+    <Compile Include="Kernel\Impl\Token.cs" />
+    <Compile Include="Kernel\Impl\TokenHome.cs" />
+    <Compile Include="Kernel\Impl\TransitionInstance.cs" />
+    <Compile Include="Kernel\INetInstance.cs" />
+    <Compile Include="Kernel\INodeInstance.cs" />
+    <Compile Include="Kernel\ISynchronizerInstance.cs" />
+    <Compile Include="Kernel\IToken.cs" />
+    <Compile Include="Kernel\ITransitionInstance.cs" />
+    <Compile Include="Kernel\KernelException.cs" />
+    <Compile Include="Kernel\KernelManager.cs" />
+    <Compile Include="Kernel\Plugin\IKernelExtension.cs" />
+    <Compile Include="Kernel\Plugin\IPlugable.cs" />
+    <Compile Include="Model\AbstractWFElement.cs" />
+    <Compile Include="Model\DataField.cs" />
+    <Compile Include="Model\Duration.cs" />
+    <Compile Include="Model\EventListener.cs" />
+    <Compile Include="Model\ExtendedAttributeNames.cs" />
+    <Compile Include="Model\FormTask.cs" />
+    <Compile Include="Model\Io\Dom4JFPDLParser.cs" />
+    <Compile Include="Model\Io\Dom4JFPDLSerializer.cs" />
+    <Compile Include="Model\Io\FPDLNames.cs" />
+    <Compile Include="Model\Io\FPDLParserException.cs" />
+    <Compile Include="Model\Io\IFPDLParser.cs" />
+    <Compile Include="Model\Io\IFPDLSerializer.cs" />
+    <Compile Include="Model\IWFElement.cs" />
+    <Compile Include="Model\Net\Activity.cs" />
+    <Compile Include="Model\Net\Edge.cs" />
+    <Compile Include="Model\Net\EndNode.cs" />
+    <Compile Include="Model\Net\Loop.cs" />
+    <Compile Include="Model\Net\Node.cs" />
+    <Compile Include="Model\Net\StartNode.cs" />
+    <Compile Include="Model\Net\Synchronizer.cs" />
+    <Compile Include="Model\Net\Transition.cs" />
+    <Compile Include="Model\Resource\AbstractResource.cs" />
+    <Compile Include="Model\Resource\Application.cs" />
+    <Compile Include="Model\Resource\Form.cs" />
+    <Compile Include="Model\Resource\IResource.cs" />
+    <Compile Include="Model\Resource\IResourceManager.cs" />
+    <Compile Include="Model\Resource\Participant.cs" />
+    <Compile Include="Model\Resource\ResourceManager4XmlFile.cs" />
+    <Compile Include="Model\Resource\SubWorkflowProcess.cs" />
+    <Compile Include="Model\SubflowTask.cs" />
+    <Compile Include="Model\Task.cs" />
+    <Compile Include="Model\TaskRef.cs" />
+    <Compile Include="Model\ToolTask.cs" />
+    <Compile Include="Model\WorkflowProcess.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Engine\Definition\关于定义文件的存储.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.VisualBasic.PowerPacks.10.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft Visual Basic PowerPacks 10.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Model\ClassDiagramModel.cd" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
