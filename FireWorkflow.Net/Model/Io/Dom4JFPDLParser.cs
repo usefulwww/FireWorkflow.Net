@@ -77,20 +77,7 @@ namespace FireWorkflow.Net.Model.Io
 		public override WorkflowProcess parse(string srin)
 		{
 			WorkflowProcess wp=new WorkflowProcess("");
-			//.net 2.0
-//        	if(!string.IsNullOrEmpty(srin)){
-//				byte[] pcontent = System.Text.Encoding.Default.GetBytes(process_content.Value.ToString());
-//				using (Stream inStream = new MemoryStream(pcontent))
-//				{
-//					if (inStream != null)
-//					{
-//						workflowProcess = parse(inStream);
-//					}else{
-//						//throw new IOException("没有填写流程定义内容!");
-//					}
-//				}
-//			}
-			XElement xele = XElement.Parse(srin,LoadOptions.PreserveWhitespace);
+			XElement xele = XElement.Parse(srin,LoadOptions.SetBaseUri);
 			wp = parse(xele);
 			return wp;
 		}
@@ -99,7 +86,7 @@ namespace FireWorkflow.Net.Model.Io
 		/// </summary>
 		/// <param name="srin">输入流</param>
 		/// <returns>返回WorkflowProcess对象</returns>
-		public override WorkflowProcess parse(Stream srin)
+        public override WorkflowProcess parse(Stream srin)
 		{
 			if (srin == null) return null;
 			try

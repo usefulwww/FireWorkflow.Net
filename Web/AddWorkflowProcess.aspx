@@ -24,7 +24,6 @@
                     <ext:RecordField Name="UploadTime" Type="Date" />
                     <ext:RecordField Name="PublishUser" />
                     <ext:RecordField Name="PublishTime" Type="Date" />
-                    <ext:RecordField Name="process_content" />
                 </Fields>
             </ext:JsonReader>
         </Reader>

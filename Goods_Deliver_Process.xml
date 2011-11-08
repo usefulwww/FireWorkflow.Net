@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE fpdl:WorkflowProcess PUBLIC "-//Nieyun Chen//ProcessDefinition//CN" "FireFlow_Process_Definition_Language.dtd">
 
 <fpdl:WorkflowProcess xmlns:fpdl="http://www.fireflow.org/Fireflow_Process_Definition_Language" Id="Goods_Deliver_Process" Name="Goods_Deliver_Process" DisplayName="商场送货流程" ResourceFile="" ResourceManager="" TaskInstanceCreator="WebDemo.Example.GoodsDeliverProcess.WorkflowExtension.GoodsDeliverTaskInstanceCreator, WebDemo">

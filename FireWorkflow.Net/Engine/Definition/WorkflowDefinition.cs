@@ -44,22 +44,26 @@ namespace FireWorkflow.Net.Engine.Definition
             {
                 if (ProcessContent != null && !String.IsNullOrEmpty(this.ProcessContent.Trim()))
                 {
-                    MemoryStream msin = null;
+                    Dom4JFPDLParser parser = new Dom4JFPDLParser();
+                    //MemoryStream msin = null;
 
-                    try
-                    {
-                        Dom4JFPDLParser parser = new Dom4JFPDLParser();
-                        msin = new MemoryStream(Encoding.UTF8.GetBytes(this.ProcessContent));
-                        this.workflowProcess = parser.parse(msin);
-                    }
-                    catch
-                    {
-                        throw;
-                    }
-                    finally
-                    {
-                        if (msin != null) msin.Close();
-                    }
+                    //try
+                    //{
+                    //    
+                    //    msin = new MemoryStream(Encoding.UTF8.GetBytes(this.ProcessContent));
+                    //    this.workflowProcess = parser.parse(msin);
+                    //}
+                    //catch
+                    //{
+                    //    throw;
+                    //}
+                    //finally
+                    //{
+                    //    if (msin != null) msin.Close();
+                    //}
+
+                    //TODO DEBUG
+                    this.workflowProcess = parser.parse(this.ProcessContent);
 
                 }
             }

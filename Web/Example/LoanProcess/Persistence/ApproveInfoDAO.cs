@@ -51,13 +51,13 @@ namespace WebDemo.Example.LoanProcess.Persistence
             {
                 instance.Id = Guid.NewGuid().ToString().Replace("-", "");
                 string insert = "INSERT INTO T_BIZ_LOAN_APPROVEINFO (" +
-                    "ID, SN, APPROVER, DECISION, DETAIL )VALUES(:1, :2, :3, :4, :5)";
+                    "ID, SN, APPROVER, DECISION, DETAIL )VALUES(@1, @2, @3, @4, @5)";
                 SqlParameter[] insertParms = { 
-				    SqlServerHelper.NewSqlParameter(":1", SqlDbType.VarChar, 50, instance.Id), 
-				    SqlServerHelper.NewSqlParameter(":2", SqlDbType.VarChar, 50, instance.Sn), 
-				    SqlServerHelper.NewSqlParameter(":3", SqlDbType.VarChar, 50, instance.Approver), 
-				    SqlServerHelper.NewSqlParameter(":4", SqlDbType.SmallInt, SqlServerHelper.OraBit(instance.Decision)), 
-				    SqlServerHelper.NewSqlParameter(":5", SqlDbType.VarChar, 50, instance.Detail)
+				    SqlServerHelper.NewSqlParameter("@1", SqlDbType.VarChar, 50, instance.Id), 
+				    SqlServerHelper.NewSqlParameter("@2", SqlDbType.VarChar, 50, instance.Sn), 
+				    SqlServerHelper.NewSqlParameter("@3", SqlDbType.VarChar, 50, instance.Approver), 
+				    SqlServerHelper.NewSqlParameter("@4", SqlDbType.SmallInt, SqlServerHelper.OraBit(instance.Decision)), 
+				    SqlServerHelper.NewSqlParameter("@5", SqlDbType.VarChar, 50, instance.Detail)
 			    };
                 if (SqlServerHelper.ExecuteNonQuery(connectionString, CommandType.Text, insert, insertParms) != 1)
                     return false;
@@ -69,11 +69,11 @@ namespace WebDemo.Example.LoanProcess.Persistence
                 "SN=:2, APPROVER=:3, DECISION=:4, DETAIL=:5" +
                 " WHERE ID=:1";
                 SqlParameter[] updateParms = { 
-                    SqlServerHelper.NewSqlParameter(":1", SqlDbType.VarChar, 50, instance.Id), 
-				    SqlServerHelper.NewSqlParameter(":2", SqlDbType.VarChar, 50, instance.Sn), 
-				    SqlServerHelper.NewSqlParameter(":3", SqlDbType.VarChar, 50, instance.Approver), 
-				    SqlServerHelper.NewSqlParameter(":4", SqlDbType.SmallInt, SqlServerHelper.OraBit(instance.Decision)), 
-				    SqlServerHelper.NewSqlParameter(":5", SqlDbType.VarChar, 50, instance.Detail)
+                    SqlServerHelper.NewSqlParameter("@1", SqlDbType.VarChar, 50, instance.Id), 
+				    SqlServerHelper.NewSqlParameter("@2", SqlDbType.VarChar, 50, instance.Sn), 
+				    SqlServerHelper.NewSqlParameter("@3", SqlDbType.VarChar, 50, instance.Approver), 
+				    SqlServerHelper.NewSqlParameter("@4", SqlDbType.SmallInt, SqlServerHelper.OraBit(instance.Decision)), 
+				    SqlServerHelper.NewSqlParameter("@5", SqlDbType.VarChar, 50, instance.Detail)
 			    };
                 if (SqlServerHelper.ExecuteNonQuery(connectionString, CommandType.Text, update, updateParms) != 1)
                     return false;
@@ -117,6 +117,7 @@ namespace WebDemo.Example.LoanProcess.Persistence
                 else return true;
             }
         }
+        
         public ApproveInfo findBySnAndUserId(String sn, String userId)
         {
             switch (dbtype)
@@ -175,14 +176,14 @@ namespace WebDemo.Example.LoanProcess.Persistence
         private ApproveInfo findBySnAndUserId_sqlserver(String sn, String userId)
         {
 
-            string select = "SELECT * FROM T_BIZ_LOAN_APPROVEINFO WHERE SN=:1 and APPROVER=:2";
+            string select = "SELECT * FROM T_BIZ_LOAN_APPROVEINFO WHERE SN=@1 and APPROVER=@2";
             SqlConnection conn = new SqlConnection(connectionString);
             SqlDataReader reader = null;
             try
             {
                 SqlParameter[] selectParms = { 
-				    SqlServerHelper.NewSqlParameter(":1", SqlDbType.VarChar, 50, sn),
-				    SqlServerHelper.NewSqlParameter(":2", SqlDbType.VarChar, 50, userId)
+				    SqlServerHelper.NewSqlParameter("@1", SqlDbType.VarChar, 50, sn),
+				    SqlServerHelper.NewSqlParameter("@2", SqlDbType.VarChar, 50, userId)
 				};
                 reader = SqlServerHelper.ExecuteReader(conn, CommandType.Text, select, selectParms);
                 if (reader.Read())
