@@ -81,20 +81,21 @@ namespace FireWorkflow.Net.Engine.Definition
             this.Description = workflowProcess.Description;
 
             Dom4JFPDLSerializer ser = new Dom4JFPDLSerializer();
-            MemoryStream so = new MemoryStream();
-            try
-            {
-                ser.serialize(workflowProcess, so);
-                this.ProcessContent = Encoding.UTF8.GetString(so.ToArray());
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                if (so != null) so.Close();
-            }
+            //MemoryStream so = new MemoryStream();
+            //try
+            //{
+            //    ser.serialize(workflowProcess, so);
+            //    this.ProcessContent = Encoding.UTF8.GetString(so.ToArray());
+            //}
+            //catch
+            //{
+            //    throw;
+            //}
+            //finally
+            //{
+            //    if (so != null) so.Close();
+            //}
+            this.ProcessContent = ser.serialize(process);
         }
     }
 }

@@ -76,9 +76,10 @@ namespace FireWorkflow.Net.Model.Io
 		/// <returns>返回WorkflowProcess对象</returns>
 		public override WorkflowProcess parse(string srin)
 		{
-			WorkflowProcess wp=new WorkflowProcess("");
-			XElement xele = XElement.Parse(srin,LoadOptions.SetBaseUri);
-			wp = parse(xele);
+			XElement xele = XElement.Parse(srin);
+			WorkflowProcess wp = parse(xele);
+            if (wp == null)
+                return new WorkflowProcess("");
 			return wp;
 		}
 		/// <summary>
@@ -362,6 +363,10 @@ namespace FireWorkflow.Net.Model.Io
 
 			part.Description = GetElementValue(xElement, "{" + FPDL_URI + "}" + DESCRIPTION);
 			part.AssignmentHandler = GetElementValue(xElement, "{" + FPDL_URI + "}" + ASSIGNMENT_HANDLER);
+
+            //如果在xml定义文件里面指定了角色对应的用户名
+            string sPERFORMER_VALUE = GetAttributeValue(xElement, PERFORMER_VALUE);
+            part.PerformerValue = string.IsNullOrEmpty(sPERFORMER_VALUE) ? part.Name : sPERFORMER_VALUE;
 
 			return part;
 		}

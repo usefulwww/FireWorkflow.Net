@@ -183,6 +183,10 @@ namespace FireWorkflow.Net.Model.Io
 
         /// <summary>Performer</summary>
         public const String PERFORMER = "Performer";
+
+        /// <summary>Performer</summary>
+        public const String PERFORMER_VALUE = "Value";
+
         /// <summary>StartMode</summary>
         public const String START_MODE = "StartMode";
         /// <summary>FinishMode</summary>

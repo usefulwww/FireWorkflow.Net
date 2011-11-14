@@ -1523,7 +1523,7 @@ namespace FireWorkflow.Net.Persistence.SqlServerDAL
                 {
                     workflowDef.Version = 1;
                 }
-                workflowDef.Id = Guid.NewGuid().ToString().Replace("-", "");
+                workflowDef.Id = Guid.NewGuid().ToString("N");
                 string insert = "INSERT INTO T_FF_DF_WORKFLOWDEF (" +
                     "ID, DEFINITION_TYPE, PROCESS_ID, NAME, DISPLAY_NAME, " +
                     "DESCRIPTION, VERSION, STATE, UPLOAD_USER, UPLOAD_TIME, " +
@@ -1542,7 +1542,7 @@ namespace FireWorkflow.Net.Persistence.SqlServerDAL
 					SqlServerHelper.NewSqlParameter("@10", SqlDbType.DateTime, 11, workflowDef.UploadTime), 
 					SqlServerHelper.NewSqlParameter("@11", SqlDbType.VarChar, 50, workflowDef.PublishUser), 
 					SqlServerHelper.NewSqlParameter("@12", SqlDbType.DateTime, 11, workflowDef.PublishTime), 
-					SqlServerHelper.NewSqlParameter("@13", SqlDbType.NVarChar, workflowDef.ProcessContent)
+					SqlServerHelper.NewSqlParameter("@13", SqlDbType.NText, workflowDef.ProcessContent)
 				};
                 if (SqlServerHelper.ExecuteNonQuery(connectionString, CommandType.Text, insert, insertParms) != 1)
                     return false;
@@ -1562,7 +1562,7 @@ namespace FireWorkflow.Net.Persistence.SqlServerDAL
     				SqlServerHelper.NewSqlParameter("@8", SqlDbType.SmallInt, SqlServerHelper.OraBit(workflowDef.State)), 
     				SqlServerHelper.NewSqlParameter("@9", SqlDbType.VarChar, 50, workflowDef.UploadUser), 
     				SqlServerHelper.NewSqlParameter("@10", SqlDbType.DateTime, 11, workflowDef.UploadTime),
-    				SqlServerHelper.NewSqlParameter("@13", SqlDbType.NVarChar,workflowDef.ProcessContent),
+    				SqlServerHelper.NewSqlParameter("@13", SqlDbType.Text,workflowDef.ProcessContent),
     				SqlServerHelper.NewSqlParameter("@1", SqlDbType.VarChar, 50, workflowDef.Id)
     			};
                 if (SqlServerHelper.ExecuteNonQuery(connectionString, CommandType.Text, update, updateParms) != 1)

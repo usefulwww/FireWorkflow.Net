@@ -31,27 +31,50 @@ namespace WebDemo.Example.WorkflowExtension
             ITaskInstance taskInst = (ITaskInstance)asignable;
 
             String roleName = performerName == null ? "" : performerName.Trim();
-            List<String> users = new List<string>(); 
-            switch (roleName)
+            List<String> users = new List<string>();
+            Dictionary<string, List<string>> users_dic = new Dictionary<string, List<string>>();
+            users_dic.Add("WarehouseKeeper", new List<string>() { "warehousekeeper1", "warehousekeeper2" });
+            users_dic.Add("Deliveryman", new List<string>() { "deliveryman1", "deliveryman2", "deliveryman3" });
+            users_dic.Add("Cashier", new List<string>() { "cashier1", "cashier2" });
+            users_dic.Add("RiskEvaluator", new List<string>() { "riskevaluator1", "riskevaluator2" });
+            users_dic.Add("Approver", new List<string>() { "approver1", "approver2", "approver3" });
+            users_dic.Add("LendMoneyOfficer", new List<string>() { "lendmoneyofficer1" });
+            users_dic.Add("Loanteller", new List<string>() { "loanteller1", "loanteller2" });
+            if (users_dic.ContainsKey(roleName))
+                users = users_dic[roleName];
+            else
             {
-                case "WarehouseKeeper":
-                    users = new List<string>() { "warehousekeeper1", "warehousekeeper2" };
-                    break;
-                case "Deliveryman":
-                    users = new List<string>() { "deliveryman1", "deliveryman2", "deliveryman3" };
-                    break;
-                case "RiskEvaluator":
-                    users = new List<string>() { "riskevaluator1", "riskevaluator2" };
-                    break;
-                case "Approver":
-                    users = new List<string>() { "approver1", "approver2", "approver3" };
-                    break;
-                case "LendMoneyOfficer":
-                    users = new List<string>() { "lendmoneyofficer1" };
-                    break;
-                default:
-                    break;
+                foreach (List<string> list in users_dic.Values) {
+                    if (list.Contains(roleName))
+                        users = list;
+                }
             }
+            //switch (roleName)
+            //{
+            //    case "WarehouseKeeper"://仓管岗
+            //        users = new List<string>() { "warehousekeeper1", "warehousekeeper2" };
+            //        break;
+            //    case "Deliveryman"://送货岗
+            //        users = new List<string>() { "deliveryman1", "deliveryman2", "deliveryman3" };
+            //        break;
+            //    case "Cashier"://收银岗
+            //        users = new List<string>() { "cashier1", "cashier2" };
+            //        break;
+            //    case "RiskEvaluator"://风险核查岗
+            //        users = new List<string>() { "riskevaluator1", "riskevaluator2" };
+            //        break;
+            //    case "Approver"://审批岗
+            //        users = new List<string>() { "approver1", "approver2", "approver3" };
+            //        break;
+            //    case "LendMoneyOfficer"://放款操作岗
+            //        users = new List<string>() { "lendmoneyofficer1" };
+            //        break;
+            //    case "Loanteller"://信贷员
+            //        users = new List<string>() { "loanteller1", "loanteller2" };
+            //        break;
+            //    default:
+            //        break;
+            //}
             if (users == null || users.Count <= 0)
             {
                 throw new EngineException(taskInst.ProcessInstanceId,
@@ -62,7 +85,7 @@ namespace WebDemo.Example.WorkflowExtension
             {
                 userIds.Add(item);
             }
-
+            
             asignable.assignToActors(userIds);
         }
 

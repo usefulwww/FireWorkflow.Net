@@ -91,6 +91,12 @@ namespace FireWorkflow.Net.Model.Io
             swout.Position = 0;
         }
 
+        public string serialize(WorkflowProcess workflowProcess)
+        {
+            XDocument inventoryDoc =new XDocument(new XDeclaration("1.0", "utf-8", "yes"),workflowProcessToDom(workflowProcess));
+            return inventoryDoc.ToString();
+        }
+
         private XElement workflowProcessToDom(WorkflowProcess workflowProcess)
         {
             XNamespace aw = FPDL_URI;
