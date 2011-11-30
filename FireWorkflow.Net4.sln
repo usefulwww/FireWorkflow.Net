@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 4.1.0.8000
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireWorkflow.Net4", "FireWorkflow.Net\FireWorkflow.Net4.csproj", "{10D41B1F-AB41-4A4F-A2FA-415BF23869A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireWorkflow.Net.Persistence.OracleDAL.Net4", "FireWorkflow.Net.Persistence.OracleDAL\FireWorkflow.Net.Persistence.OracleDAL.Net4.csproj", "{36D872DC-8503-4DBD-B580-2C69D851B4F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Net4", "Web\Web.Net4.csproj", "{0E853C4E-4D97-41E3-85CE-EC4B66181D86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireWorkflow.Net.Persistence.SqlServerDAL.Net4", "FireWorkflow.Net.Persistence.SqlServerDAL\FireWorkflow.Net.Persistence.SqlServerDAL.Net4.csproj", "{21520687-37FB-47DC-87DA-67D840E70201}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10D41B1F-AB41-4A4F-A2FA-415BF23869A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10D41B1F-AB41-4A4F-A2FA-415BF23869A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10D41B1F-AB41-4A4F-A2FA-415BF23869A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10D41B1F-AB41-4A4F-A2FA-415BF23869A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36D872DC-8503-4DBD-B580-2C69D851B4F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36D872DC-8503-4DBD-B580-2C69D851B4F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36D872DC-8503-4DBD-B580-2C69D851B4F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36D872DC-8503-4DBD-B580-2C69D851B4F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E853C4E-4D97-41E3-85CE-EC4B66181D86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E853C4E-4D97-41E3-85CE-EC4B66181D86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E853C4E-4D97-41E3-85CE-EC4B66181D86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E853C4E-4D97-41E3-85CE-EC4B66181D86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21520687-37FB-47DC-87DA-67D840E70201}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21520687-37FB-47DC-87DA-67D840E70201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21520687-37FB-47DC-87DA-67D840E70201}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21520687-37FB-47DC-87DA-67D840E70201}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+EndGlobal
