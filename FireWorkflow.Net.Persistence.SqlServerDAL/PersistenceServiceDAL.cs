@@ -32,10 +32,11 @@ namespace FireWorkflow.Net.Persistence.SqlServerDAL
                     connectionString = ConfigurationManager.ConnectionStrings["OracleServer"].ConnectionString;
                     break;
                 default:
-                    connectionString = ConfigurationManager.ConnectionStrings["OracleServer"].ConnectionString;
+                    connectionString = ConfigurationManager.ConnectionStrings["SqlServer"].ConnectionString;
                     break;
             }
         }
+        
         public PersistenceServiceDAL(String connName)
         {
             if (String.IsNullOrEmpty(connName)) throw new Exception("没有配置数据库连接字符串。");

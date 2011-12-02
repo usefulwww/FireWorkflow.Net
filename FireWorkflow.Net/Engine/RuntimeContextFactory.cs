@@ -45,8 +45,10 @@ namespace FireWorkflow.Net.Engine
                         type = Type.GetType("FireWorkflow.Net.Persistence.SqlServerDAL.PersistenceServiceDAL, FireWorkflow.Net.Persistence.SqlServerDAL");
                         break;
                     case "oracle":
-                    default:
                         type = Type.GetType("FireWorkflow.Net.Persistence.OracleDAL.PersistenceServiceDAL, FireWorkflow.Net.Persistence.OracleDAL");
+                        break;
+                    default:
+                        type = Type.GetType(dbtype);
                         break;
                 }
                 
@@ -62,11 +64,11 @@ namespace FireWorkflow.Net.Engine
                             ctx.PersistenceService = (IPersistenceService)Activator.CreateInstance(type, new object[] { "OracleServer" });
                             break;
                         default:
-                            ctx.PersistenceService = (IPersistenceService)Activator.CreateInstance(type, new object[] { "OracleServer" });
+                            ctx.PersistenceService = (IPersistenceService)Activator.CreateInstance(type, new object[] {});
                             break;
                     }
                 }
-                else throw new Exception("默认FireWorkflow.Net.Persistence.OracleDAL程序集没有引入！");
+                else throw new Exception("默认"+dbtype+"程序集没有引入！");
 
                 //流程定义服务，通过该服务获取流程定义
                 DefinitionService4DBMS ds4dbms = new FireWorkflow.Net.Engine.Definition.DefinitionService4DBMS();
