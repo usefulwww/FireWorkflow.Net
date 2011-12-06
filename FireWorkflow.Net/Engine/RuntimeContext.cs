@@ -100,8 +100,6 @@ namespace FireWorkflow.Net.Engine
             }
         }
 
-        
-
         /// <summary>内核管理器</summary>
         private KernelManager _kernelManager = null;
         /// <summary>内核管理器</summary>

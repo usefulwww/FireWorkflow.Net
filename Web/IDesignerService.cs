@@ -21,6 +21,6 @@ namespace WebDemo
         String GetWorkflowProcessXmlProcessIdOrVersion(String processID, int version);
 
         [OperationContract]
-        List<ProcessInstanceTrace> GetProcessInstanceTraceXml(String processInstanceId);
+        IList<IProcessInstanceTrace> GetProcessInstanceTraceXml(String processInstanceId);
     }
 }

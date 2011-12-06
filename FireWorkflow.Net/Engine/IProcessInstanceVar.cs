@@ -18,20 +18,20 @@
  */
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Text;
-using FireWorkflow.Net.Engine;
-using FireWorkflow.Net.Model;
-using FireWorkflow.Net.Model.Io;
 
-namespace FireWorkflow.Net.Engine.Definition
+using FireWorkflow.Net.Engine.Impl;
+
+namespace FireWorkflow.Net.Engine
 {
-    /// <summary>
-    /// 流程定义对象
-    /// 映射到表T_FF_DF_WORKFLOWDEF
-    /// </summary>
-    public class WorkflowDefinition : WorkflowDefinitionInfo
-    {
-
-    }
+	public interface IProcessInstanceVar
+	{
+		ProcessInstanceVarPk VarPrimaryKey { get; set; }
+		string ValueType { get; set; }
+		string StringValue { get; set; }
+		object Value { get; set; }
+		string Name { get; set; }
+		string ProcessInstanceId { get; set; }
+	}
 }

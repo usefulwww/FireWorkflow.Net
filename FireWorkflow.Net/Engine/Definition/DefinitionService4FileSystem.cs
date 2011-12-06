@@ -57,7 +57,7 @@ namespace FireWorkflow.Net.Engine.Definition
                     WorkflowDefinition workflowDef = new WorkflowDefinition();
                     workflowDef.Version = 1;
 
-                    workflowDef.setWorkflowProcess(workflowProcess);
+                    WorkflowDefinitionHelper.setWorkflowProcess(workflowDef,workflowProcess);
 
                     String latestVersionKey = workflowProcess.Id + "_V_" + workflowDef.Version;
                     workflowDefinitionMap.Add(latestVersionKey, workflowDef);
@@ -69,22 +69,27 @@ namespace FireWorkflow.Net.Engine.Definition
         #region 实现IDefinitionService
         /// <summary>返回所有流程的最新版本</summary>
         /// <returns></returns>
-        public List<WorkflowDefinition> GetAllLatestVersionsOfWorkflowDefinition()
+        public IList<IWorkflowDefinition> GetAllLatestVersionsOfWorkflowDefinition()
         {
             setDefinitionFiles();
-            return new List<WorkflowDefinition>(workflowDefinitionMap.Values);
+            IList<IWorkflowDefinition> list = new List<IWorkflowDefinition>();
+            foreach(IWorkflowDefinition wdf in workflowDefinitionMap.Values){
+            	list.Add(wdf);
+            }
+            return list;
+            //return new List<IWorkflowDefinition>(workflowDefinitionMap.Values);
         }
 
 
         /// <summary>根据流程Id和版本号查找流程定义</summary>
-        public WorkflowDefinition GetWorkflowDefinitionByProcessIdAndVersionNumber(String processId, Int32 version)
+        public IWorkflowDefinition GetWorkflowDefinitionByProcessIdAndVersionNumber(String processId, Int32 version)
         {
             setDefinitionFiles();
             return this.workflowDefinitionMap[processId + "_V_" + version];
         }
 
         /// <summary>通过流程Id查找其最新版本的流程定义</summary>
-        public WorkflowDefinition GetTheLatestVersionOfWorkflowDefinition(String processId)
+        public IWorkflowDefinition GetTheLatestVersionOfWorkflowDefinition(String processId)
         {
             setDefinitionFiles();
             return this.workflowDefinitionMap[this.latestVersionKeyMap[processId]];

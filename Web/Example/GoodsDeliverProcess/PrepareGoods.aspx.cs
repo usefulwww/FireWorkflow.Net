@@ -4,8 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 using Coolite.Ext.Web;
 using FireWorkflow.Net.Engine;
+using FireWorkflow.Net.Engine.Impl;
 using FireWorkflow.Net.Kernel;
 using WebDemo.Components;
 using WebDemo.Example.GoodsDeliverProcess.Persistence;
@@ -24,7 +26,7 @@ namespace WebDemo.Example.GoodsDeliverProcess
                     string workItemId = this.Request.QueryString["WorkItemId"];
                     IWorkflowSession wflsession = RuntimeContextExamples.GetRuntimeContext().getWorkflowSession();
                     IWorkItem wi = wflsession.findWorkItemById(workItemId);
-                    String sn = (String)wi.TaskInstance.AliveProcessInstance.getProcessInstanceVariable("sn");
+                    String sn = (String)ProcessInstanceHelper.getProcessInstanceVariable(TaskInstanceHelper.getAliveProcessInstance(wi.TaskInstance),"sn");
                     TradeInfo ti=tradeInfoDao.findById(sn);
                     if (ti != null)
                     {
@@ -54,7 +56,7 @@ namespace WebDemo.Example.GoodsDeliverProcess
                 {
                     if (wi.ActorId == this.User.Identity.Name)
                     {
-                        wi.complete(comments.Text);
+                        WorkItemHelper.complete(wi,comments.Text);
                     }
                 }
             }

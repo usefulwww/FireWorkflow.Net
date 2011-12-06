@@ -53,9 +53,9 @@ namespace FireWorkflow.Net.Persistence.OracleDAL
         /// <param name="rs"></param>
         /// <param name="rowNum"></param>
         /// <returns></returns>
-        public static TaskInstance GetTaskInstance(IDataReader dr)
+        public static ITaskInstance GetTaskInstance(IDataReader dr)
         {
-            TaskInstance taskInstance = new TaskInstance();
+            ITaskInstance taskInstance = new TaskInstance();
             taskInstance.Id=Convert.ToString(dr["id"]);
             // 20090922 wmj2003 没有给biz_type赋值 是否需要给基于jdbc的数据增加 setBizType()方法？
             taskInstance.TaskId=Convert.ToString(dr["task_id"]);

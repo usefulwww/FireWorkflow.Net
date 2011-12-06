@@ -31,7 +31,7 @@ namespace WebDemo.Example.WorkflowExtension
 
         public void Sdate_Refresh(object sender, StoreRefreshDataEventArgs e)
         {
-            List<IWorkItem> iwis = RuntimeContextExamples.GetRuntimeContext().PersistenceService.FindHaveDoneWorkItems(this.User.Identity.Name);
+            IList<IWorkItem> iwis = RuntimeContextExamples.GetRuntimeContext().PersistenceService.FindHaveDoneWorkItems(this.User.Identity.Name);
             Sdate.DataSource = iwis;
             Sdate.DataBind();
         }

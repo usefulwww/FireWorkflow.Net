@@ -4,8 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 using Coolite.Ext.Web;
 using FireWorkflow.Net.Engine;
+using FireWorkflow.Net.Engine.Impl;
 using FireWorkflow.Net.Kernel;
 using WebDemo.Components;
 using WebDemo.Example.LoanProcess.Persistence;
@@ -50,12 +52,12 @@ namespace WebDemo.Example.LoanProcess
                 IProcessInstance procInst =
                     workflowSession.createProcessInstance("LoanProcess", this.User.Identity.Name);
                 // 2、设置流程变量/业务属性字段
-                procInst.setProcessInstanceVariable("sn", loanInfo.Sn);// 设置流水号
-                procInst.setProcessInstanceVariable("applicantName", loanInfo.ApplicantName);//贷款人姓名
-                procInst.setProcessInstanceVariable("loanValue", loanInfo.LoanValue);// 贷款数额
+                ProcessInstanceHelper.setProcessInstanceVariable(procInst,"sn", loanInfo.Sn);// 设置流水号
+                ProcessInstanceHelper.setProcessInstanceVariable(procInst,"applicantName", loanInfo.ApplicantName);//贷款人姓名
+                ProcessInstanceHelper.setProcessInstanceVariable(procInst,"loanValue", loanInfo.LoanValue);// 贷款数额
 
                 // 3、启动流程实例,run()方法启动实例并创建第一个环节实例、分派任务
-                procInst.run();
+                ProcessInstanceHelper.run(procInst);
             }
             catch
             {

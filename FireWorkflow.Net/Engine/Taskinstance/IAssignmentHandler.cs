@@ -30,6 +30,7 @@ namespace FireWorkflow.Net.Engine.Taskinstance
     /// </summary>
     public interface IAssignmentHandler
     {
+    	//FIXME ITaskInstance 已经去掉IAssignable实现
         /// <summary>
         /// <para>实现任务分配工作，该方法一般的实现逻辑是：</para>
         /// <para>首先根据performerName查询出所有的操作员，可以把performerName当作角色名称。</para>
@@ -39,7 +40,7 @@ namespace FireWorkflow.Net.Engine.Taskinstance
         /// </summary>
         /// <param name="asignable">IAssignable实现类，在FireWorkflow中实际上就是TaskInstance对象。</param>
         /// <param name="performerName">角色名称</param>
-        void assign(IAssignable asignable, String performerName);// throws EngineException, KernelException;
+        void assign(ITaskInstance taskInstance, String performerName);// throws EngineException, KernelException;
 
         //后续版本实现。。。
         //    public void assign(IWorkflowSession workflowSession, IProcessInstance processInstance, 

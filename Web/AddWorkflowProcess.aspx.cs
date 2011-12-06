@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using System.Xml.Linq;
 
 using Coolite.Ext.Web;
+using FireWorkflow.Net.Engine;
 using FireWorkflow.Net.Engine.Definition;
 using FireWorkflow.Net.Model;
 using FireWorkflow.Net.Model.Io;
@@ -33,7 +34,7 @@ namespace WebDemo
 
         public void ok_Click(object sender, AjaxEventArgs e)
         {
-            WorkflowDefinition wd = new WorkflowDefinition();
+            IWorkflowDefinition wd = new WorkflowDefinition();
 
             WorkflowProcess workflowProcess = null;
 
@@ -85,7 +86,7 @@ namespace WebDemo
                 wd.Name = workflowProcess.Name;
                 wd.DisplayName = workflowProcess.DisplayName;
                 wd.Description = workflowProcess.Description;
-                wd.setWorkflowProcess(workflowProcess);
+                WorkflowDefinitionHelper.setWorkflowProcess(wd,workflowProcess);
                 //wd.ProcessContent = File.ReadAllText(filename);// twd.ProcessContent;
             }
             else
@@ -132,7 +133,7 @@ namespace WebDemo
             RowSelectionModel sm = this.mpgList.SelectionModel.Primary as RowSelectionModel;
             if (sm != null && sm.SelectedRows.Count == 1)
             {
-                WorkflowDefinition wd = RuntimeContextExamples.GetRuntimeContext().PersistenceService.FindWorkflowDefinitionById(sm.SelectedRows[0].RecordID);
+                IWorkflowDefinition wd = RuntimeContextExamples.GetRuntimeContext().PersistenceService.FindWorkflowDefinitionById(sm.SelectedRows[0].RecordID);
                 if (wd != null)
                 {
                     this.state.SetValue(wd.State.ToString());

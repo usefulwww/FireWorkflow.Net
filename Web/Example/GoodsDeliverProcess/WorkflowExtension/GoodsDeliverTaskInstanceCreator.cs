@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+
 using FireWorkflow.Net.Engine;
+using FireWorkflow.Net.Engine.Impl;
 using FireWorkflow.Net.Engine.Taskinstance;
 using FireWorkflow.Net.Model;
 using FireWorkflow.Net.Model.Net;
-
 
 namespace WebDemo.Example.GoodsDeliverProcess.WorkflowExtension
 {
@@ -19,16 +20,16 @@ namespace WebDemo.Example.GoodsDeliverProcess.WorkflowExtension
         {
             GoodsDeliverTaskInstance taskInst = new GoodsDeliverTaskInstance();
 
-            String sn = (String)processInstance.getProcessInstanceVariable("sn");
+            String sn = (String)ProcessInstanceHelper.getProcessInstanceVariable(processInstance,"sn");
             taskInst.Sn = sn;
 
-            String customerName = (String)processInstance.getProcessInstanceVariable("customerName");
+            String customerName = (String)ProcessInstanceHelper.getProcessInstanceVariable(processInstance,"customerName");
             taskInst.CustomerName = customerName;
 
-            String goodsName = (String)processInstance.getProcessInstanceVariable("goodsName");
+            String goodsName = (String)ProcessInstanceHelper.getProcessInstanceVariable(processInstance,"goodsName");
             taskInst.GoodsName = goodsName;
 
-            long quantity = (long)processInstance.getProcessInstanceVariable("quantity");
+            long quantity = (long)ProcessInstanceHelper.getProcessInstanceVariable(processInstance,"quantity");
             taskInst.Quantity = quantity;
 
             //taskInst.BizInfo=

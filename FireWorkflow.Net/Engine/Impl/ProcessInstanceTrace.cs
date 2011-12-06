@@ -27,45 +27,50 @@ using System.Runtime.Serialization;
 
 namespace FireWorkflow.Net.Engine.Impl
 {
-    public enum ProcessInstanceTraceEnum
-    {
-        TRANSITION_TYPE,// = "Transition";
-        LOOP_TYPE,// = "Loop";
-        JUMPTO_TYPE,// = "JumpTo";
-        WITHDRAW_TYPE,// = "Withdraw";
-        REJECT_TYPE// = "Reject";
-    }
+	public enum ProcessInstanceTraceEnum
+	{
+		TRANSITION_TYPE,
+		// = "Transition";
+		LOOP_TYPE,
+		// = "Loop";
+		JUMPTO_TYPE,
+		// = "JumpTo";
+		WITHDRAW_TYPE,
+		// = "Withdraw";
+		REJECT_TYPE
+		// = "Reject";
+	}
 
-    [Serializable]
-    [DataContract]
-    public class ProcessInstanceTrace
-    {
-        public String Id { get; set; }
+	[Serializable()]
+	[DataContract()]
+	public class ProcessInstanceTrace : IProcessInstanceTrace
+	{
+		public String Id { get; set; }
 
-        /// <summary>流程实例ID</summary>
-        //[DataMember]
-        public String ProcessInstanceId { get; set; }
+		/// <summary>流程实例ID</summary>
+		//[DataMember]
+		public String ProcessInstanceId { get; set; }
 
-        /// <summary>步骤</summary>
-        //[DataMember]
-        public Int32 StepNumber { get; set; }
+		/// <summary>步骤</summary>
+		//[DataMember]
+		public Int32 StepNumber { get; set; }
 
-        /// <summary>子步骤</summary>
-        //[DataMember]
-        public Int32 MinorNumber { get; set; }
+		/// <summary>子步骤</summary>
+		//[DataMember]
+		public Int32 MinorNumber { get; set; }
 
-        /// <summary>类型</summary>
-        //[DataMember]
-        public ProcessInstanceTraceEnum Type { get; set; }
+		/// <summary>类型</summary>
+		//[DataMember]
+		public ProcessInstanceTraceEnum Type { get; set; }
 
-        /// <summary>连接ID</summary>
-        [DataMember]
-        public String EdgeId { get; set; }
+		/// <summary>连接ID</summary>
+		[DataMember()]
+		public String EdgeId { get; set; }
 
-        [DataMember]
-        public String FromNodeId { get; set; }
+		[DataMember()]
+		public String FromNodeId { get; set; }
 
-        [DataMember]
-        public String ToNodeId { get; set; }
-    }
+		[DataMember()]
+		public String ToNodeId { get; set; }
+	}
 }

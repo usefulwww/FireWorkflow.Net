@@ -73,8 +73,8 @@ namespace FireWorkflow.Net.Engine.Impl
         {
             String wfprocessId = workflowProcessId;
 
-            WorkflowDefinition workflowDef = RuntimeContext.DefinitionService.GetTheLatestVersionOfWorkflowDefinition(wfprocessId);
-            WorkflowProcess wfProcess = workflowDef.getWorkflowProcess();
+            IWorkflowDefinition workflowDef = RuntimeContext.DefinitionService.GetTheLatestVersionOfWorkflowDefinition(wfprocessId);
+            WorkflowProcess wfProcess = WorkflowDefinitionHelper.getWorkflowProcess(workflowDef);
 
             if (wfProcess == null)
             {
@@ -84,7 +84,7 @@ namespace FireWorkflow.Net.Engine.Impl
                 new WorkflowSessionIProcessInstanceCreateProcessInstance(creatorId, wfProcess, workflowDef, parentProcessInstanceId, parentTaskInstanceId));
 
             // 初始化流程变量
-            processInstance.ProcessInstanceVariables = new Dictionary<String, Object>();
+            ProcessInstanceHelper.setProcessInstanceVariables(processInstance,new Dictionary<String, Object>());
 
             List<DataField> datafields = wfProcess.DataFields;
             for (int i = 0; datafields != null && i < datafields.Count; i++)
@@ -94,11 +94,11 @@ namespace FireWorkflow.Net.Engine.Impl
                 {
                     if (df.InitialValue != null)
                     {
-                        processInstance.setProcessInstanceVariable(df.Name, df.InitialValue);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, df.InitialValue);
                     }
                     else
                     {
-                        processInstance.setProcessInstanceVariable(df.Name, "");
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, "");
                     }
                 }
                 else if (df.DataType == DataTypeEnum.INTEGER)
@@ -108,13 +108,13 @@ namespace FireWorkflow.Net.Engine.Impl
                         try
                         {
                             int intValue = int.Parse(df.InitialValue);
-                            processInstance.setProcessInstanceVariable(df.Name, intValue);
+                            ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, intValue);
                         }
                         catch { }
                     }
                     else
                     {
-                        processInstance.setProcessInstanceVariable(df.Name, 0);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, 0);
                     }
                 }
                 else if (df.DataType == DataTypeEnum.LONG)
@@ -124,13 +124,13 @@ namespace FireWorkflow.Net.Engine.Impl
                         try
                         {
                             long longValue = long.Parse(df.InitialValue);
-                            processInstance.setProcessInstanceVariable(df.Name, longValue);
+                            ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, longValue);
                         }
                         catch { }
                     }
                     else
                     {
-                        processInstance.setProcessInstanceVariable(df.Name, (long)0);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, (long)0);
                     }
                 }
                 else if (df.DataType == DataTypeEnum.FLOAT)
@@ -138,11 +138,11 @@ namespace FireWorkflow.Net.Engine.Impl
                     if (df.InitialValue != null)
                     {
                         float floatValue = float.Parse(df.InitialValue);
-                        processInstance.setProcessInstanceVariable(df.Name, floatValue);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, floatValue);
                     }
                     else
                     {
-                        processInstance.setProcessInstanceVariable(df.Name, (float)0);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, (float)0);
                     }
                 }
                 else if (df.DataType == DataTypeEnum.DOUBLE)
@@ -150,11 +150,11 @@ namespace FireWorkflow.Net.Engine.Impl
                     if (df.InitialValue != null)
                     {
                         Double doubleValue = Double.Parse(df.InitialValue);
-                        processInstance.setProcessInstanceVariable(df.Name, doubleValue);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, doubleValue);
                     }
                     else
                     {
-                        processInstance.setProcessInstanceVariable(df.Name, (Double)0);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, (Double)0);
                     }
                 }
                 else if (df.DataType == DataTypeEnum.BOOLEAN)
@@ -162,11 +162,11 @@ namespace FireWorkflow.Net.Engine.Impl
                     if (df.InitialValue != null)
                     {
                         Boolean booleanValue = Boolean.Parse(df.InitialValue);
-                        processInstance.setProcessInstanceVariable(df.Name, booleanValue);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, booleanValue);
                     }
                     else
                     {
-                        processInstance.setProcessInstanceVariable(df.Name, false);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, false);
                     }
                 }
                 else if (df.DataType == DataTypeEnum.DATETIME)
@@ -177,16 +177,16 @@ namespace FireWorkflow.Net.Engine.Impl
                         try
                         {
                             DateTime dateTmp = DateTime.Parse(df.InitialValue);
-                            processInstance.setProcessInstanceVariable(df.Name, dateTmp);
+                            ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, dateTmp);
                         }
                         catch
                         {
-                            processInstance.setProcessInstanceVariable(df.Name, null);
+                            ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, null);
                         }
                     }
                     else
                     {
-                        processInstance.setProcessInstanceVariable(df.Name, null);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, null);
                     }
                 }
             }
@@ -343,7 +343,7 @@ namespace FireWorkflow.Net.Engine.Impl
         public IProcessInstance abortProcessInstance(String processInstanceId)
         {
             IProcessInstance processInstance = this.findProcessInstanceById(processInstanceId);
-            processInstance.abort();
+            ProcessInstanceHelper.abort(processInstance);
             return processInstance;
         }
 
@@ -351,54 +351,54 @@ namespace FireWorkflow.Net.Engine.Impl
         {
             IWorkItem result = null;
             IWorkItem wi = this.findWorkItemById(workItemId);
-            result = wi.claim();
+            result = WorkItemHelper.claim(wi);
             return result;
         }
 
         public void completeWorkItem(String workItemId)
         {
             IWorkItem wi = this.findWorkItemById(workItemId);
-            wi.complete();
+            WorkItemHelper.complete(wi);
 
         }
 
         public void completeWorkItem(String workItemId, String comments)
         {
             IWorkItem wi = this.findWorkItemById(workItemId);
-            wi.complete(comments);
+            WorkItemHelper.complete(wi,comments);
         }
 
         public void completeWorkItem(String workItemId, DynamicAssignmentHandler dynamicAssignmentHandler, String comments)
         {
             IWorkItem wi = this.findWorkItemById(workItemId);
-            wi.complete(dynamicAssignmentHandler, comments);
+            WorkItemHelper.complete(wi,dynamicAssignmentHandler, comments);
 
         }
 
         public void completeWorkItemAndJumpTo(String workItemId, String targetActivityId)
         {
             IWorkItem wi = this.findWorkItemById(workItemId);
-            wi.jumpTo(targetActivityId);
+            WorkItemHelper.jumpTo(wi,targetActivityId);
         }
 
         public void completeWorkItemAndJumpTo(String workItemId, String targetActivityId, String comments)
         {
             IWorkItem wi = this.findWorkItemById(workItemId);
-            wi.jumpTo(targetActivityId, comments);
+            WorkItemHelper.jumpTo(wi,targetActivityId, comments);
         }
 
         public void completeWorkItemAndJumpTo(String workItemId, String targetActivityId,
                 DynamicAssignmentHandler dynamicAssignmentHandler, String comments)
         {
             IWorkItem wi = this.findWorkItemById(workItemId);
-            wi.jumpTo(targetActivityId, dynamicAssignmentHandler, comments);
+            WorkItemHelper.jumpTo(wi,targetActivityId, dynamicAssignmentHandler, comments);
         }
 
         public void completeWorkItemAndJumpToEx(String workItemId, String targetActivityId,
             DynamicAssignmentHandler dynamicAssignmentHandler, String comments)
         {
             IWorkItem wi = this.findWorkItemById(workItemId);
-            wi.jumpToEx(targetActivityId, dynamicAssignmentHandler, comments);
+            WorkItemHelper.jumpToEx(wi,targetActivityId, dynamicAssignmentHandler, comments);
         }
 
         public IProcessInstance findProcessInstanceById(String id)
@@ -452,7 +452,7 @@ namespace FireWorkflow.Net.Engine.Impl
         public IWorkItem reasignWorkItemTo(String workItemId, String actorId)
         {
             IWorkItem workItem = this.findWorkItemById(workItemId);
-            return workItem.reassignTo(actorId);
+            return WorkItemHelper.reassignTo(workItem,actorId);
         }
 
         /// <summary>将工作项委派给其他人，自己的工作项变成CANCELED状态。返回新创建的工作项</summary>    
@@ -463,7 +463,7 @@ namespace FireWorkflow.Net.Engine.Impl
         public IWorkItem reasignWorkItemTo(String workItemId, String actorId, String comments)
         {
             IWorkItem workItem = this.findWorkItemById(workItemId);
-            return workItem.reassignTo(actorId, comments);
+            return WorkItemHelper.reassignTo(workItem,actorId, comments);
         }
 
         /// <summary>
@@ -476,7 +476,7 @@ namespace FireWorkflow.Net.Engine.Impl
         public void rejectWorkItem(String workItemId)
         {
             IWorkItem workItem = this.findWorkItemById(workItemId);
-            workItem.reject();
+            WorkItemHelper.reject(workItem);
         }
 
         /// <summary>
@@ -490,7 +490,7 @@ namespace FireWorkflow.Net.Engine.Impl
         public void rejectWorkItem(String workItemId, String comments)
         {
             IWorkItem workItem = this.findWorkItemById(workItemId);
-            workItem.reject(comments);
+            WorkItemHelper.reject(workItem,comments);
         }
 
         /// <summary>恢复被挂起的流程实例</summary>
@@ -498,7 +498,7 @@ namespace FireWorkflow.Net.Engine.Impl
         public IProcessInstance restoreProcessInstance(String processInstanceId)
         {
             IProcessInstance processInstance = this.findProcessInstanceById(processInstanceId);
-            processInstance.restore();
+            ProcessInstanceHelper.restore(processInstance);
             return processInstance;
         }
 
@@ -508,28 +508,30 @@ namespace FireWorkflow.Net.Engine.Impl
         public ITaskInstance restoreTaskInstance(String taskInstanceId)
         {
             ITaskInstance taskInst = this.findTaskInstanceById(taskInstanceId);
-            taskInst.restore();
+            TaskInstanceHelper.restore(taskInst);
+            //taskInst.restore();
             return taskInst;
         }
 
         public IProcessInstance suspendProcessInstance(String processInstanceId)
         {
             IProcessInstance processInstance = this.findProcessInstanceById(processInstanceId);
-            processInstance.suspend();
+            ProcessInstanceHelper.suspend(processInstance);
             return processInstance;
         }
 
         public ITaskInstance suspendTaskInstance(String taskInstanceId)
         {
             ITaskInstance taskInst = this.findTaskInstanceById(taskInstanceId);
-            taskInst.suspend();
+            //taskInst.suspend();
+            TaskInstanceHelper.suspend(taskInst);
             return taskInst;
         }
 
         public IWorkItem withdrawWorkItem(String workItemId)
         {
             IWorkItem wi = this.findWorkItemById(workItemId);
-            return wi.withdraw();
+            return WorkItemHelper.withdraw(wi);
         }
 
         public void clearAttributes()

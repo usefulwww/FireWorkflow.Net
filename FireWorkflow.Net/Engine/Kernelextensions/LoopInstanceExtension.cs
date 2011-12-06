@@ -63,12 +63,12 @@ namespace FireWorkflow.Net.Engine.Kernelextensions
             // 3、计算EL表达式
             try
             {
-                Boolean alive = determineTheAliveOfToken(token.ProcessInstance.ProcessInstanceVariables, condition);
+            	Boolean alive = determineTheAliveOfToken(ProcessInstanceHelper.getProcessInstanceVariables(token.ProcessInstance), condition);
                 token.IsAlive = alive;
             }
             catch (Exception ex)
             {
-                throw new EngineException(token.ProcessInstanceId, token.ProcessInstance.WorkflowProcess, token.NodeId, ex.Message);
+            	throw new EngineException(token.ProcessInstanceId, ProcessInstanceHelper.getWorkflowProcess(token.ProcessInstance), token.NodeId, ex.Message);
             }
         }
 

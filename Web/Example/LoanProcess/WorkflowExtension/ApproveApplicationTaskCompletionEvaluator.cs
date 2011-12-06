@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Text;
+using System.Web;
+
 using FireWorkflow.Net.Engine;
+using FireWorkflow.Net.Engine.Impl;
 using FireWorkflow.Net.Engine.Persistence;
 using FireWorkflow.Net.Engine.Taskinstance;
 using FireWorkflow.Net.Kernel;
@@ -19,10 +21,10 @@ namespace WebDemo.Example.LoanProcess.WorkflowExtension
         public bool taskInstanceCanBeCompleted(IWorkflowSession currentSession, RuntimeContext runtimeContext, IProcessInstance processInstance, ITaskInstance taskInstance)
         {
             IPersistenceService persistenceService = runtimeContext.PersistenceService;
-            List<IWorkItem> workItems = persistenceService.FindWorkItemsForTaskInstance(taskInstance.Id);
+            IList<IWorkItem> workItems = persistenceService.FindWorkItemsForTaskInstance(taskInstance.Id);
 
             //从流程变量中获取业务流水号
-            String sn = (String)processInstance.getProcessInstanceVariable("sn");
+            String sn = (String)ProcessInstanceHelper.getProcessInstanceVariable(processInstance,"sn");
 
             //已经完成的WorkItem数量
             int completedWorkItemCount = 0;
@@ -76,7 +78,7 @@ namespace WebDemo.Example.LoanProcess.WorkflowExtension
             {
 
                 //修改流程变量的值
-                processInstance.setProcessInstanceVariable("Decision", true);
+                ProcessInstanceHelper.setProcessInstanceVariable(processInstance,"Decision", true);
 
                 //将最终审批决定纪录到业务表中
                 LoanInfo loanInfo = loanInfoDAO.findBySn(sn);
@@ -99,7 +101,7 @@ namespace WebDemo.Example.LoanProcess.WorkflowExtension
                 if (currentAggreePercentage < theRule)
                 {
                     //修改流程变量的值
-                    processInstance.setProcessInstanceVariable("Decision", false);
+                    ProcessInstanceHelper.setProcessInstanceVariable(processInstance,"Decision", false);
 
                     //将最终审批决定记录到业务表中
                     if (loanInfo != null) loanInfo.Decision = false;
@@ -111,7 +113,7 @@ namespace WebDemo.Example.LoanProcess.WorkflowExtension
                 else
                 {
                     //修改流程变量的值
-                    processInstance.setProcessInstanceVariable("Decision", true);
+                    ProcessInstanceHelper.setProcessInstanceVariable(processInstance,"Decision", true);
 
                     //将最终审批决定记录到业务表中
                     if (loanInfo != null) loanInfo.Decision = true;

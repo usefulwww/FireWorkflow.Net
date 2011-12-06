@@ -4,8 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 using Coolite.Ext.Web;
 using FireWorkflow.Net.Engine;
+using FireWorkflow.Net.Engine.Impl;
 using FireWorkflow.Net.Kernel;
 using WebDemo.Components;
 using WebDemo.Example.GoodsDeliverProcess.Persistence;
@@ -49,14 +51,14 @@ namespace WebDemo.Example.GoodsDeliverProcess
                 // 1、创建流程实例
                 IProcessInstance procInst = workflowSession.createProcessInstance("Goods_Deliver_Process", this.User.Identity.Name);
                 // 2、设置流程变量/业务属性字段
-                procInst.setProcessInstanceVariable("sn", paymentInfo.Sn);// 设置交易顺序号
-                procInst.setProcessInstanceVariable("goodsName", paymentInfo.GoodsName);// 货物名称
-                procInst.setProcessInstanceVariable("quantity", paymentInfo.Quantity);// 数量
-                procInst.setProcessInstanceVariable("mobile", paymentInfo.CustomerMobile);// 客户电话
-                procInst.setProcessInstanceVariable("customerName", paymentInfo.CustomerName);
+                ProcessInstanceHelper.setProcessInstanceVariable(procInst,"sn", paymentInfo.Sn);// 设置交易顺序号
+                ProcessInstanceHelper.setProcessInstanceVariable(procInst,"goodsName", paymentInfo.GoodsName);// 货物名称
+                ProcessInstanceHelper.setProcessInstanceVariable(procInst,"quantity", paymentInfo.Quantity);// 数量
+                ProcessInstanceHelper.setProcessInstanceVariable(procInst,"mobile", paymentInfo.CustomerMobile);// 客户电话
+                ProcessInstanceHelper.setProcessInstanceVariable(procInst,"customerName", paymentInfo.CustomerName);
 
                 // 3、启动流程实例,run()方法启动实例并创建第一个环节实例、分派任务
-                procInst.run();
+                ProcessInstanceHelper.run(procInst);
             }
             catch
             {

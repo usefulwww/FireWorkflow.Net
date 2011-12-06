@@ -18,20 +18,26 @@
  */
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
-using FireWorkflow.Net.Engine;
-using FireWorkflow.Net.Model;
-using FireWorkflow.Net.Model.Io;
 
-namespace FireWorkflow.Net.Engine.Definition
+using FireWorkflow.Net.Engine.Impl;
+
+namespace FireWorkflow.Net.Engine
 {
-    /// <summary>
-    /// 流程定义对象
-    /// 映射到表T_FF_DF_WORKFLOWDEF
-    /// </summary>
-    public class WorkflowDefinition : WorkflowDefinitionInfo
-    {
-
-    }
+	public interface IProcessInstanceTrace
+	{
+		string Id { get; set; }
+		string ProcessInstanceId { get; set; }
+		int StepNumber { get; set; }
+		int MinorNumber { get; set; }
+		ProcessInstanceTraceEnum Type { get; set; }
+		[DataMemberAttribute()]
+		string EdgeId { get; set; }
+		[DataMemberAttribute()]
+		string FromNodeId { get; set; }
+		[DataMemberAttribute()]
+		string ToNodeId { get; set; }
+	}
 }

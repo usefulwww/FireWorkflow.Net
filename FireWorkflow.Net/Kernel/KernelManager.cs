@@ -79,7 +79,7 @@ namespace FireWorkflow.Net.Kernel
             if (netInstance == null)
             {
                 //数据流定义在runtimeContext初始化的时候，就被加载了，将流程定义的xml读入到内存中 
-                WorkflowDefinition def = this.RuntimeContext.DefinitionService.GetWorkflowDefinitionByProcessIdAndVersionNumber(processId, version);
+                IWorkflowDefinition def = this.RuntimeContext.DefinitionService.GetWorkflowDefinitionByProcessIdAndVersionNumber(processId, version);
                 netInstance = this.createNetInstance(def);
             }
             return netInstance;
@@ -94,11 +94,11 @@ namespace FireWorkflow.Net.Kernel
         /// <summary>创建一个工作流网实例</summary>
         /// <param name="workflowDef"></param>
         /// <returns></returns>
-        public INetInstance createNetInstance(WorkflowDefinition workflowDef)
+        public INetInstance createNetInstance(IWorkflowDefinition workflowDef)
         {
             if (workflowDef == null) return null;
             WorkflowProcess workflowProcess = null;
-            workflowProcess = workflowDef.getWorkflowProcess();//解析fpdl 
+            workflowProcess = WorkflowDefinitionHelper.getWorkflowProcess(workflowDef);//解析fpdl 
 
             //Map nodeInstanceMap = new HashMap();
             if (workflowProcess == null)
