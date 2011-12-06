@@ -5,7 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Caching;
-using Coolite.Ext.Web;
+using Ext.Net;
+
 
 namespace WebDemo.Example.WorkflowExtension
 {
@@ -13,7 +14,7 @@ namespace WebDemo.Example.WorkflowExtension
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            RefreshHomeTabData(null, null);
         }
 
         protected void RefreshHomeTabData(object sender, StoreRefreshDataEventArgs e)

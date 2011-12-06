@@ -4,8 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Coolite.Ext.Web;
+
+
 using FireWorkflow.Net.Engine;
+using FireWorkflow.Net.Engine.Impl;
 using FireWorkflow.Net.Engine.Persistence;
 using FireWorkflow.Net.Kernel;
 using WebDemo.Components;
@@ -24,7 +26,7 @@ namespace WebDemo.Example.LoanProcess
                     string workItemId = this.Request.QueryString["WorkItemId"];
                     IWorkflowSession wflsession = RuntimeContextExamples.GetRuntimeContext().getWorkflowSession();
                     IWorkItem wi = wflsession.findWorkItemById(workItemId);
-                    String sn = (String)wi.TaskInstance.AliveProcessInstance.getProcessInstanceVariable("sn");
+                    String sn = (String)ProcessInstanceHelper.getProcessInstanceVariable(TaskInstanceHelper.getAliveProcessInstance(wi.TaskInstance),"sn");
                     LoanInfoDAO lid = new LoanInfoDAO();
                     LoanInfo ti = lid.findBySn(sn);
                     if (ti != null)
@@ -48,13 +50,13 @@ namespace WebDemo.Example.LoanProcess
             }
         }
 
-        public void Save_Click(object sender, AjaxEventArgs e)
+        public void Save_Click(object sender, EventArgs e)
         {
             string workItemId = HWorkItemId.Value.ToString();
             IWorkflowSession wflsession = RuntimeContextExamples.GetRuntimeContext().getWorkflowSession();
             IWorkItem wi = wflsession.findWorkItemById(workItemId);
 
-            String sn = (String)wi.TaskInstance.AliveProcessInstance.getProcessInstanceVariable("sn");
+            String sn = (String)ProcessInstanceHelper.getProcessInstanceVariable(TaskInstanceHelper.getAliveProcessInstance(wi.TaskInstance),"sn");
             LoanInfoDAO lid = new LoanInfoDAO();
             LoanInfo loanInfo = lid.findBySn(sn);
             loanInfo.RejectInfoInputTime = DateTime.Parse(rejectInfoInputTime.Text);//lendMoneyInfo
@@ -67,7 +69,7 @@ namespace WebDemo.Example.LoanProcess
                 {
                     if (wi.ActorId == this.User.Identity.Name)
                     {
-                        wi.complete(comments.Text);
+                       WorkItemHelper.complete(wi,comments.Text);
                     }
                 }
             }

@@ -20,10 +20,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FireWorkflow.Net.Engine;
 
 namespace FireWorkflow.Net.Kernel.Plugin
 {
-    public interface IKernelExtension
+    public interface IKernelExtension: IRuntimeContextAware
     {
         /// <summary>获取扩展目标名称</summary>
         String ExtentionTargetName { get; }

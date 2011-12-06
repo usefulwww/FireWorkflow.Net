@@ -8,10 +8,10 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <ext:ScriptManager ID="ScriptManager1" runat="server" />
+    <ext:ResourceManager ID="ResourceManager1" runat="server" />
     <ext:Store ID="Sdate" runat="server">
         <Reader>
-            <ext:JsonReader ReaderID="Id">
+            <ext:JsonReader>
                 <Fields>
                     <ext:RecordField Name="Id" />
                     <ext:RecordField Name="ProcessId" />
@@ -30,38 +30,38 @@
     </ext:Store>
     <ext:Hidden ID="HProcessId" runat="server" />
     <ext:ViewPort ID="ViewPort1" runat="server">
-        <Body>
-            <ext:FitLayout ID="FitLayout1" runat="server">
-                <ext:Panel ID="Panel1" runat="server" Height="300" Border="false" HideBorders="true" Title="流程管理">
+        <Items>
+            
+                <ext:Panel ID="Panel1" runat="server" Height="300" Border="false" HideBorders="true" Title="流程管理" Layout="Fit">
                     <TopBar>
                         <ext:Toolbar ID="Toolbar1" runat="server">
                             <Items>
-                                <ext:ToolbarButton ID="ToolbarButton1" runat="server" Text="添加">
+                                <ext:Button ID="ToolbarButton1" runat="server" Text="添加">
                                     <Listeners>
                                         <Click Handler="#{FormPanel1}.getForm().reset();#{HProcessId}.setValue();#{WorkflowEdit}.setTitle('添加流程'); #{WorkflowEdit}.show();" />
                                     </Listeners>
-                                </ext:ToolbarButton>
-                                <ext:ToolbarButton ID="ToolbarButton2" runat="server" Text="修改">
-                                <AjaxEvents>
+                                </ext:Button>
+                                <ext:Button ID="ToolbarButton2" runat="server" Text="修改">
+                                <DirectEvents>
                                 <Click OnEvent="update_Click">
                                     <EventMask ShowMask="true" Msg="请稍等..." MinDelay="500" />
                                 </Click>
-                                </AjaxEvents>
-                                </ext:ToolbarButton>
+                                </DirectEvents>
+                                </ext:Button>
                                 
-                                <ext:ToolbarButton ID="ToolbarButton3" runat="server" Text="查询">
-                                    <AjaxEvents>
+                                <ext:Button ID="ToolbarButton3" runat="server" Text="查询">
+                                    <DirectEvents>
                                         <Click OnEvent="query_Click">
                                             <EventMask ShowMask="true" Msg="正在查询数据请稍等..." MinDelay="100" />
                                         </Click>
-                                    </AjaxEvents>
-                                </ext:ToolbarButton>
+                                    </DirectEvents>
+                                </ext:Button>
                             </Items>
                         </ext:Toolbar>
                     </TopBar>
-                    <Body>
-                        <ext:FitLayout ID="CenterLayout2" runat="server">
-                            <ext:GridPanel ID="mpgList" runat="server" StoreID="Sdate" ClicksToEdit="1" StripeRows="true">
+                    <Items>
+                        
+                            <ext:GridPanel ID="mpgList" runat="server" StoreID="Sdate" ClicksToEdit="1" StripeRows="true" Layout="Fit">
                                 <ColumnModel ID="ColumnModel1" runat="server">
                                     <Columns>
                                         <ext:Column Width="80px" Sortable="true" DataIndex="ProcessId" Header="流程ID">
@@ -102,34 +102,17 @@
                                     <Command Handler="WindowView.autoLoad.url='WorkflowProcessView.aspx?WorkflowProcessId='+record.data.Id; WindowView.reload(true); WindowView.show();" />
                                 </Listeners>
                             </ext:GridPanel>
-                        </ext:FitLayout>
-                    </Body>
+                    </Items>
                 </ext:Panel>
-            </ext:FitLayout>
-        </Body>
+        </Items>
     </ext:ViewPort>
     <ext:Window ID="WorkflowEdit" runat="server" Icon="CalendarSelectWeek" Title="添加流程" AutoHeight="true" Parent="true"
-        BodyStyle="padding:10px 10px" Width="500px" ShowOnLoad="false" Constrain="true" ConstrainHeader="true"
+        BodyStyle="padding:10px 10px" Width="500px"  Hidden="true" Constrain="true" ConstrainHeader="true"
         Modal="True" Shadow="Sides" Floating="False" Footer="False">
-        <Body>
-            
-            
-            
-            <ext:FitLayout ID="FitLayout2" runat="server">
-                <ext:FormPanel ID="FormPanel1" runat="server" Border="false" MonitorValid="true" BodyStyle="background-color:transparent;">
-                <Body>
-                
-                    
-                    <ext:FormLayout ID="FormLayout1" runat="server" LabelWidth="80">
-                        
-                        <ext:Anchor Horizontal="100%">
-                        <ext:TextField id="name" runat="server" BlankText="名称不能为空" FieldLabel="流程名称"></ext:TextField>
-                        </ext:Anchor>
-                        
-                        <ext:Anchor Horizontal="100%">
-                        <ext:TextArea ID="process_content" runat="server" Text="" FieldLabel="流程定义"></ext:TextArea>
-                        </ext:Anchor>
-                        
+        <Items>
+           <ext:FormPanel ID="FormPanel1" runat="server" Border="false" MonitorValid="true" BodyStyle="background-color:transparent;" Layout="Fit">
+                <Items>
+                    <ext:FormLayout ID="FormLayout1" runat="server" LabelWidth="80"><Anchors>
                         <ext:Anchor Horizontal="100%">
                             <ext:FileUploadField ID="BasicField" runat="server" Width="350" Icon="Attach" FieldLabel="上传流程文件" />
                         </ext:Anchor>
@@ -142,26 +125,25 @@
                                 <SelectedItem Value="False" />
                             </ext:ComboBox>
                         </ext:Anchor>
-                        
+                        </Anchors>
                     </ext:FormLayout>
-                </Body>
+                </Items>
             </ext:FormPanel>
-            </ext:FitLayout>
-        </Body>
+        </Items>
         <Buttons>
             <ext:Button ID="Bppok" runat="server" Icon="CalendarSelectWeek" Text="保存">
-                <AjaxEvents>
+                <DirectEvents>
                     <Click OnEvent="ok_Click" Timeout="240000" Before="Ext.Msg.wait('正在上传你的流程文件，请稍等...', '上传流程文件');" 
                         Failure="Ext.Msg.show({ title: 'Error', msg: '上传没有成功', minWidth: 200, modal: true, icon: Ext.Msg.ERROR, buttons: Ext.Msg.OK });">
 
                     </Click>
-                </AjaxEvents>
+                </DirectEvents>
             </ext:Button>
         </Buttons>
     </ext:Window>
     
     <ext:Window ID="WindowView" runat="server" Width="650" Height="450" Collapsible="True"
-        Maximizable="true" ShowOnLoad="false" Icon="Help" Title="流程" BodyStyle="padding: 5px;" Constrain="True" Modal="True" >
+        Maximizable="true" Hidden="true" Icon="Help" Title="流程" BodyStyle="padding: 5px;" Constrain="True" Modal="True" >
         <AutoLoad Url="WorkflowProcessView.aspx" Mode="IFrame" MaskMsg="加载流程。。。" ShowMask="true" />
     </ext:Window>
     </form>

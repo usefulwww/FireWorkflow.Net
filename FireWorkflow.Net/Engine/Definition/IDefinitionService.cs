@@ -28,7 +28,7 @@ namespace FireWorkflow.Net.Engine.Definition
     public interface IDefinitionService : IRuntimeContextAware
     {
         /// <summary>返回所有流程的最新版本</summary>
-        List<WorkflowDefinition> GetAllLatestVersionsOfWorkflowDefinition();
+        IList<IWorkflowDefinition> GetAllLatestVersionsOfWorkflowDefinition();
 
         /// <summary>
         /// 根据流程Id和版本号查找流程定义
@@ -36,13 +36,13 @@ namespace FireWorkflow.Net.Engine.Definition
         /// <param name="processId">流程Id</param>
         /// <param name="version">版本号</param>
         /// <returns></returns>
-        WorkflowDefinition GetWorkflowDefinitionByProcessIdAndVersionNumber(String processId, Int32 version);
+        IWorkflowDefinition GetWorkflowDefinitionByProcessIdAndVersionNumber(String processId, Int32 version);
 
         /// <summary>
         /// 通过流程Id查找其最新版本的流程定义
         /// </summary>
         /// <param name="processId">流程Id</param>
         /// <returns></returns>
-        WorkflowDefinition GetTheLatestVersionOfWorkflowDefinition(String processId);
+        IWorkflowDefinition GetTheLatestVersionOfWorkflowDefinition(String processId);
     }
 }

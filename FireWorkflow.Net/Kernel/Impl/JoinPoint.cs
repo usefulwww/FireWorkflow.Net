@@ -35,7 +35,7 @@ namespace FireWorkflow.Net.Kernel.Impl
     {
         public JoinPoint() { }
 
-        public JoinPoint(ProcessInstance processInstance)
+        public JoinPoint(IProcessInstance processInstance)
         {
             this._processInstance = processInstance;
         }

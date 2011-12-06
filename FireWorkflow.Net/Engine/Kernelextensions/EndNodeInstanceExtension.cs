@@ -51,8 +51,8 @@ namespace FireWorkflow.Net.Engine.Kernelextensions
             {
                 // 执行ProcessInstance的complete操作
                 IToken tk = e.Token;
-                ProcessInstance currentProcessInstance = (ProcessInstance)tk.ProcessInstance;
-                currentProcessInstance.complete();
+                IProcessInstance currentProcessInstance = tk.ProcessInstance;
+                ProcessInstanceHelper.complete(currentProcessInstance);
             }
         }
     }

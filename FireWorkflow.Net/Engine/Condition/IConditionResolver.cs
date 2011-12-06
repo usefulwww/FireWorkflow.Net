@@ -26,7 +26,7 @@ namespace FireWorkflow.Net.Engine.Condition
     /// <summary>
     /// 转移条件表达式解析器
     /// </summary>
-    public interface IConditionResolver
+    public interface IConditionResolver : IRuntimeContextAware
     {
         /// <summary>
         /// 解析条件表达式。条件表达是必须是一个值为Boolean类型的EL表达式

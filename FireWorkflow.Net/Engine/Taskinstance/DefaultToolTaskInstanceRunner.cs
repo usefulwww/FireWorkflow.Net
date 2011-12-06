@@ -32,19 +32,19 @@ namespace FireWorkflow.Net.Engine.Taskinstance
         {
             if (taskInstance.TaskType != TaskTypeEnum.TOOL)
             {
-                throw new EngineException(processInstance, taskInstance.Activity,
+            	throw new EngineException(processInstance, TaskInstanceHelper.getActivity(taskInstance),
                         "DefaultToolTaskInstanceRunner：TaskInstance的任务类型错误，只能为TOOL类型");
             }
-            Task task = taskInstance.Task;
+            Task task = TaskInstanceHelper.getTask(taskInstance);
             if (task == null)
             {
-                WorkflowProcess process = taskInstance.WorkflowProcess;
+                WorkflowProcess process = TaskInstanceHelper.getWorkflowProcess(taskInstance);
                 throw new EngineException(taskInstance.ProcessInstanceId, process, taskInstance.TaskId,
                         "The Task is null,can NOT start the taskinstance,");
             }
             if (((ToolTask)task).Application == null || ((ToolTask)task).Application.Handler == null)
             {
-                WorkflowProcess process = taskInstance.WorkflowProcess;
+                WorkflowProcess process = TaskInstanceHelper.getWorkflowProcess(taskInstance);
                 throw new EngineException(taskInstance.ProcessInstanceId, process, taskInstance.TaskId,
                         "The task.Application is null or task.Application.Handler is null,can NOT start the taskinstance,");
             }
@@ -53,7 +53,7 @@ namespace FireWorkflow.Net.Engine.Taskinstance
 
             if (obj == null || !(obj is IApplicationHandler))
             {
-                WorkflowProcess process = taskInstance.WorkflowProcess;
+                WorkflowProcess process = TaskInstanceHelper.getWorkflowProcess(taskInstance);
                 throw new EngineException(taskInstance.ProcessInstanceId, process, taskInstance.TaskId,
                         "Run tool task instance error! Not found the instance of " + ((ToolTask)task).Application.Handler + " or the instance not implements IApplicationHandler");
             }
@@ -64,7 +64,7 @@ namespace FireWorkflow.Net.Engine.Taskinstance
             }
             catch (Exception )
             {//TODO wmj2003 对tool类型的task抛出的错误应该怎么处理？ 这个时候引擎会如何？整个流程是否还可以继续？
-                throw new EngineException(processInstance, taskInstance.Activity,
+            	throw new EngineException(processInstance, TaskInstanceHelper.getActivity(taskInstance),
                         "DefaultToolTaskInstanceRunner：TaskInstance的任务执行失败！");
             }
 

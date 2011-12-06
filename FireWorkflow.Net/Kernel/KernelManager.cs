@@ -47,9 +47,12 @@ namespace FireWorkflow.Net.Kernel
                         for (int i = 0; item != null && i < item.Count; i++)
                         {
                             IKernelExtension extension = (IKernelExtension)item[i];
-                            ((IRuntimeContextAware)extension).RuntimeContext = this.runtimeContext;
+                            //TODO Debug
+                            if (extension is IRuntimeContextAware)
+                                ((IRuntimeContextAware)extension).RuntimeContext = this.runtimeContext;
                             //wangmj? 如何就强制转换成IRuntimeContextAware了？
                             //答：因为IKernelExtension 的实现类，同时也实现了接口IRuntimeContextAware
+                            //lyun:直接让IKernelExtension 接口继承接口IRuntimeContextAware 2011.12
                         }
                     }
                 }
@@ -79,7 +82,7 @@ namespace FireWorkflow.Net.Kernel
             if (netInstance == null)
             {
                 //数据流定义在runtimeContext初始化的时候，就被加载了，将流程定义的xml读入到内存中 
-                WorkflowDefinition def = this.RuntimeContext.DefinitionService.GetWorkflowDefinitionByProcessIdAndVersionNumber(processId, version);
+                IWorkflowDefinition def = this.RuntimeContext.DefinitionService.GetWorkflowDefinitionByProcessIdAndVersionNumber(processId, version);
                 netInstance = this.createNetInstance(def);
             }
             return netInstance;
@@ -94,11 +97,11 @@ namespace FireWorkflow.Net.Kernel
         /// <summary>创建一个工作流网实例</summary>
         /// <param name="workflowDef"></param>
         /// <returns></returns>
-        public INetInstance createNetInstance(WorkflowDefinition workflowDef)
+        public INetInstance createNetInstance(IWorkflowDefinition workflowDef)
         {
             if (workflowDef == null) return null;
             WorkflowProcess workflowProcess = null;
-            workflowProcess = workflowDef.getWorkflowProcess();//解析fpdl 
+            workflowProcess = WorkflowDefinitionHelper.getWorkflowProcess(workflowDef);//解析fpdl 
 
             //Map nodeInstanceMap = new HashMap();
             if (workflowProcess == null)

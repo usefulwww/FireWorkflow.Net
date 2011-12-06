@@ -4,11 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
+using Ext.Net;
+using FireWorkflow.Net.Engine;
+using FireWorkflow.Net.Engine.Definition;
+using FireWorkflow.Net.Engine.Impl;
 using FireWorkflow.Net.Model;
 using FireWorkflow.Net.Model.Io;
-using FireWorkflow.Net.Engine.Definition;
-using FireWorkflow.Net.Engine;
-using Coolite.Ext.Web;
 using WebDemo.Components;
 
 namespace WebDemo.Example.WorkflowExtension
@@ -23,7 +25,7 @@ namespace WebDemo.Example.WorkflowExtension
             }
         }
 
-        public void query_Click(object sender, AjaxEventArgs e)
+        public void query_Click(object sender, EventArgs e)
         {
             Sdate_Refresh(null, null);
         }
@@ -35,7 +37,7 @@ namespace WebDemo.Example.WorkflowExtension
             Sdate.DataBind();
         }
 
-        [AjaxMethod]
+        [DirectMethod]
         public bool claim(String workItemId)
         {
             IWorkflowSession wflsession = RuntimeContextExamples.GetRuntimeContext().getWorkflowSession();
@@ -47,7 +49,7 @@ namespace WebDemo.Example.WorkflowExtension
                 {
                     if (wi.ActorId == this.User.Identity.Name)
                     {
-                        wi.claim();
+                        WorkItemHelper.claim(wi);
                         Sdate_Refresh(null, null);
                         return true;
                     }
@@ -61,7 +63,7 @@ namespace WebDemo.Example.WorkflowExtension
             return false;
         }
 
-        [AjaxMethod]
+        [DirectMethod]
         public void complete(String workItemId)
         {
             IWorkflowSession wflsession = RuntimeContextExamples.GetRuntimeContext().getWorkflowSession();
@@ -73,9 +75,9 @@ namespace WebDemo.Example.WorkflowExtension
                 {
                     if (wi.ActorId == this.User.Identity.Name)
                     {
-                        if (wi.TaskInstance.Task is FormTask)
+                    	if (TaskInstanceHelper.getTask(wi.TaskInstance) is FormTask)
                         {
-                            String formUri = this.ResolveUrl(((FormTask)wi.TaskInstance.Task).EditForm.Uri + "?WorkItemId=" + workItemId);
+                    		String formUri = this.ResolveUrl(((FormTask)TaskInstanceHelper.getTask(wi.TaskInstance)).EditForm.Uri + "?WorkItemId=" + workItemId);
 
                             WindowView.AutoLoad.Url = formUri;
                             WindowView.AutoLoad.Mode = LoadMode.IFrame;

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+
 using FireWorkflow.Net.Engine;
+using FireWorkflow.Net.Engine.Impl;
 using FireWorkflow.Net.Engine.Taskinstance;
 using FireWorkflow.Net.Kernel;
 
@@ -26,9 +28,9 @@ namespace WebDemo.Example.WorkflowExtension
 		/// </summary>
 		/// <param name="asignable">IAssignable实现类，在FireWorkflow中实际上就是TaskInstance对象。</param>
 		/// <param name="performerName">角色名称</param>
-		public void assign(IAssignable asignable, string performerName)
+		public void assign(ITaskInstance taskInst, string performerName)
 		{
-			ITaskInstance taskInst = (ITaskInstance)asignable;
+			//ITaskInstance taskInst = (ITaskInstance)asignable;
 
 			String roleName = performerName == null ? "" : performerName.Trim();
 			List<String> users = new List<string>();
@@ -61,7 +63,7 @@ namespace WebDemo.Example.WorkflowExtension
 			if (users == null || users.Count <= 0)
 			{
 				throw new EngineException(taskInst.ProcessInstanceId,
-				                          taskInst.WorkflowProcess, taskInst.TaskId, "没有任何用户和角色" + performerName + "相关联，无法分配任务实例[id=" + taskInst.Id + ",任务名称=" + taskInst.DisplayName);
+				                          TaskInstanceHelper.getWorkflowProcess(taskInst), taskInst.TaskId, "没有任何用户和角色" + performerName + "相关联，无法分配任务实例[id=" + taskInst.Id + ",任务名称=" + taskInst.DisplayName);
 			}
 			List<String> userIds = new List<string>();
 			foreach (string item in users)
@@ -69,7 +71,7 @@ namespace WebDemo.Example.WorkflowExtension
 				userIds.Add(item);
 			}
 			
-			asignable.assignToActors(userIds);
+			TaskInstanceHelper.assignToActors(taskInst,userIds);
 		}
 
 		#endregion

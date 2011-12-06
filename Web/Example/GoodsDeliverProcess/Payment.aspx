@@ -7,9 +7,9 @@
 </head>
 <body style="padding: 10px;">
     <form id="form1" runat="server">
-    <ext:ScriptManager ID="ScriptManager1" runat="server" />
+    <ext:ResourceManager ID="ResourceManager1" runat="server" />
     <ext:Panel ID="Panel1" runat="server" BodyStyle="padding:5px 5px 0" Width="350" ButtonAlign="Center" Border="false">
-        <Body>
+        <Items>
             <ext:FormLayout ID="FormLayout1" runat="server" LabelWidth="60">
                 <Anchors >
                     <ext:Anchor Horizontal="100%">
@@ -51,14 +51,14 @@
                     </ext:Anchor>
                 </Anchors>
             </ext:FormLayout>
-        </Body>
+        </Items>
         <Buttons>
             <ext:Button runat="server" Text="Save">
-                <AjaxEvents>
+                <DirectEvents>
                     <Click OnEvent="Save_Click" Success="parent.Ext.WindowMgr.hideAll();">
                           <EventMask ShowMask="true" Msg="正在保存数据请稍等..." MinDelay="100" />
                     </Click>
-                </AjaxEvents>
+                </DirectEvents>
             </ext:Button>
         </Buttons>
     </ext:Panel>

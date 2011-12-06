@@ -18,13 +18,9 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Text;
-using FireWorkflow.Net.Model;
-using FireWorkflow.Net.Engine;
-using FireWorkflow.Net.Engine.Taskinstance;
 using FireWorkflow.Net.Engine.Definition;
 using FireWorkflow.Net.Engine.Persistence;
-using FireWorkflow.Net.Kernel;
+using FireWorkflow.Net.Model;
 
 namespace FireWorkflow.Net.Engine.Impl
 {
@@ -46,17 +42,17 @@ namespace FireWorkflow.Net.Engine.Impl
         public object doInWorkflowSession(RuntimeContext ctx)
         {
 
-            WorkflowDefinition workflowDef = ctx.DefinitionService.GetTheLatestVersionOfWorkflowDefinition(wfprocessId);
+            IWorkflowDefinition workflowDef = ctx.DefinitionService.GetTheLatestVersionOfWorkflowDefinition(wfprocessId);
             WorkflowProcess wfProcess = null;
 
-            wfProcess = workflowDef.getWorkflowProcess();
+            wfProcess = WorkflowDefinitionHelper.getWorkflowProcess(workflowDef);
 
             if (wfProcess == null)
             {
                 throw new Exception("Workflow process NOT found,id=[" + wfprocessId + "]");
             }
 
-            ProcessInstance processInstance = new ProcessInstance();
+            IProcessInstance processInstance = new ProcessInstance();
             processInstance.CreatorId=creatorId;
             processInstance.ProcessId=wfProcess.Id;
             processInstance.Version=workflowDef.Version;
@@ -79,11 +75,11 @@ namespace FireWorkflow.Net.Engine.Impl
                 {
                     if (df.InitialValue != null)
                     {
-                        processInstance.setProcessInstanceVariable(df.Name, df.InitialValue);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, df.InitialValue);
                     }
                     else
                     {
-                        processInstance.setProcessInstanceVariable(df.Name, "");
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, "");
                     }
                 }
                 else if (df.DataType == DataTypeEnum.INTEGER)
@@ -93,7 +89,7 @@ namespace FireWorkflow.Net.Engine.Impl
                         try
                         {
                             Int32 intValue = Int32.Parse(df.InitialValue);
-                            processInstance.setProcessInstanceVariable(df.Name, intValue);
+                            ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, intValue);
                         }
                         catch (Exception )
                         {
@@ -101,7 +97,7 @@ namespace FireWorkflow.Net.Engine.Impl
                     }
                     else
                     {
-                        processInstance.setProcessInstanceVariable(df.Name, (Int32)0);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, (Int32)0);
                     }
                 }
                 else if (df.DataType == DataTypeEnum.LONG)
@@ -111,7 +107,7 @@ namespace FireWorkflow.Net.Engine.Impl
                         try
                         {
                             long longValue = long.Parse(df.InitialValue);
-                            processInstance.setProcessInstanceVariable(df.Name, longValue);
+                            ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, longValue);
                         }
                         catch (Exception )
                         {
@@ -119,7 +115,7 @@ namespace FireWorkflow.Net.Engine.Impl
                     }
                     else
                     {
-                        processInstance.setProcessInstanceVariable(df.Name, (long)0);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, (long)0);
                     }
                 }
                 else if (df.DataType == DataTypeEnum.FLOAT)
@@ -127,11 +123,11 @@ namespace FireWorkflow.Net.Engine.Impl
                     if (df.InitialValue != null)
                     {
                         float floatValue = float.Parse(df.InitialValue);
-                        processInstance.setProcessInstanceVariable(df.Name, floatValue);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, floatValue);
                     }
                     else
                     {
-                        processInstance.setProcessInstanceVariable(df.Name, (float)0);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, (float)0);
                     }
                 }
                 else if (df.DataType == DataTypeEnum.DOUBLE)
@@ -139,12 +135,11 @@ namespace FireWorkflow.Net.Engine.Impl
                     if (df.InitialValue != null)
                     {
                         Double doubleValue = Double.Parse(df.InitialValue);
-                        processInstance.setProcessInstanceVariable(df
-                                .Name, doubleValue);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, doubleValue);
                     }
                     else
                     {
-                        processInstance.setProcessInstanceVariable(df.Name, (Double)0);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, (Double)0);
                     }
                 }
                 else if (df.DataType == DataTypeEnum.BOOLEAN)
@@ -152,11 +147,11 @@ namespace FireWorkflow.Net.Engine.Impl
                     if (df.InitialValue != null)
                     {
                         Boolean booleanValue = Boolean.Parse(df.InitialValue);
-                        processInstance.setProcessInstanceVariable(df.Name, booleanValue);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, booleanValue);
                     }
                     else
                     {
-                        processInstance.setProcessInstanceVariable(df.Name, false);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, false);
                     }
                 }
                 else if (df.DataType == DataTypeEnum.DATETIME)
@@ -169,17 +164,17 @@ namespace FireWorkflow.Net.Engine.Impl
                         {
                             //SimpleDateFormat dFormat = new SimpleDateFormat(df.DataPattern);
                             DateTime dateTmp = DateTime.Parse(df.InitialValue);
-                            processInstance.setProcessInstanceVariable(df.Name, dateTmp);
+                            ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, dateTmp);
                         }
                         catch (Exception )
                         {
-                            processInstance.setProcessInstanceVariable(df.Name, null);
+                            ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, null);
                             //e.printStackTrace();
                         }
                     }
                     else
                     {
-                        processInstance.setProcessInstanceVariable(df.Name, null);
+                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance,df.Name, null);
                     }
                 }
             }
@@ -290,12 +285,12 @@ namespace FireWorkflow.Net.Engine.Impl
     {
         String creatorId;
         WorkflowProcess wfProcess;
-        WorkflowDefinition workflowDef;
+        IWorkflowDefinition workflowDef;
         String parentProcessInstanceId;
         String parentTaskInstanceId;
 
         public WorkflowSessionIProcessInstanceCreateProcessInstance(String creatorId, WorkflowProcess wfProcess, 
-            WorkflowDefinition workflowDef, String parentProcessInstanceId,String parentTaskInstanceId)
+            IWorkflowDefinition workflowDef, String parentProcessInstanceId,String parentTaskInstanceId)
         {
             this.creatorId = creatorId;
             this.wfProcess = wfProcess;
@@ -307,7 +302,7 @@ namespace FireWorkflow.Net.Engine.Impl
         public Object doInWorkflowSession(RuntimeContext ctx)
         {
 
-            ProcessInstance processInstance = new ProcessInstance();
+            IProcessInstance processInstance = new ProcessInstance();
             processInstance.CreatorId=creatorId;
             processInstance.ProcessId=wfProcess.Id;
             processInstance.Version=workflowDef.Version;

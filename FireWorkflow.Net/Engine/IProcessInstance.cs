@@ -42,90 +42,58 @@ namespace FireWorkflow.Net.Engine
     /// <para>活动状态包括：INITIALIZED,RUNNING,SUSPENDED</para>
     /// 非活动状态包括：COMPLETED,CANCELED
     /// </summary>
-    public interface IProcessInstance
+    public interface IProcessInstance: IWorkflowSessionAware
     {
-        /// <summary>流程实例开始运行！</summary>
-        void run();// throws EngineException, KernelException;
 
         /// <summary>主键.</summary>
-        String Id { get; }
+        String Id { get;set; }
 
         /// <summary>流程实例的name（与流程定义的name相同）</summary>
-        String Name { get; }
+        String Name { get;set; }
 
         /// <summary>流程实例的DisplayName（与流程定义的DisplayName相同）</summary>
-        String DisplayName { get; }
+        String DisplayName { get;set; }
 
         /// <summary>流程定义的id</summary>
-        String ProcessId { get; }
+        String ProcessId { get;set; }
 
         /// <summary>流程实例的状态</summary>
-        ProcessInstanceEnum State { get; }
+        ProcessInstanceEnum State { get; set;}
 
         /// <summary>流程定义的Version</summary>
-        Int32 Version { get; }
+        Int32 Version { get;set; }
 
         /// <summary>流程实例创建者ID</summary>
-        String CreatorId { get; }
+        String CreatorId { get;set; }
 
         /// <summary>返回流程实例的创建时间</summary>
         /// <returns>流程实例的创建时间</returns>
-        DateTime? CreatedTime { get; }
+        DateTime? CreatedTime { get;set; }
 
         /// <summary>返回流程实例的启动时间，即执行IProcessInstance.run()的时间</summary>
-        DateTime? StartedTime { get; }
+        DateTime? StartedTime { get;set; }
 
         /// <summary>返回流程实例的结束时间</summary>
-        DateTime? EndTime { get; }
+        DateTime? EndTime { get;set; }
 
         /// <summary>返回流程实例的到期时间</summary>
-        DateTime? ExpiredTime { get; }
+        DateTime? ExpiredTime { get;set; }
 
-
-        /// <summary>
-        /// <para>获取流程实例变量的值</para>
-        /// Get the process instance variable,return null if the variable is not existing .
-        /// </summary>
-        /// <param name="name">the name of the variable</param>
-        /// <returns>the value of the variable. It may be Int32,String,Boolean,java.util.DateTime or Float</returns>
-        Object getProcessInstanceVariable(String name);
-
-        /// <summary>
-        /// Save the process instance variable.If there is a variable with the same name ,it will be updated.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="var">The value of the variable. It may be Int32,String,Boolean,java.util.DateTime or Float</param>
-        void setProcessInstanceVariable(String name, Object var);
-
-        Dictionary<String, Object> ProcessInstanceVariables { get; set; }
+//        Dictionary<String, Object> ProcessInstanceVariables { get; set; }
 
         /// <summary>return the corresponding workflow process.</summary>
-        WorkflowProcess WorkflowProcess { get; }// throws EngineException;
+//        WorkflowProcess WorkflowProcess { get; }// throws EngineException;
 
-        String WorkflowProcessId { get; }
+//        String WorkflowProcessId { get; }
 
         /// <summary>get the parent process instance's id , null if no parent process instance.</summary>
-        String ParentProcessInstanceId { get; }
+        String ParentProcessInstanceId { get;set; }
 
         /// <summary>get the parent taskinstance's id ,null if no parent taskinstance.</summary>
-        String ParentTaskInstanceId { get; }
+        String ParentTaskInstanceId { get; set;}
+        
+       Boolean? Suspended { get; set; }
 
-        /// <summary>强行中止流程实例，不管是否达到终态。</summary>
-        void abort();// throws EngineException;
 
-        /// <summary>
-        /// 挂起
-        /// fireflow.engine.EngineException
-        /// </summary>
-        void suspend();// throws EngineException;
-
-        /// <summary>是否挂起</summary>
-        Boolean? IsSuspended();
-
-        /// <summary>
-        /// 从挂起状态恢复到挂起前的状态
-        /// fireflow.engine.EngineException
-        /// </summary>
-        void restore();// throws EngineException;
     }
 }

@@ -27,7 +27,7 @@ namespace FireWorkflow.Net.Engine.Taskinstance
         /// 进行任务分配。
         /// </summary>
         /// <param name="asignable">IAssignable实现类，在FireWorkflow中实际上就是TaskInstance对象。</param>
-        void assignCurrent(IWorkflowSession workflowSession, IProcessInstance processInstance, IAssignable asignable);// throws EngineException, KernelException;
+        void assignCurrent(IWorkflowSession workflowSession, IProcessInstance processInstance, ITaskInstance asignable);// throws EngineException, KernelException;
 
         /// <summary>
         /// <para>实现任务分配工作，该方法一般的实现逻辑是：</para>
@@ -38,7 +38,7 @@ namespace FireWorkflow.Net.Engine.Taskinstance
         /// </summary>
         /// <param name="asignable">IAssignable实现类，在FireWorkflow中实际上就是TaskInstance对象。</param>
         /// <param name="performerName">角色名称</param>
-        void assignRole(IWorkflowSession workflowSession, IProcessInstance processInstance, IAssignable asignable, String performerName);// throws EngineException, KernelException;
+        void assignRole(IWorkflowSession workflowSession, IProcessInstance processInstance, ITaskInstance asignable, String performerName);// throws EngineException, KernelException;
 
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace FireWorkflow.Net.Engine.Taskinstance
         /// </summary>
         /// <param name="asignable">IAssignable实现类，在FireWorkflow中实际上就是TaskInstance对象。</param>
         /// <param name="performerName">机构名称</param>
-        void assignAgency(IWorkflowSession workflowSession, IProcessInstance processInstance, IAssignable asignable, String performerName);
+        void assignAgency(IWorkflowSession workflowSession, IProcessInstance processInstance, ITaskInstance asignable, String performerName);
 
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace FireWorkflow.Net.Engine.Taskinstance
         /// </summary>
         /// <param name="asignable">IAssignable实现类，在FireWorkflow中实际上就是TaskInstance对象。</param>
         /// <param name="performerName">用户名称</param>
-        void assignFixed(IWorkflowSession workflowSession, IProcessInstance processInstance, IAssignable asignable, String performerName);
+        void assignFixed(IWorkflowSession workflowSession, IProcessInstance processInstance, ITaskInstance asignable, String performerName);
 
 
         /// <summary>
@@ -73,6 +73,6 @@ namespace FireWorkflow.Net.Engine.Taskinstance
         /// 进行任务分配。
         /// </summary>
         /// <param name="asignable">IAssignable实现类，在FireWorkflow中实际上就是TaskInstance对象。</param>
-        void assignSuperiors(IWorkflowSession workflowSession, IProcessInstance processInstance, IAssignable asignable);
+        void assignSuperiors(IWorkflowSession workflowSession, IProcessInstance processInstance, ITaskInstance asignable);
     }
 }

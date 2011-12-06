@@ -15,7 +15,7 @@ namespace WebDemo
     {
         public String GetWorkflowProcessXml(String id)
         {
-            WorkflowDefinition wd = RuntimeContextFactory.getRuntimeContext().PersistenceService.FindWorkflowDefinitionById(id);
+            IWorkflowDefinition wd = RuntimeContextFactory.getRuntimeContext().PersistenceService.FindWorkflowDefinitionById(id);
             if (wd != null) return wd.ProcessContent;
             else return "";
         }
@@ -24,20 +24,20 @@ namespace WebDemo
         {
             if (version <= 0)
             {
-                WorkflowDefinition wd = RuntimeContextFactory.getRuntimeContext().PersistenceService.FindTheLatestVersionOfWorkflowDefinitionByProcessId(processID);
+                IWorkflowDefinition wd = RuntimeContextFactory.getRuntimeContext().PersistenceService.FindTheLatestVersionOfWorkflowDefinitionByProcessId(processID);
                 if (wd != null) return wd.ProcessContent;
             }
             else
             {
-                WorkflowDefinition wd = RuntimeContextFactory.getRuntimeContext().PersistenceService.FindWorkflowDefinitionByProcessIdAndVersionNumber(processID, version);
+                IWorkflowDefinition wd = RuntimeContextFactory.getRuntimeContext().PersistenceService.FindWorkflowDefinitionByProcessIdAndVersionNumber(processID, version);
                 if (wd != null) return wd.ProcessContent;
             }
             return "";
         }
 
-        public List<ProcessInstanceTrace> GetProcessInstanceTraceXml(String processInstanceId)
+        public IList<IProcessInstanceTrace> GetProcessInstanceTraceXml(String processInstanceId)
         {
-            List<ProcessInstanceTrace> pit = RuntimeContextFactory.getRuntimeContext().PersistenceService.FindProcessInstanceTraces(processInstanceId);
+            IList<IProcessInstanceTrace> pit = RuntimeContextFactory.getRuntimeContext().PersistenceService.FindProcessInstanceTraces(processInstanceId);
             return pit;
         }
     }

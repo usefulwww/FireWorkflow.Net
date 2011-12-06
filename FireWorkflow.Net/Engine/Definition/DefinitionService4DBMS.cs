@@ -37,7 +37,7 @@ namespace FireWorkflow.Net.Engine.Definition
         #region 实现IDefinitionService
         /// <summary>返回所有流程的最新版本</summary>
         /// <returns></returns>
-        public List<WorkflowDefinition> GetAllLatestVersionsOfWorkflowDefinition()
+        public IList<IWorkflowDefinition> GetAllLatestVersionsOfWorkflowDefinition()
         {
             return RuntimeContext.PersistenceService.FindAllTheLatestVersionsOfWorkflowDefinition();
         }
@@ -49,7 +49,7 @@ namespace FireWorkflow.Net.Engine.Definition
         /// <param name="processId">流程Id</param>
         /// <param name="version">版本号</param>
         /// <returns></returns>
-        public WorkflowDefinition GetWorkflowDefinitionByProcessIdAndVersionNumber(String processId, Int32 version)
+        public IWorkflowDefinition GetWorkflowDefinitionByProcessIdAndVersionNumber(String processId, Int32 version)
         {
             return RuntimeContext.PersistenceService.FindWorkflowDefinitionByProcessIdAndVersionNumber(processId, version);
         }
@@ -59,7 +59,7 @@ namespace FireWorkflow.Net.Engine.Definition
         /// </summary>
         /// <param name="processId">流程Id</param>
         /// <returns></returns>
-        public WorkflowDefinition GetTheLatestVersionOfWorkflowDefinition(String processId)
+        public IWorkflowDefinition GetTheLatestVersionOfWorkflowDefinition(String processId)
         {
             return RuntimeContext.PersistenceService.FindTheLatestVersionOfWorkflowDefinitionByProcessId(processId);
         }

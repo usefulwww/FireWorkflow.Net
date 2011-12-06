@@ -20,3 +20,8 @@
 /DLL/Ext.net
 
 /DomCache
+/FireWorkflow.Net/FireWorkflow.Net.PartCover.Settings
+/DLL/NHibernate
+/FireWorkflow.Net.Persistence.NHibernateDAL/bin
+/FireWorkflow.Net.Persistence.NHibernateDAL/obj
+/DLL/DomCache

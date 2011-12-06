@@ -8,10 +8,10 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <ext:ScriptManager ID="ScriptManager1" runat="server" />
+    <ext:ResourceManager ID="ResourceManager1" runat="server" />
      <ext:Store ID="Sdate" runat="server" OnRefreshData="Sdate_Refresh">
         <Reader>
-            <ext:JsonReader ReaderID="Id">
+            <ext:JsonReader>
                 <Fields>
                     <ext:RecordField Name="Id" />
                     <ext:RecordField Name="Name" />
@@ -33,25 +33,24 @@
 
     <ext:Hidden ID="HProcessId" runat="server" />
     <ext:ViewPort ID="ViewPort1" runat="server">
-        <Body>
-            <ext:FitLayout ID="FitLayout1" runat="server">
-                <ext:Panel ID="Panel1" runat="server" Height="300" Border="false" HideBorders="true" Title="我的待办工作">
+        <Items>
+                <ext:Panel ID="Panel1" runat="server" Height="300" Layout="Fit" Border="false" HideBorders="true" Title="我的待办工作">
                     <TopBar>
                         <ext:Toolbar ID="Toolbar1" runat="server">
                             <Items>
-                                <ext:ToolbarButton ID="ToolbarButton3" runat="server" Text="刷新">
-                                    <AjaxEvents>
+                                <ext:Button ID="ToolbarButton3" runat="server" Text="刷新">
+                                    <DirectEvents>
                                         <Click OnEvent="query_Click">
                                             <EventMask ShowMask="true" Msg="正在查询数据请稍等..." MinDelay="100" />
                                         </Click>
-                                    </AjaxEvents>
-                                </ext:ToolbarButton>
+                                    </DirectEvents>
+                                </ext:Button>
                             </Items>
                         </ext:Toolbar>
                     </TopBar>
-                    <Body>
-                        <ext:FitLayout ID="CenterLayout2" runat="server">
-                            <ext:GridPanel ID="mpgList" runat="server" StoreID="Sdate" ClicksToEdit="1" StripeRows="true" AutoExpandColumn="BizInfo">
+                    <Items>
+                        
+                            <ext:GridPanel ID="mpgList" runat="server" StoreID="Sdate" Layout="Fit" ClicksToEdit="1" StripeRows="true" AutoExpandColumn="BizInfo">
                                 <ColumnModel ID="ColumnModel1" runat="server">
                                     <Columns>
                                         <ext:Column Width="150px" Sortable="true" DataIndex="DisplayName" Header="环节说明">
@@ -89,12 +88,18 @@
                                                         WindowView.show();" />
                                 </Listeners>
                             </ext:GridPanel>
-                        </ext:FitLayout>
-                    </Body>
+                        
+                    </Items>
                 </ext:Panel>
-            </ext:FitLayout>
-        </Body>
+            
+        </Items>
     </ext:ViewPort>
+    
+    <ext:Window ID="WindowView" runat="server" Width="650" Height="450" Collapsible="True" Maximizable="true" Constrain="True"
+        Hidden="true" Icon="Help" Title="流程" BodyStyle="padding: 5px;"  Modal="True">
+        <AutoLoad Url="" Mode="IFrame" MaskMsg="加载流程。。。" ShowMask="true" />
+        <Listeners><Hide Handler="#{mpgList}.reload();" /></Listeners>
+    </ext:Window>
     </form>
 </body>
 </html>

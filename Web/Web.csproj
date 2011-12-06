@@ -17,13 +17,14 @@
     <SccAuxPath>Svn</SccAuxPath>
     <SccProvider>SubversionScc</SccProvider>
     <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Administrator\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
-    <StartArguments>/path:"${ProjectDir}"</StartArguments>
+    <StartArguments>/path:"${ProjectDir}" /ipMode:Any</StartArguments>
     <StartWorkingDirectory>${StartupPath}</StartWorkingDirectory>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,21 +53,24 @@
     <Reference Include="Common.Logging">
       <HintPath>..\DLL\Spring.net\Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Coolite.Ext.Web">
-      <HintPath>..\DLL\Coolite.Ext\Coolite.Ext.Web.dll</HintPath>
+    <Reference Include="Ext.Net">
+      <HintPath>..\DLL\Ext.net\Ext.Net.dll</HintPath>
     </Reference>
-    <Reference Include="Coolite.Utilities">
-      <HintPath>..\DLL\Coolite.Ext\Coolite.Utilities.dll</HintPath>
+    <Reference Include="Ext.Net.Utilities">
+      <HintPath>..\DLL\Ext.net\Ext.Net.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\DLL\Coolite.Ext\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\DLL\Ext.net\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Spring.Core">
       <HintPath>..\DLL\Spring.net\Spring.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.OracleClient" />
@@ -80,9 +84,6 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
@@ -90,6 +91,9 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="AddWorkflowProcess.aspx" />

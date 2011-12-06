@@ -38,17 +38,17 @@ namespace FireWorkflow.Net.Engine.Taskinstance
         {
             if (taskInstance.TaskType!= TaskTypeEnum.FORM)//!Task.FORM.Equals(taskInstance.TaskType))
             {
-                throw new EngineException(processInstance, taskInstance.Activity,
+                throw new EngineException(processInstance, TaskInstanceHelper.getActivity(taskInstance),
                         "DefaultFormTaskInstanceRunner：TaskInstance的任务类型错误，只能为FORM类型");
             }
 
             DynamicAssignmentHandler dynamicAssignmentHandler = ((WorkflowSession)currentSession).consumeCurrentDynamicAssignmentHandler();
-            FormTask task = (FormTask)taskInstance.Task;
+            FormTask task = (FormTask)TaskInstanceHelper.getTask(taskInstance);
             // performer(id,name,type,handler)
             Participant performer = task.Performer;
             if (performer == null || performer.AssignmentHandler.Trim().Equals(""))
             {
-                throw new EngineException(processInstance, taskInstance.Activity,
+                throw new EngineException(processInstance, TaskInstanceHelper.getActivity(taskInstance),
                         "流程定义错误，Form类型的 task必须指定performer及其AssignmentHandler");
             }
             assign(currentSession, processInstance, runtimeContext, taskInstance, task, performer, dynamicAssignmentHandler);
@@ -67,12 +67,12 @@ namespace FireWorkflow.Net.Engine.Taskinstance
             //如果有指定的Actor，则按照指定的Actor分配任务
             if (dynamicAssignmentHandler != null)
             {
-                dynamicAssignmentHandler.assign((IAssignable)taskInstance, part.Name);
+                dynamicAssignmentHandler.assign(taskInstance, part.Name);
             }
             else
             {
                 IPersistenceService persistenceService = runtimeContext.PersistenceService;
-                List<ITaskInstance> taskInstanceList = persistenceService.FindTaskInstancesForProcessInstance(taskInstance.ProcessInstanceId, taskInstance.ActivityId);
+                IList<ITaskInstance> taskInstanceList = persistenceService.FindTaskInstancesForProcessInstance(taskInstance.ProcessInstanceId, taskInstance.ActivityId);
                 ITaskInstance theLastCompletedTaskInstance = null;
 
                 for (int i = 0; taskInstanceList != null && i < taskInstanceList.Count; i++)
@@ -97,14 +97,14 @@ namespace FireWorkflow.Net.Engine.Taskinstance
                 //如果是循环且LoopStrategy==REDO，则分配个上次完成该工作的操作员
                 if (theLastCompletedTaskInstance != null && (LoopStrategyEnum.REDO==formTask.LoopStrategy || currentSession.isInWithdrawOrRejectOperation()))
                 {
-                    List<IWorkItem> workItemList = persistenceService.FindCompletedWorkItemsForTaskInstance(theLastCompletedTaskInstance.Id);
+                    IList<IWorkItem> workItemList = persistenceService.FindCompletedWorkItemsForTaskInstance(theLastCompletedTaskInstance.Id);
                     ITaskInstanceManager taskInstanceMgr = runtimeContext.TaskInstanceManager;
                     for (int k = 0; k < workItemList.Count; k++)
                     {
                         IWorkItem completedWorkItem = (IWorkItem)workItemList[k];
 
                         IWorkItem newFromWorkItem = taskInstanceMgr.createWorkItem(currentSession, processInstance, taskInstance, completedWorkItem.ActorId);
-                        newFromWorkItem.claim();//并自动签收
+                        WorkItemHelper.claim(newFromWorkItem);//并自动签收
                     }
                 }
                 else
@@ -116,28 +116,28 @@ namespace FireWorkflow.Net.Engine.Taskinstance
                     {
                         case AssignmentTypeEnum.Current:
                             runtimeContext.AssignmentBusinessHandler.assignCurrent(
-                                currentSession, processInstance, (IAssignable)taskInstance);
+                                currentSession, processInstance, taskInstance);
                             break;
                         case AssignmentTypeEnum.Role:
                             runtimeContext.AssignmentBusinessHandler.assignRole(
-                                currentSession, processInstance, (IAssignable)taskInstance, part.PerformerValue);
+                                currentSession, processInstance, taskInstance, part.PerformerValue);
                             break;
                         case AssignmentTypeEnum.Agency:
                             runtimeContext.AssignmentBusinessHandler.assignAgency(
-                                currentSession, processInstance, (IAssignable)taskInstance, part.PerformerValue);
+                                currentSession, processInstance, taskInstance, part.PerformerValue);
                             break;
                         case AssignmentTypeEnum.Fixed:
                             runtimeContext.AssignmentBusinessHandler.assignFixed(
-                                currentSession, processInstance, (IAssignable)taskInstance, part.PerformerValue);
+                                currentSession, processInstance, taskInstance, part.PerformerValue);
                             break;
                         case AssignmentTypeEnum.Superiors:
                             runtimeContext.AssignmentBusinessHandler.assignSuperiors(
-                                currentSession, processInstance, (IAssignable)taskInstance);
+                                currentSession, processInstance, taskInstance);
                             break;
                         default:
                             IAssignmentHandler assignmentHandler = (IAssignmentHandler)beanFactory.GetBean(part.AssignmentHandler);
                             //modified by wangmj 20090904
-                            ((IAssignmentHandler)assignmentHandler).assign((IAssignable)taskInstance, part.PerformerValue);
+                            assignmentHandler.assign(taskInstance, part.PerformerValue);
                             break;
                     }
                 }

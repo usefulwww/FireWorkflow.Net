@@ -38,10 +38,10 @@ namespace FireWorkflow.Net.Kernel.Impl
 
         public IProcessInstance ProcessInstance
         {
-            get { return (IProcessInstance)this.contextInfo[EngineConstant.CURRENT_PROCESS_INSTANCE]; }
+            get { return this.contextInfo[EngineConstant.CURRENT_PROCESS_INSTANCE]; }
             set
             {
-                this.contextInfo.Add(EngineConstant.CURRENT_PROCESS_INSTANCE, value);
+                this.contextInfo[EngineConstant.CURRENT_PROCESS_INSTANCE]=value;
                 if (value != null)
                 {
                     this.ProcessInstanceId = value.Id;

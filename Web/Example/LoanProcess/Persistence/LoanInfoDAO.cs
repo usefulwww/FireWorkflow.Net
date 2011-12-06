@@ -27,7 +27,7 @@ namespace WebDemo.Example.LoanProcess.Persistence
                     connectionString = ConfigurationManager.ConnectionStrings["OracleServer"].ConnectionString;
                     break;
                 default:
-                    connectionString = ConfigurationManager.ConnectionStrings["OracleServer"].ConnectionString;
+                    connectionString = ConfigurationManager.ConnectionStrings["SqlServer"].ConnectionString;
                     break;
             }
         }
@@ -41,7 +41,7 @@ namespace WebDemo.Example.LoanProcess.Persistence
                 case "oracle":
                     return attachDirty_oracle(instance);
                 default:
-                    return attachDirty_oracle(instance);
+                    return attachDirty_sqlserver(instance);
             }
         }
 
@@ -220,7 +220,7 @@ namespace WebDemo.Example.LoanProcess.Persistence
                 case "oracle":
                     return findBySn_oracle(sn);
                 default:
-                    return findBySn_oracle(sn);
+                    return findBySn_sqlserver(sn);
             }
         }
 

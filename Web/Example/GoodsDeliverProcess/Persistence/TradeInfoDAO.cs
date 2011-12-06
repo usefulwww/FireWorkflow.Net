@@ -40,7 +40,7 @@ namespace WebDemo.Example.GoodsDeliverProcess.Persistence
                     connectionString = ConfigurationManager.ConnectionStrings["OracleServer"].ConnectionString;
                     break;
                 default:
-                    connectionString = ConfigurationManager.ConnectionStrings["OracleServer"].ConnectionString;
+                    connectionString = ConfigurationManager.ConnectionStrings["SqlServer"].ConnectionString;
                     break;
             }
         }
@@ -59,7 +59,7 @@ namespace WebDemo.Example.GoodsDeliverProcess.Persistence
                 case "oracle":
                     return save_oracle(transientInstance);
                 default:
-                    return save_oracle(transientInstance);
+                    return save_sqlserver(transientInstance);
             }
            
         }
@@ -93,7 +93,7 @@ namespace WebDemo.Example.GoodsDeliverProcess.Persistence
 
         private bool save_sqlserver(TradeInfo transientInstance)
         {
-            transientInstance.Id = Guid.NewGuid().ToString().Replace("-", "");
+            transientInstance.Id = Guid.NewGuid().ToString("N");
             string insert = "INSERT INTO T_BIZ_TRADEINFO (" +
                 "ID, SN, GOODS_NAME, GOODS_TYPE, QUANTITY, " +
                 "UNIT_PRICE, AMOUNT, CUSTOMER_NAME, CUSTOMER_MOBILE, CUSTOMER_PHONE_FAX, " +
@@ -140,7 +140,7 @@ namespace WebDemo.Example.GoodsDeliverProcess.Persistence
                 case "oracle":
                     return findById_oracle(id);
                 default:
-                    return findById_oracle(id);
+                    return findById_sqlserver(id);
             }
         }
 

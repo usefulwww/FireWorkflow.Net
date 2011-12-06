@@ -7,8 +7,9 @@
     <title></title>
 </head>
 <body>
+
     <form id="form1" runat="server">
-   <ext:ScriptManager ID="ScriptManager1" runat="server" />
+  <ext:ResourceManager ID="ResourceManager1" runat="server" />
         <table>
 	<tr>
 		<td align="center"><img width="500" height="250"
@@ -160,33 +161,32 @@
             Title="Login"
             Width="350"
             BodyStyle="padding:5px;">
-            <Body>
-                <ext:FormLayout ID="FormLayout1" runat="server">
-                    <ext:Anchor Horizontal="100%">
-                        <ext:TextField 
+            <Items>
+                    
+                        <ext:TextField  
                             ID="txtUsername" 
                             runat="server" 
                             FieldLabel="用户名" 
                             />
-                    </ext:Anchor>
-                    <ext:Anchor Horizontal="100%">
-                        <ext:TextField 
+                    
+                        <ext:TextField  
                             ID="txtPassword" 
                             runat="server" 
                             InputType="Password" 
                             FieldLabel="密码" 
                             BlankText="Your password is required."
                             />
-                    </ext:Anchor>
-                </ext:FormLayout>
-            </Body>
+                   
+             </Items>
+                   
+            
             <Buttons>
                 <ext:Button ID="Button1" runat="server" Text="登录" Icon="Accept">
-                    <AjaxEvents>
+                    <DirectEvents>
                         <Click OnEvent="Button1_Click">
                             <EventMask ShowMask="true" Msg="Verifying..." MinDelay="1000" />
                         </Click>
-                    </AjaxEvents>
+                    </DirectEvents>
                 </ext:Button>
             </Buttons>
         </ext:Window>

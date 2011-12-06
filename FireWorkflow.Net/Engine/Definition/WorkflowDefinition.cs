@@ -1,6 +1,6 @@
 ﻿/*
  * Copyright 2003-2008 非也
- * All rights reserved. 
+ * All rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -26,76 +26,49 @@ using FireWorkflow.Net.Model.Io;
 
 namespace FireWorkflow.Net.Engine.Definition
 {
-    /// <summary>
-    /// 流程定义对象
-    /// 映射到表T_FF_DF_WORKFLOWDEF
-    /// </summary>
-    public class WorkflowDefinition : WorkflowDefinitionInfo
-    {
-        protected WorkflowProcess workflowProcess;
+	/// <summary>
+	/// 流程定义对象
+	/// 映射到表T_FF_DF_WORKFLOWDEF
+	/// </summary>
+	public class WorkflowDefinition : IWorkflowDefinition
+	{
+		public WorkflowDefinition()
+		{
+			DefinitionType = FPDL_PROCESS;
+		}
+		
+		public const String FPDL_PROCESS = "FPDL";
+		public const String XPDL_PROCESS = "XPDL";//从未用到
+		public const String BPEL_PROCESS = "BPEL";//从未用到
 
-        /// <summary>获取或设置流程定义文件的内容。</summary>
-        public String ProcessContent { get; set; }//
+		#region 属性
+		/// <summary>获取或设置主键</summary>
+		public String Id { get; set; }
+		/// <summary>获取或设置流程id</summary>
+		public String ProcessId { get; set; }
+		/// <summary>获取或设置流程英文名称</summary>
+		public String Name { get; set; }
+		/// <summary>获取或设置流程显示名称</summary>
+		public String DisplayName { get; set; }
+		/// <summary>获取或设置流程业务说明</summary>
+		public String Description { get; set; }
+		/// <summary>获取或设置版本号</summary>
+		public Int32 Version { get; set; }
+		/// <summary>获取或设置是否发布，1=已经发布,0未发布</summary>
+		public Boolean State { get; set; }
+		/// <summary>获取或设置上载到数据库的操作员</summary>
+		public String UploadUser { get; set; }
+		/// <summary>获取或设置上载到数据库的时间</summary>
+		public DateTime UploadTime { get; set; }
+		/// <summary>获取或设置发布人</summary>
+		public String PublishUser { get; set; }
+		/// <summary>获取或设置发布时间</summary>
+		public DateTime PublishTime { get; set; }
+		/// <summary>获取或设置定义文件的语言类型，fpdl,xpdl,bepl...</summary>
+		public String DefinitionType { get; set; }
+		/// <summary>获取或设置流程定义文件的内容。</summary>
+		public String ProcessContent { get; set; }//
+		#endregion
 
-        /// <summary>获取业务流程对象</summary>
-        public WorkflowProcess getWorkflowProcess()// throws RuntimeException
-        {
-            if (workflowProcess == null)
-            {
-                if (ProcessContent != null && !String.IsNullOrEmpty(this.ProcessContent.Trim()))
-                {
-                    Dom4JFPDLParser parser = new Dom4JFPDLParser();
-                    //MemoryStream msin = null;
-
-                    //try
-                    //{
-                    //    
-                    //    msin = new MemoryStream(Encoding.UTF8.GetBytes(this.ProcessContent));
-                    //    this.workflowProcess = parser.parse(msin);
-                    //}
-                    //catch
-                    //{
-                    //    throw;
-                    //}
-                    //finally
-                    //{
-                    //    if (msin != null) msin.Close();
-                    //}
-
-                    //TODO DEBUG
-                    this.workflowProcess = parser.parse(this.ProcessContent);
-
-                }
-            }
-            workflowProcess.Sn = this.Id;
-            return workflowProcess;
-        }
-
-        public void setWorkflowProcess(WorkflowProcess process)// throws  RuntimeException 
-        {
-            this.workflowProcess = process;
-
-            this.ProcessId = workflowProcess.Id;
-            this.Name = workflowProcess.Name;
-            this.DisplayName = workflowProcess.DisplayName;
-            this.Description = workflowProcess.Description;
-
-            Dom4JFPDLSerializer ser = new Dom4JFPDLSerializer();
-            //MemoryStream so = new MemoryStream();
-            //try
-            //{
-            //    ser.serialize(workflowProcess, so);
-            //    this.ProcessContent = Encoding.UTF8.GetString(so.ToArray());
-            //}
-            //catch
-            //{
-            //    throw;
-            //}
-            //finally
-            //{
-            //    if (so != null) so.Close();
-            //}
-            this.ProcessContent = ser.serialize(process);
-        }
-    }
+	}
 }

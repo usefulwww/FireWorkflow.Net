@@ -11,8 +11,9 @@ using FireWorkflow.Net.Engine.Definition;
 using FireWorkflow.Net.Engine;
 using FireWorkflow.Net.Engine.Impl;
 using FireWorkflow.Net.Engine.Persistence;
-using Coolite.Ext.Web;
+
 using WebDemo.Components;
+using Ext.Net;
 
 namespace WebDemo.Example.WorkflowExtension
 {
@@ -32,10 +33,10 @@ namespace WebDemo.Example.WorkflowExtension
             IPersistenceService ips = RuntimeContextExamples.GetRuntimeContext().PersistenceService;
             string username = this.User.Identity.Name;
             if (username == "admin") username = "";
-            List<IProcessInstance> pis = ips.FindProcessInstanceListByCreatorId(username, "", 100, 0);
+            IList<IProcessInstance> pis = ips.FindProcessInstanceListByCreatorId(username, "", 100, 0);
             foreach (IProcessInstance item in pis)
             {
-                ((ProcessInstance)item).RuntimeContext = ips.RuntimeContext;
+                //((ProcessInstance)item).RuntimeContext = ips.RuntimeContext;
             }
             Sdate.DataSource = pis;
             Sdate.DataBind();
@@ -56,10 +57,10 @@ namespace WebDemo.Example.WorkflowExtension
             Store2.DataBind();
         }
 
-        protected void BeforeExpand(object sender, AjaxEventArgs e)
+        protected void BeforeExpand(object sender, DirectEventArgs e)
         {
             IPersistenceService ips = RuntimeContextExamples.GetRuntimeContext().PersistenceService;
-            List<IWorkItem> IWorkItems = ips.FindWorkItemsForTaskInstance(e.ExtraParams["id"]);
+            IList<IWorkItem> IWorkItems = ips.FindWorkItemsForTaskInstance(e.ExtraParams["id"]);
             StringBuilder sb = new StringBuilder();
             foreach (IWorkItem item in IWorkItems)
             {

@@ -77,7 +77,7 @@ namespace FireWorkflow.Net.Kernel.Impl
             this.fireNodeEvent(event1);
 
             //汇聚检查
-            joinPoint = ((ProcessInstance)tk.ProcessInstance).createJoinPoint(this, tk);// JoinPoint由谁生成比较好？
+            joinPoint = ProcessInstanceHelper.createJoinPoint(tk.ProcessInstance,this, tk);// JoinPoint由谁生成比较好？
             int value = (int)joinPoint.Value;
             if (value > this.Volume)//如果value大于同步器容量，那说明出错了
             {

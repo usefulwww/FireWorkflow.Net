@@ -73,7 +73,7 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// </summary>
         /// <param name="processId">The id of the process definition.</param>
         /// <returns>A list of processInstance</returns>
-        List<IProcessInstance> FindProcessInstancesByProcessId(String processId);
+        IList<IProcessInstance> FindProcessInstancesByProcessId(String processId);
 
         /// <summary>
         /// 查找并返回同一个指定版本业务流程的所有实例
@@ -82,7 +82,7 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// <param name="processId">The id of the process definition.</param>
         /// <param name="version">A list of processInstance</param>
         /// <returns></returns>
-        List<IProcessInstance> FindProcessInstancesByProcessIdAndVersion(String processId, Int32 version);
+        IList<IProcessInstance> FindProcessInstancesByProcessIdAndVersion(String processId, Int32 version);
 
         /// <summary>
         /// 计算活动的子流程实例的数量
@@ -95,19 +95,19 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// 终止流程实例。将流程实例、活动的TaskInstance、活动的WorkItem的状态设置为CANCELED；并删除所有的token
         /// </summary>
         /// <param name="processInstance"></param>
-        bool AbortProcessInstance(ProcessInstance processInstance);
+        bool AbortProcessInstance(IProcessInstance processInstance);
 
         /// <summary>
         /// 挂起流程实例
         /// </summary>
         /// <param name="processInstance"></param>
-        bool SuspendProcessInstance(ProcessInstance processInstance);
+        bool SuspendProcessInstance(IProcessInstance processInstance);
 
         /// <summary>
         /// 恢复流程实例
         /// </summary>
         /// <param name="processInstance"></param>
-        bool RestoreProcessInstance(ProcessInstance processInstance);
+        bool RestoreProcessInstance(IProcessInstance processInstance);
 
         /******************************************************************************/
         /************                                                        **********/
@@ -119,13 +119,13 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// <summary>查询流程实例的所有变量</summary>
         /// <param name="processInstanceId">流程实例的Id</param>
         /// <returns>流程实例的所有变量</returns>
-        List<ProcessInstanceVar> FindProcessInstanceVariable(String processInstanceId);
+        IList<IProcessInstanceVar> FindProcessInstanceVariable(String processInstanceId);
 
-        ProcessInstanceVar FindProcessInstanceVariable(String processInstanceId, String name);
+        IProcessInstanceVar FindProcessInstanceVariable(String processInstanceId, String name);
 
-        bool UpdateProcessInstanceVariable(ProcessInstanceVar var);
+        bool UpdateProcessInstanceVariable(IProcessInstanceVar var);
 
-        bool SaveProcessInstanceVariable(ProcessInstanceVar var);
+        bool SaveProcessInstanceVariable(IProcessInstanceVar var);
 
         /******************************************************************************/
         /************                                                        **********/
@@ -148,7 +148,7 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// "活的"WorkItem 是指状态等于INITIALIZED、STARTED或者SUSPENDED的WorkItem.
         /// </summary>
         /// <param name="taskInstance"></param>
-        bool AbortTaskInstance(TaskInstance taskInstance);
+        bool AbortTaskInstance(ITaskInstance taskInstance);
 
         /// <summary>
         /// 返回“活的”TaskInstance。<br/>
@@ -191,7 +191,7 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// <param name="processInstanceId">the id of the process instance</param>
         /// <param name="activityId">if the activityId is null, then return all the taskinstance of the processinstance;</param>
         /// <returns></returns>
-        List<ITaskInstance> FindTaskInstancesForProcessInstance(String processInstanceId, String activityId);
+        IList<ITaskInstance> FindTaskInstancesForProcessInstance(String processInstanceId, String activityId);
 
         /// <summary>
         /// 查询出同一个stepNumber的所有TaskInstance实例
@@ -199,7 +199,7 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// <param name="processInstanceId"></param>
         /// <param name="stepNumber"></param>
         /// <returns></returns>
-        List<ITaskInstance> FindTaskInstancesForProcessInstanceByStepNumber(String processInstanceId, Int32 stepNumber);
+        IList<ITaskInstance> FindTaskInstancesForProcessInstanceByStepNumber(String processInstanceId, Int32 stepNumber);
 
         /// <summary>
         /// 调用数据库自身的机制所定TaskInstance实例。<br/>
@@ -237,14 +237,14 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// </summary>
         /// <param name="taskInstanceId">任务实例Id</param>
         /// <returns></returns>
-        List<IWorkItem> FindCompletedWorkItemsForTaskInstance(String taskInstanceId);
+        IList<IWorkItem> FindCompletedWorkItemsForTaskInstance(String taskInstanceId);
 
         /// <summary>
         /// 查询某任务实例的所有WorkItem
         /// </summary>
         /// <param name="taskInstanceId"></param>
         /// <returns></returns>
-        List<IWorkItem> FindWorkItemsForTaskInstance(String taskInstanceId);
+        IList<IWorkItem> FindWorkItemsForTaskInstance(String taskInstanceId);
 
         /// <summary>
         /// 删除处于初始化状态的workitem。
@@ -267,7 +267,7 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// </summary>
         /// <param name="taskid"></param>
         /// <returns></returns>
-        List<IWorkItem> FindWorkItemsForTask(String taskid);
+        IList<IWorkItem> FindWorkItemsForTask(String taskid);
 
         /// <summary>
         /// 根据操作员的Id返回其待办工单。如果actorId==null，则返回系统所有的待办任务<br/>
@@ -276,7 +276,7 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// </summary>
         /// <param name="actorId"></param>
         /// <returns></returns>
-        List<IWorkItem> FindTodoWorkItems(String actorId);
+        IList<IWorkItem> FindTodoWorkItems(String actorId);
 
         /// <summary>
         /// 查找操作员在某个流程实例中的待办工单。
@@ -287,7 +287,7 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// <param name="actorId"></param>
         /// <param name="processInstanceId"></param>
         /// <returns></returns>
-        List<IWorkItem> FindTodoWorkItems(String actorId, String processInstanceId);
+        IList<IWorkItem> FindTodoWorkItems(String actorId, String processInstanceId);
 
         /// <summary>
         /// 查找操作员在某个流程某个任务上的待办工单。
@@ -299,7 +299,7 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// <param name="processId"></param>
         /// <param name="taskId"></param>
         /// <returns></returns>
-        List<IWorkItem> FindTodoWorkItems(String actorId, String processId, String taskId);
+        IList<IWorkItem> FindTodoWorkItems(String actorId, String processId, String taskId);
 
         /// <summary>
         /// 根据操作员的Id返回其已办工单。如果actorId==null，则返回系统所有的已办任务
@@ -308,7 +308,7 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// </summary>
         /// <param name="actorId"></param>
         /// <returns></returns>
-        List<IWorkItem> FindHaveDoneWorkItems(String actorId);
+        IList<IWorkItem> FindHaveDoneWorkItems(String actorId);
 
         /// <summary>
         /// 查找操作员在某个流程实例中的已办工单。
@@ -319,7 +319,7 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// <param name="actorId"></param>
         /// <param name="processInstanceId"></param>
         /// <returns></returns>
-        List<IWorkItem> FindHaveDoneWorkItems(String actorId, String processInstanceId);
+        IList<IWorkItem> FindHaveDoneWorkItems(String actorId, String processInstanceId);
 
         /// <summary>
         /// 查找操作员在某个流程某个任务上的已办工单。
@@ -331,7 +331,7 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// <param name="processId"></param>
         /// <param name="taskId"></param>
         /// <returns></returns>
-        List<IWorkItem> FindHaveDoneWorkItems(String actorId, String processId, String taskId);
+        IList<IWorkItem> FindHaveDoneWorkItems(String actorId, String processId, String taskId);
 
         /******************************************************************************/
         /************                                                        **********/
@@ -356,13 +356,13 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// <param name="processInstanceId">the id of the process instance</param>
         /// <param name="nodeId">if the nodeId is null ,then return all the tokens of the process instance.</param>
         /// <returns></returns>
-        List<IToken> FindTokensForProcessInstance(String processInstanceId, String nodeId);
+        IList<IToken> FindTokensForProcessInstance(String processInstanceId, String nodeId);
 
         /// <summary>删除某个节点的所有token</summary>
         bool DeleteTokensForNode(String processInstanceId, String nodeId);
 
         /// <summary>删除某些节点的所有token</summary>
-        bool DeleteTokensForNodes(String processInstanceId, List<String> nodeIdsList);
+        bool DeleteTokensForNodes(String processInstanceId, IList<String> nodeIdsList);
 
         /// <summary>删除token</summary>
         bool DeleteToken(IToken token);
@@ -378,38 +378,38 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// Save or update the workflow definition. The version will be increased automatically when insert a new record.
         /// 保存流程定义，如果同一个ProcessId的流程定义已经存在，则版本号自动加1。
         /// </summary>
-        bool SaveOrUpdateWorkflowDefinition(WorkflowDefinition workflowDef);
+        bool SaveOrUpdateWorkflowDefinition(IWorkflowDefinition workflowDef);
 
         /// <summary>
         /// Find the workflow definition by id .
         /// 根据纪录的ID返回流程定义
         /// </summary>
-        WorkflowDefinition FindWorkflowDefinitionById(String id);
+        IWorkflowDefinition FindWorkflowDefinitionById(String id);
 
         /// <summary>
         /// Find workflow definition by workflow process id and version
         /// 根据ProcessId和版本号返回流程定义
         /// </summary>
-        WorkflowDefinition FindWorkflowDefinitionByProcessIdAndVersionNumber(String processId, int version);
+        IWorkflowDefinition FindWorkflowDefinitionByProcessIdAndVersionNumber(String processId, int version);
 
         /// <summary>
         /// Find the latest version of the workflow definition.
         /// 根据processId返回最新版本的有效流程定义
         /// </summary>
         /// <param name="processId">the workflow process id</param>
-        WorkflowDefinition FindTheLatestVersionOfWorkflowDefinitionByProcessId(String processId);
+        IWorkflowDefinition FindTheLatestVersionOfWorkflowDefinitionByProcessId(String processId);
 
         /// <summary>
         /// Find all the workflow definitions for the workflow process id.
         /// 根据ProcessId 返回所有版本的流程定义
         /// </summary>
-        List<WorkflowDefinition> FindWorkflowDefinitionsByProcessId(String processId);
+        IList<IWorkflowDefinition> FindWorkflowDefinitionsByProcessId(String processId);
 
         /// <summary>
         /// Find all of the latest version of workflow definitions.
         /// 返回系统中所有的最新版本的有效流程定义
         /// </summary>
-        List<WorkflowDefinition> FindAllTheLatestVersionsOfWorkflowDefinition();
+        IList<IWorkflowDefinition> FindAllTheLatestVersionsOfWorkflowDefinition();
 
         /// <summary>
         /// Find the latest version number 
@@ -425,7 +425,7 @@ namespace FireWorkflow.Net.Engine.Persistence
 
 
         /********************************process instance trace info **********************/
-        bool SaveOrUpdateProcessInstanceTrace(ProcessInstanceTrace processInstanceTrace);
+        bool SaveOrUpdateProcessInstanceTrace(IProcessInstanceTrace processInstanceTrace);
 
 
         /********************************process instance trace info **********************/
@@ -435,7 +435,7 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// </summary>
         /// <param name="processInstanceId">流程实例ID</param>
         /// <returns></returns>
-        List<ProcessInstanceTrace> FindProcessInstanceTraces(String processInstanceId);
+        IList<IProcessInstanceTrace> FindProcessInstanceTraces(String processInstanceId);
 
         /******************************** lifw555@gmail.com **********************/
 
@@ -457,7 +457,7 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// <param name="pageSize">每页显示的条数</param>
         /// <param name="pageNumber">当前页数</param>
         /// <returns></returns>
-        List<IWorkItem> FindTodoWorkItems(String actorId, String publishUser, int pageSize, int pageNumber);
+        IList<IWorkItem> FindTodoWorkItems(String actorId, String publishUser, int pageSize, int pageNumber);
 
         /// <summary>
         /// 获得操作员完成的工单总数量
@@ -477,7 +477,7 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// <param name="pageSize">每页显示的条数</param>
         /// <param name="pageNumber">当前页数</param>
         /// <returns></returns>
-        List<IWorkItem> FindHaveDoneWorkItems(String actorId, String publishUser, int pageSize, int pageNumber);
+        IList<IWorkItem> FindHaveDoneWorkItems(String actorId, String publishUser, int pageSize, int pageNumber);
 
         /// <summary>
         /// 获得操作员发起的工作流实例总数量
@@ -497,7 +497,7 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// <param name="pageSize">每页显示的条数</param>
         /// <param name="pageNumber">当前页数</param>
         /// <returns></returns>
-        List<IProcessInstance> FindProcessInstanceListByCreatorId(String creatorId, String publishUser, int pageSize, int pageNumber);
+        IList<IProcessInstance> FindProcessInstanceListByCreatorId(String creatorId, String publishUser, int pageSize, int pageNumber);
 
         /// <summary>
         /// 获得工作流发布者发起的所有流程定义的工作流实例总数量
@@ -513,7 +513,7 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// <param name="pageSize">每页显示的条数</param>
         /// <param name="pageNumber">当前页数</param>
         /// <returns></returns>
-        List<IProcessInstance> FindProcessInstanceListByPublishUser(String publishUser, int pageSize, int pageNumber);
+        IList<IProcessInstance> FindProcessInstanceListByPublishUser(String publishUser, int pageSize, int pageNumber);
 
     }
 }

@@ -40,38 +40,38 @@ namespace FireWorkflow.Net.Engine.Taskinstance
         {
             if (taskInstance.TaskType != TaskTypeEnum.SUBFLOW)
             {
-                throw new EngineException(processInstance, taskInstance.Activity,
+                throw new EngineException(processInstance, TaskInstanceHelper.getActivity(taskInstance),
                         "DefaultSubflowTaskInstanceRunner：TaskInstance的任务类型错误，只能为SUBFLOW类型");
             }
-            Task task = taskInstance.Task;
+            Task task = TaskInstanceHelper.getTask(taskInstance);
             SubWorkflowProcess Subflow = ((SubflowTask)task).SubWorkflowProcess;
 
-            WorkflowDefinition subWorkflowDef = runtimeContext.DefinitionService.GetTheLatestVersionOfWorkflowDefinition(Subflow.WorkflowProcessId);
+            IWorkflowDefinition subWorkflowDef = runtimeContext.DefinitionService.GetTheLatestVersionOfWorkflowDefinition(Subflow.WorkflowProcessId);
             if (subWorkflowDef == null)
             {
-                WorkflowProcess parentWorkflowProcess = taskInstance.WorkflowProcess;
+                WorkflowProcess parentWorkflowProcess = TaskInstanceHelper.getWorkflowProcess(taskInstance);
                 throw new EngineException(taskInstance.ProcessInstanceId, parentWorkflowProcess, taskInstance.TaskId,
                         "系统中没有Id为" + Subflow.WorkflowProcessId + "的流程定义");
             }
-            WorkflowProcess subWorkflowProcess = subWorkflowDef.getWorkflowProcess();
+            WorkflowProcess subWorkflowProcess = WorkflowDefinitionHelper.getWorkflowProcess(subWorkflowDef);
 
             if (subWorkflowProcess == null)
             {
-                WorkflowProcess parentWorkflowProcess = taskInstance.WorkflowProcess;
+                WorkflowProcess parentWorkflowProcess = TaskInstanceHelper.getWorkflowProcess(taskInstance);
                 throw new EngineException(taskInstance.ProcessInstanceId, parentWorkflowProcess, taskInstance.TaskId,
                         "系统中没有Id为" + Subflow.WorkflowProcessId + "的流程定义");
             }
 
             IPersistenceService persistenceService = runtimeContext.PersistenceService;
             //更改任务的状态和开始时间
-            ((TaskInstance)taskInstance).State = TaskInstanceStateEnum.RUNNING;
-            ((TaskInstance)taskInstance).StartedTime = runtimeContext.CalendarService.getSysDate();
+            taskInstance.State = TaskInstanceStateEnum.RUNNING;
+            taskInstance.StartedTime = runtimeContext.CalendarService.getSysDate();
             persistenceService.SaveOrUpdateTaskInstance(taskInstance);
 
             IProcessInstance subProcessInstance = currentSession.createProcessInstance(subWorkflowProcess.Name, taskInstance);
 
             //初始化流程变量,从父实例获得初始值
-            Dictionary<String, Object> processVars = ((TaskInstance)taskInstance).AliveProcessInstance.ProcessInstanceVariables;
+            Dictionary<String, Object> processVars = ProcessInstanceHelper.getProcessInstanceVariables(TaskInstanceHelper.getAliveProcessInstance(taskInstance));
             List<DataField> datafields = subWorkflowProcess.DataFields;
             for (int i = 0; datafields != null && i < datafields.Count; i++)
             {
@@ -80,67 +80,67 @@ namespace FireWorkflow.Net.Engine.Taskinstance
                 {
                     if (processVars[df.Name] != null && (processVars[df.Name] is String))
                     {
-                        subProcessInstance.setProcessInstanceVariable(df.Name, processVars[df.Name]);
+                        ProcessInstanceHelper.setProcessInstanceVariable(subProcessInstance,df.Name, processVars[df.Name]);
                     }
                     else if (df.InitialValue != null)
                     {
-                        subProcessInstance.setProcessInstanceVariable(df.Name, df.InitialValue);
+                        ProcessInstanceHelper.setProcessInstanceVariable(subProcessInstance,df.Name, df.InitialValue);
                     }
                     else
                     {
-                        subProcessInstance.setProcessInstanceVariable(df.Name, "");
+                        ProcessInstanceHelper.setProcessInstanceVariable(subProcessInstance,df.Name, "");
                     }
                 }
                 else if (df.DataType == DataTypeEnum.INTEGER)
                 {
                     if (processVars[df.Name] != null && (processVars[df.Name] is Int32))
                     {
-                        subProcessInstance.setProcessInstanceVariable(df.Name, processVars[df.Name]);
+                        ProcessInstanceHelper.setProcessInstanceVariable(subProcessInstance,df.Name, processVars[df.Name]);
                     }
                     else if (df.InitialValue != null)
                     {
                         try
                         {
                             Int32 intValue = Int32.Parse(df.InitialValue);
-                            subProcessInstance.setProcessInstanceVariable(df.Name, intValue);
+                            ProcessInstanceHelper.setProcessInstanceVariable(subProcessInstance,df.Name, intValue);
                         }
                         catch { }
                     }
                     else
                     {
-                        subProcessInstance.setProcessInstanceVariable(df.Name, (Int32)0);
+                        ProcessInstanceHelper.setProcessInstanceVariable(subProcessInstance,df.Name, (Int32)0);
                     }
                 }
                 else if (df.DataType == DataTypeEnum.FLOAT)
                 {
                     if (processVars[df.Name] != null && (processVars[df.Name] is float))
                     {
-                        subProcessInstance.setProcessInstanceVariable(df.Name, processVars[df.Name]);
+                        ProcessInstanceHelper.setProcessInstanceVariable(subProcessInstance,df.Name, processVars[df.Name]);
                     }
                     else if (df.InitialValue != null)
                     {
                         float floatValue = float.Parse(df.InitialValue);
-                        subProcessInstance.setProcessInstanceVariable(df.Name, floatValue);
+                        ProcessInstanceHelper.setProcessInstanceVariable(subProcessInstance,df.Name, floatValue);
                     }
                     else
                     {
-                        subProcessInstance.setProcessInstanceVariable(df.Name, (float)0);
+                        ProcessInstanceHelper.setProcessInstanceVariable(subProcessInstance,df.Name, (float)0);
                     }
                 }
                 else if (df.DataType == DataTypeEnum.BOOLEAN)
                 {
                     if (processVars[df.Name] != null && (processVars[df.Name] is Boolean))
                     {
-                        subProcessInstance.setProcessInstanceVariable(df.Name, processVars[df.Name]);
+                        ProcessInstanceHelper.setProcessInstanceVariable(subProcessInstance,df.Name, processVars[df.Name]);
                     }
                     else if (df.InitialValue != null)
                     {
                         Boolean booleanValue = Boolean.Parse(df.InitialValue);
-                        subProcessInstance.setProcessInstanceVariable(df.Name, booleanValue);
+                        ProcessInstanceHelper.setProcessInstanceVariable(subProcessInstance,df.Name, booleanValue);
                     }
                     else
                     {
-                        subProcessInstance.setProcessInstanceVariable(df.Name, false);
+                        ProcessInstanceHelper.setProcessInstanceVariable(subProcessInstance,df.Name, false);
                     }
                 }
                 else if (df.DataType == DataTypeEnum.DATETIME)
@@ -149,24 +149,24 @@ namespace FireWorkflow.Net.Engine.Taskinstance
                     //wmj2003 20090925 补充上了
                     if (processVars[df.Name] != null && (processVars[df.Name] is DateTime))
                     {
-                        subProcessInstance.setProcessInstanceVariable(df.Name, processVars[df.Name]);
+                        ProcessInstanceHelper.setProcessInstanceVariable(subProcessInstance,df.Name, processVars[df.Name]);
                     }
                     else if (df.InitialValue != null)
                     {
                         try
                         {
                             DateTime dateTmp = DateTime.Parse(df.InitialValue);
-                            subProcessInstance.setProcessInstanceVariable(df.Name, dateTmp);
+                            ProcessInstanceHelper.setProcessInstanceVariable(subProcessInstance,df.Name, dateTmp);
                         }
                         catch
                         {
-                            subProcessInstance.setProcessInstanceVariable(df.Name, null);
+                            ProcessInstanceHelper.setProcessInstanceVariable(subProcessInstance,df.Name, null);
                         }
                     }
                 }
                 //TODO 应将下面这句删除！这里还需要吗？应该直接subProcessInstance.run()就可以了。
                 runtimeContext.PersistenceService.SaveOrUpdateProcessInstance(subProcessInstance);
-                subProcessInstance.run();
+                ProcessInstanceHelper.run(subProcessInstance);
             }
         }
     }

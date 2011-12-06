@@ -45,27 +45,27 @@ namespace FireWorkflow.Net.Engine.Taskinstance
         /// </summary>
         /// <param name="asignable">IAssignable实现类，在FireWorkflow中实际上就是TaskInstance对象。</param>
         /// <param name="performerName">角色名称</param>
-        public void assign(IAssignable asignable, String performerName)// throws EngineException, KernelException 
+        public void assign(ITaskInstance taskInstance, String performerName)// throws EngineException, KernelException 
         {
             if (ActorIdsList == null || ActorIdsList.Count == 0)
             {
-                TaskInstance taskInstance = (TaskInstance)asignable;
-                throw new EngineException(taskInstance.ProcessInstanceId, taskInstance.WorkflowProcess, taskInstance.TaskId,
+                //ITaskInstance taskInstance = (ITaskInstance)asignable;
+                throw new EngineException(taskInstance.ProcessInstanceId, TaskInstanceHelper.getWorkflowProcess(taskInstance), taskInstance.TaskId,
                     "actorIdsList can not be empty");
             }
 
-            List<IWorkItem> workItems = asignable.assignToActors(ActorIdsList);
+            IList<IWorkItem> workItems = TaskInstanceHelper.assignToActors(taskInstance,ActorIdsList);
 
-            ITaskInstance taskInst = (ITaskInstance)asignable;
+            //ITaskInstance taskInst = (ITaskInstance)asignable;
             //如果不需要签收，这里自动进行签收，（FormTask的strategy="all"或者=any并且工作项数量为1） 
             if (!IsNeedClaim)
             {
-                if (FormTaskEnum.ALL==taskInst.AssignmentStrategy || (FormTaskEnum.ANY==taskInst.AssignmentStrategy && ActorIdsList.Count == 1))
+                if (FormTaskEnum.ALL==taskInstance.AssignmentStrategy || (FormTaskEnum.ANY==taskInstance.AssignmentStrategy && ActorIdsList.Count == 1))
                 {
                     for (int i = 0; i < workItems.Count; i++)
                     {
                         IWorkItem wi = workItems[i];
-                        wi.claim();
+                        WorkItemHelper.claim(wi);
                     }
                 }
             }

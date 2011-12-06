@@ -8,8 +8,9 @@ using FireWorkflow.Net.Model;
 using FireWorkflow.Net.Model.Io;
 using FireWorkflow.Net.Engine.Definition;
 using FireWorkflow.Net.Engine;
-using Coolite.Ext.Web;
+
 using WebDemo.Components;
+using Ext.Net;
 
 namespace WebDemo.Example.WorkflowExtension
 {
@@ -24,14 +25,14 @@ namespace WebDemo.Example.WorkflowExtension
             }
         }
 
-        public void query_Click(object sender, AjaxEventArgs e)
+        public void query_Click(object sender, EventArgs e)
         {
             Sdate_Refresh(null, null);
         }
 
         public void Sdate_Refresh(object sender, StoreRefreshDataEventArgs e)
         {
-            List<IWorkItem> iwis = RuntimeContextExamples.GetRuntimeContext().PersistenceService.FindHaveDoneWorkItems(this.User.Identity.Name);
+            IList<IWorkItem> iwis = RuntimeContextExamples.GetRuntimeContext().PersistenceService.FindHaveDoneWorkItems(this.User.Identity.Name);
             Sdate.DataSource = iwis;
             Sdate.DataBind();
         }
