@@ -184,11 +184,23 @@ namespace FireWorkflow.Net.Engine
             }
         }
 
-        public IWorkflowSession getWorkflowSession()
-        {
-            return new WorkflowSession(this);
-        }
+        Dictionary<string, IWorkflowSession> workflowSession_map = new Dictionary<string, IWorkflowSession>();
+        
+        //[System.Obsolete("createWorkflowSession()")]
+        //public IWorkflowSession getWorkflowSession()
+        //{
+        //    return new WorkflowSession(this);
+            
+        //}
 
+
+        public IWorkflowSession getWorkflowSession(string processInstanceId)
+        {
+            if (workflowSession_map.ContainsKey(processInstanceId))
+                return workflowSession_map[processInstanceId];
+            else
+                return workflowSession_map[processInstanceId] = new WorkflowSession(this);
+        }
         /// <summary>初始化方法</summary>
         public void initialize()// throws EngineException, KernelException 
         {

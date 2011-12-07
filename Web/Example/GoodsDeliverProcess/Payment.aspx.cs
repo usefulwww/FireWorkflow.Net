@@ -45,11 +45,12 @@ namespace WebDemo.Example.GoodsDeliverProcess
             tradeInfoDao.save(paymentInfo);
 
             // 二、开始执行流程操作
-            IWorkflowSession workflowSession = RuntimeContextExamples.GetRuntimeContext().getWorkflowSession();//.workflowRuntimeContext.getWorkflowSession();
+            //IWorkflowSession workflowSession = RuntimeContextExamples.GetRuntimeContext().getWorkflowSession();//.workflowRuntimeContext.getWorkflowSession();
             try
             {
                 // 1、创建流程实例
-                IProcessInstance procInst = workflowSession.createProcessInstance("Goods_Deliver_Process", this.User.Identity.Name);
+                IProcessInstance procInst = ProcessInstanceHelper.createProcessInstance("Goods_Deliver_Process", this.User.Identity.Name);
+                
                 // 2、设置流程变量/业务属性字段
                 ProcessInstanceHelper.setProcessInstanceVariable(procInst,"sn", paymentInfo.Sn);// 设置交易顺序号
                 ProcessInstanceHelper.setProcessInstanceVariable(procInst,"goodsName", paymentInfo.GoodsName);// 货物名称

@@ -65,7 +65,10 @@ namespace FireWorkflow.Net.Engine.Taskinstance
             ICalendarService calService = this.RuntimeContext.CalendarService;
 
             IProcessInstance processInstance = token.ProcessInstance;
-            IWorkflowSession workflowSession = processInstance.CurrentWorkflowSession;
+            //IWorkflowSession workflowSession = processInstance.CurrentWorkflowSession;
+            
+            //lyun: 可以使用这个方法获取workflowsession 2011-12
+            IWorkflowSession workflowSession = this.RuntimeContext.getWorkflowSession(token.ProcessInstanceId);
 
             if (workflowSession == null)
             {
@@ -862,7 +865,7 @@ namespace FireWorkflow.Net.Engine.Taskinstance
             wi.State = WorkItemEnum.INITIALIZED;
             wi.CreatedTime = this.RuntimeContext.CalendarService.getSysDate();
             //wi.RuntimeContext = this.RuntimeContext;
-            wi.CurrentWorkflowSession = currentSession;
+            //wi.CurrentWorkflowSession = currentSession;
             //保存到数据库
             persistenceService.SaveOrUpdateWorkItem(wi);
 
@@ -966,7 +969,8 @@ namespace FireWorkflow.Net.Engine.Taskinstance
             // 触发AFTER_WORKITEM_COMPLETE事件
             TaskInstanceEvent e = new TaskInstanceEvent();
             e.Source = workItem.TaskInstance;
-            e.WorkflowSession = ((IWorkflowSessionAware)workItem).CurrentWorkflowSession;
+            //e.WorkflowSession = ((IWorkflowSessionAware)workItem).CurrentWorkflowSession;
+            e.WorkflowSession = this.RuntimeContext.getWorkflowSession(workItem.ProcessInstanceId);
             e.ProcessInstance = TaskInstanceHelper.getAliveProcessInstance(workItem.TaskInstance);
             e.EventType = TaskInstanceEventEnum.AFTER_WORKITEM_COMPLETE;
             if (this.DefaultTaskInstanceEventListener != null)
@@ -1394,8 +1398,9 @@ namespace FireWorkflow.Net.Engine.Taskinstance
             }
 
             //执行reject操作。
-            IWorkflowSession session = ((IWorkflowSessionAware)workItem).CurrentWorkflowSession;
-            session.setWithdrawOrRejectOperationFlag(true);
+           // IWorkflowSession session = ((IWorkflowSessionAware)workItem).CurrentWorkflowSession;
+           // session.setWithdrawOrRejectOperationFlag(true);
+            IWorkflowSession session = this.RuntimeContext.getWorkflowSession(workItem.ProcessInstanceId);
             int newStepNumber = (int)thisTaskInstance.StepNumber + 1;
             try
             {
@@ -1530,8 +1535,8 @@ namespace FireWorkflow.Net.Engine.Taskinstance
             IActivityInstance thisActivityInstance = (IActivityInstance)obj;
 
             //一切检查通过之后进行“收回”处理
-
-            IWorkflowSession session = ((IWorkflowSessionAware)workItem).CurrentWorkflowSession;
+            //IWorkflowSession session = ((IWorkflowSessionAware)workItem).CurrentWorkflowSession;
+            IWorkflowSession session = this.RuntimeContext.getWorkflowSession(workItem.ProcessInstanceId);
             session.setWithdrawOrRejectOperationFlag(true);
             int newStepNumber = (int)thisTaskInstance.StepNumber + 2;
             try

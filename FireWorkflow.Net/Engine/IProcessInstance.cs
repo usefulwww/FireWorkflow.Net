@@ -42,7 +42,7 @@ namespace FireWorkflow.Net.Engine
     /// <para>活动状态包括：INITIALIZED,RUNNING,SUSPENDED</para>
     /// 非活动状态包括：COMPLETED,CANCELED
     /// </summary>
-    public interface IProcessInstance: IWorkflowSessionAware
+    public interface IProcessInstance/*: IWorkflowSessionAware*/
     {
 
         /// <summary>主键.</summary>

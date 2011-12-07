@@ -70,9 +70,9 @@ namespace FireWorkflow.Net.Engine.Impl
 //            }
 //        }
 
-        protected IWorkflowSession _workflowSession = null;
+        //protected IWorkflowSession _workflowSession = null;
        /// TODO Debug
-        public IWorkflowSession CurrentWorkflowSession { get; set; }
+       // public IWorkflowSession CurrentWorkflowSession { get; set; }
         //public IWorkflowSession CurrentWorkflowSession
         //{
         //    get { return this._workflowSession; }

@@ -44,7 +44,7 @@ namespace FireWorkflow.Net.Engine
     /// <para>活动状态包括：INITIALIZED,RUNNING,SUSPENDED</para>
     /// 非活动状态包括：COMPLETED,CANCELED
     /// </summary>
-    public interface ITaskInstance :  IWorkflowSessionAware
+    public interface ITaskInstance /*:  IWorkflowSessionAware*/
     {
         /// <summary>返回任务实例的Id</summary>
         String Id { get;set; }

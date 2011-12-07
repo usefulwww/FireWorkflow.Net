@@ -50,6 +50,11 @@ namespace FireWorkflow.Net.Engine.Persistence
         /// </summary>
         /// <param name="processInstance"></param>
         bool SaveOrUpdateProcessInstance(IProcessInstance processInstance);
+       
+        /// <summary>
+        /// 插入
+        /// </summary>
+        bool SaveProcessInstance(IProcessInstance processInstance);
 
         /// <summary>
         /// 通过ID获得“活的”ProcessInstance对象。

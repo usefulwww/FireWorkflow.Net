@@ -24,9 +24,9 @@ namespace WebDemo.Example.GoodsDeliverProcess
                 if (this.Request.QueryString["WorkItemId"] != null)
                 {
                     string workItemId = this.Request.QueryString["WorkItemId"];
-                    IWorkflowSession wflsession = RuntimeContextExamples.GetRuntimeContext().getWorkflowSession();
-                    IWorkItem wi = wflsession.findWorkItemById(workItemId);
-                    String sn = (String)ProcessInstanceHelper.getProcessInstanceVariable(TaskInstanceHelper.getAliveProcessInstance(wi.TaskInstance),"sn");
+                    //IWorkflowSession wflsession = RuntimeContextExamples.GetRuntimeContext().getWorkflowSessionByWorkItemId(workItemId);
+                    IWorkItem wi = RuntimeContextExamples.GetRuntimeContext().PersistenceService.FindWorkItemById(workItemId);
+                    String sn = (String)ProcessInstanceHelper.getProcessInstanceVariable(TaskInstanceHelper.getAliveProcessInstance(wi.TaskInstance), "sn");
                     TradeInfo ti=tradeInfoDao.findById(sn);
                     if (ti != null)
                     {
@@ -47,9 +47,9 @@ namespace WebDemo.Example.GoodsDeliverProcess
         public void Save_Click(object sender, EventArgs e)
         {
             string workItemId = HWorkItemId.Value.ToString();
-            IWorkflowSession wflsession = RuntimeContextExamples.GetRuntimeContext().getWorkflowSession();
-            IWorkItem wi = wflsession.findWorkItemById(workItemId);
-
+            //IWorkflowSession wflsession = RuntimeContextExamples.GetRuntimeContext().getWorkflowSessionByWorkItemId(workItemId);
+            IWorkItem wi = RuntimeContextExamples.GetRuntimeContext().PersistenceService.FindWorkItemById(workItemId);
+            
             try
             {
                 if (wi != null)

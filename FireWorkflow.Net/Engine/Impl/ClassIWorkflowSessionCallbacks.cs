@@ -288,10 +288,11 @@ namespace FireWorkflow.Net.Engine.Impl
         IWorkflowDefinition workflowDef;
         String parentProcessInstanceId;
         String parentTaskInstanceId;
-
-        public WorkflowSessionIProcessInstanceCreateProcessInstance(String creatorId, WorkflowProcess wfProcess, 
+        String processInstanceId;
+        public WorkflowSessionIProcessInstanceCreateProcessInstance(String processInstanceId,String creatorId, WorkflowProcess wfProcess, 
             IWorkflowDefinition workflowDef, String parentProcessInstanceId,String parentTaskInstanceId)
         {
+            this.processInstanceId = processInstanceId;
             this.creatorId = creatorId;
             this.wfProcess = wfProcess;
             this.workflowDef = workflowDef;
@@ -303,6 +304,7 @@ namespace FireWorkflow.Net.Engine.Impl
         {
 
             IProcessInstance processInstance = new ProcessInstance();
+            processInstance.Id = processInstanceId;
             processInstance.CreatorId=creatorId;
             processInstance.ProcessId=wfProcess.Id;
             processInstance.Version=workflowDef.Version;
@@ -313,7 +315,7 @@ namespace FireWorkflow.Net.Engine.Impl
             processInstance.ParentProcessInstanceId=parentProcessInstanceId;
             processInstance.ParentTaskInstanceId=parentTaskInstanceId;
 
-            ctx.PersistenceService.SaveOrUpdateProcessInstance(processInstance);
+            ctx.PersistenceService.SaveProcessInstance(processInstance);
 
             return processInstance;
         }

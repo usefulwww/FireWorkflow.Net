@@ -59,20 +59,21 @@ namespace FireWorkflow.Net.Persistence.SqlServerDAL
         /************            Persistence methods for process instance    **********/
         /************                                                        **********/
         /******************************************************************************/
-        /// <summary>
+       
+         /// <summary>
         /// 插入或者更新ProcessInstance流程实例
         /// </summary>
-        public bool SaveOrUpdateProcessInstance(IProcessInstance processInstance)
+        public bool SaveProcessInstance(IProcessInstance processInstance)
         {
             if (String.IsNullOrEmpty(processInstance.Id))
-            {
-                ((ProcessInstance)processInstance).Id = Guid.NewGuid().ToString().Replace("-", "");
-                string insert = "INSERT INTO T_FF_RT_PROCESSINSTANCE (" +
+                return false;
+
+            string insert = "INSERT INTO T_FF_RT_PROCESSINSTANCE (" +
                     "ID, PROCESS_ID, VERSION, NAME, DISPLAY_NAME, " +
                     "STATE, SUSPENDED, CREATOR_ID, CREATED_TIME, STARTED_TIME, " +
                     "EXPIRED_TIME, END_TIME, PARENT_PROCESSINSTANCE_ID, PARENT_TASKINSTANCE_ID" +
                     ") VALUES(@1,@2,@3,@4,@5, @6,@7,@8,@9,@10, @11,@12,@13,@14)";
-                SqlParameter[] insertParms = { 
+            SqlParameter[] insertParms = { 
     				SqlServerHelper.NewSqlParameter("@1", SqlDbType.VarChar, 50, processInstance.Id), 
     				SqlServerHelper.NewSqlParameter("@2", SqlDbType.VarChar, 100, processInstance.ProcessId), 
     				SqlServerHelper.NewSqlParameter("@3", SqlDbType.Int, processInstance.Version), 
@@ -88,9 +89,19 @@ namespace FireWorkflow.Net.Persistence.SqlServerDAL
     				SqlServerHelper.NewSqlParameter("@13", SqlDbType.VarChar, 50, processInstance.ParentProcessInstanceId), 
     				SqlServerHelper.NewSqlParameter("@14", SqlDbType.VarChar, 50, processInstance.ParentTaskInstanceId)
     			};
-                if (SqlServerHelper.ExecuteNonQuery(connectionString, CommandType.Text, insert, insertParms) != 1)
-                    return false;
-                else return true;
+            if (SqlServerHelper.ExecuteNonQuery(connectionString, CommandType.Text, insert, insertParms) != 1)
+                return false;
+            else return true;
+        }
+        /// <summary>
+        /// 插入或者更新ProcessInstance流程实例
+        /// </summary>
+        public bool SaveOrUpdateProcessInstance(IProcessInstance processInstance)
+        {
+            if (String.IsNullOrEmpty(processInstance.Id))
+            {
+                processInstance.Id = Guid.NewGuid().ToString("N");
+                return SaveProcessInstance(processInstance);
             }
             else
             {
@@ -219,8 +230,10 @@ namespace FireWorkflow.Net.Persistence.SqlServerDAL
             IList<IProcessInstance> _IProcessInstances = new List<IProcessInstance>();
 
             QueryField queryField = new QueryField();
-            queryField.Add(new QueryFieldInfo("a.creator_id", CSharpType.String, creatorId));
-            queryField.Add(new QueryFieldInfo("b.publish_user", CSharpType.String, publishUser));
+            if(!string.IsNullOrEmpty(creatorId))
+            	queryField.Add(new QueryFieldInfo("a.creator_id", CSharpType.String, creatorId));
+             if(!string.IsNullOrEmpty(publishUser))
+             	queryField.Add(new QueryFieldInfo("b.publish_user", CSharpType.String, publishUser));
             QueryInfo queryInfo = SqlServerHelper.GetFormatQuery(queryField);
 
             SqlConnection conn = new SqlConnection(connectionString);
@@ -229,9 +242,10 @@ namespace FireWorkflow.Net.Persistence.SqlServerDAL
             {
                 reader = SqlServerHelper.ExecuteReader(conn, pageNumber, pageSize, out sum,
                     "T_FF_RT_PROCESSINSTANCE a,t_ff_df_workflowdef b",
+                    "a.id",
                     "a.*,b.publish_user",
                     String.Format("a.process_id=b.process_id and a.version=b.version {0}", queryInfo.QueryStringAnd),
-                    "a.created_time desc",
+                    "created_time desc",
                     queryInfo.ListQueryParameters == null ? null : queryInfo.ListQueryParameters.ToArray());
 
                 if (reader != null)
@@ -549,7 +563,7 @@ namespace FireWorkflow.Net.Persistence.SqlServerDAL
         {
             if (String.IsNullOrEmpty(taskInstance.Id))
             {
-                taskInstance.Id = Guid.NewGuid().ToString().Replace("-", "");
+                taskInstance.Id = Guid.NewGuid().ToString("N");
                 string insert = "INSERT INTO T_FF_RT_TASKINSTANCE (" +
                 "ID, BIZ_TYPE, TASK_ID, ACTIVITY_ID, NAME, " +
                 "DISPLAY_NAME, STATE, SUSPENDED, TASK_TYPE, CREATED_TIME, " +
@@ -895,7 +909,7 @@ namespace FireWorkflow.Net.Persistence.SqlServerDAL
         {
             if (String.IsNullOrEmpty(workitem.Id))
             {
-                ((WorkItem)workitem).Id = Guid.NewGuid().ToString().Replace("-", ""); ;
+                workitem.Id = Guid.NewGuid().ToString("N"); ;
 
                 string insert = "INSERT INTO T_FF_RT_WORKITEM (" +
                     "ID, STATE, CREATED_TIME, CLAIMED_TIME, END_TIME, " +
@@ -1317,7 +1331,7 @@ namespace FireWorkflow.Net.Persistence.SqlServerDAL
         {
             if (String.IsNullOrEmpty(token.Id))
             {
-                ((Token)token).Id = Guid.NewGuid().ToString().Replace("-", "");
+                token.Id = Guid.NewGuid().ToString("N");
                 string insert = "INSERT INTO T_FF_RT_TOKEN (" +
                     "ID, ALIVE, VALUE, NODE_ID, PROCESSINSTANCE_ID, " +
                     "STEP_NUMBER, FROM_ACTIVITY_ID )VALUES(@1, @2, @3, @4, @5, @6, @7)";
@@ -1755,7 +1769,7 @@ namespace FireWorkflow.Net.Persistence.SqlServerDAL
         {
             if (String.IsNullOrEmpty(processInstanceTrace.Id))
             {
-                processInstanceTrace.Id = Guid.NewGuid().ToString().Replace("-", "");
+                processInstanceTrace.Id = Guid.NewGuid().ToString("N");
                 string insert = "INSERT INTO T_FF_HIST_TRACE (" +
                     "ID, PROCESSINSTANCE_ID, STEP_NUMBER, MINOR_NUMBER, TYPE, " +
                     "EDGE_ID, FROM_NODE_ID, TO_NODE_ID )VALUES(@1, @2, @3, @4, @5, @6, @7, @8)";

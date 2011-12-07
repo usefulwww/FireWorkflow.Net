@@ -60,7 +60,7 @@ namespace FireWorkflow.Net.Engine
         /// <param name="workflowProcessName">流程的Name属性，在Fire workflow中，流程的Name和Id是相等的而且都是唯一的。</param>
         /// <param name="parentTaskInstance">父TaskInstance</param>
         /// <returns>新创建的流程实例</returns>
-        IProcessInstance createProcessInstance(String workflowProcessName, ITaskInstance parentTaskInstance);//throws EngineException, KernelException;
+        //IProcessInstance createProcessInstance(String workflowProcessName, ITaskInstance parentTaskInstance);//throws EngineException, KernelException;
 
         /// <summary>
         /// <para>创建流程实例，并将creatorId填充到ProcessInstance的CreatorId字段。</para>
@@ -69,7 +69,7 @@ namespace FireWorkflow.Net.Engine
         /// <param name="workflowProcessName">流程定义的名称</param>
         /// <param name="creatorId">创建者Id</param>
         /// <returns>新创建的流程实例</returns>
-        IProcessInstance createProcessInstance(String workflowProcessName, String creatorId);//throws EngineException, KernelException;
+        //IProcessInstance createProcessInstance(String workflowProcessName, String creatorId);//throws EngineException, KernelException;
 
 
 

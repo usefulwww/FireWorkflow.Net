@@ -43,13 +43,13 @@ namespace WebDemo.Example.LoanProcess
             loanInfoDAO.attachDirty(loanInfo);
 
             // 二、开始执行流程操作
-            IWorkflowSession workflowSession = RuntimeContextExamples.GetRuntimeContext().getWorkflowSession();
+           // IWorkflowSession workflowSession = RuntimeContextExamples.GetRuntimeContext().getWorkflowSession();
 
             try
             {
                 // 1、创建流程实例
                 IProcessInstance procInst =
-                    workflowSession.createProcessInstance("LoanProcess", this.User.Identity.Name);
+                    ProcessInstanceHelper.createProcessInstance("LoanProcess", this.User.Identity.Name);
                 // 2、设置流程变量/业务属性字段
                 ProcessInstanceHelper.setProcessInstanceVariable(procInst,"sn", loanInfo.Sn);// 设置流水号
                 ProcessInstanceHelper.setProcessInstanceVariable(procInst,"applicantName", loanInfo.ApplicantName);//贷款人姓名

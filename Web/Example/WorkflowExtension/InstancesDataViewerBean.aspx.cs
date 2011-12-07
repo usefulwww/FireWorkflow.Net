@@ -32,12 +32,13 @@ namespace WebDemo.Example.WorkflowExtension
         {
             IPersistenceService ips = RuntimeContextExamples.GetRuntimeContext().PersistenceService;
             string username = this.User.Identity.Name;
-            if (username == "admin") username = "";
+            if (username == "admin") 
+            	username = "";
             IList<IProcessInstance> pis = ips.FindProcessInstanceListByCreatorId(username, "", 100, 0);
-            foreach (IProcessInstance item in pis)
-            {
+//            foreach (IProcessInstance item in pis)
+//            {
                 //((ProcessInstance)item).RuntimeContext = ips.RuntimeContext;
-            }
+//            }
             Sdate.DataSource = pis;
             Sdate.DataBind();
         }

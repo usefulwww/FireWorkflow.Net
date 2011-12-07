@@ -68,7 +68,7 @@ namespace FireWorkflow.Net.Engine.Taskinstance
             taskInstance.StartedTime = runtimeContext.CalendarService.getSysDate();
             persistenceService.SaveOrUpdateTaskInstance(taskInstance);
 
-            IProcessInstance subProcessInstance = currentSession.createProcessInstance(subWorkflowProcess.Name, taskInstance);
+            IProcessInstance subProcessInstance = ProcessInstanceHelper.createProcessInstance(subWorkflowProcess.Name, taskInstance);
 
             //初始化流程变量,从父实例获得初始值
             Dictionary<String, Object> processVars = ProcessInstanceHelper.getProcessInstanceVariables(TaskInstanceHelper.getAliveProcessInstance(taskInstance));

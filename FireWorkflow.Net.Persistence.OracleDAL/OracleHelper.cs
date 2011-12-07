@@ -394,7 +394,7 @@ namespace FireWorkflow.Net.Persistence.OracleDAL
             }
             string stotalRecords = "SELECT COUNT(*) FROM {0}{1}";
             object obj = ExecuteScalar(conn.ConnectionString, CommandType.Text, string.Format(stotalRecords, tblName, sTemp), commandParameters);
-            if (obj != null && obj is decimal)
+            if (obj != null && obj.GetType().IsValueType)
             {
                 totalRecords = Convert.ToInt32(obj);
             }

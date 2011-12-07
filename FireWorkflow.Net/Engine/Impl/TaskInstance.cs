@@ -100,7 +100,7 @@ namespace FireWorkflow.Net.Engine.Impl
         /// <summary>返回或设置</summary>
         public Boolean CanBeWithdrawn { get; set; }
 
-        public IWorkflowSession CurrentWorkflowSession { get; set; }
+        //public IWorkflowSession CurrentWorkflowSession { get; set; }
 
        
 

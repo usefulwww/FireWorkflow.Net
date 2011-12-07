@@ -46,17 +46,17 @@ namespace FireWorkflow.Net.Persistence.OracleDAL
         /// <summary>
         /// 插入或者更新ProcessInstance流程实例
         /// </summary>
-        public bool SaveOrUpdateProcessInstance(IProcessInstance processInstance)
+        public bool SaveProcessInstance(IProcessInstance processInstance)
         {
             if (String.IsNullOrEmpty(processInstance.Id))
-            {
-                ((ProcessInstance)processInstance).Id = Guid.NewGuid().ToString().Replace("-", "");
-                string insert = "INSERT INTO T_FF_RT_PROCESSINSTANCE ("+
-                    "ID, PROCESS_ID, VERSION, NAME, DISPLAY_NAME, "+
-                    "STATE, SUSPENDED, CREATOR_ID, CREATED_TIME, STARTED_TIME, "+
-                    "EXPIRED_TIME, END_TIME, PARENT_PROCESSINSTANCE_ID, PARENT_TASKINSTANCE_ID"+
+                return false;
+
+            string insert = "INSERT INTO T_FF_RT_PROCESSINSTANCE (" +
+                    "ID, PROCESS_ID, VERSION, NAME, DISPLAY_NAME, " +
+                    "STATE, SUSPENDED, CREATOR_ID, CREATED_TIME, STARTED_TIME, " +
+                    "EXPIRED_TIME, END_TIME, PARENT_PROCESSINSTANCE_ID, PARENT_TASKINSTANCE_ID" +
                     ") VALUES(:1,:2,:3,:4,:5, :6,:7,:8,:9,:10, :11,:12,:13,:14)";
-    			OracleParameter[] insertParms = { 
+            OracleParameter[] insertParms = { 
     				OracleHelper.NewOracleParameter(":1", OracleType.VarChar, 50, processInstance.Id), 
     				OracleHelper.NewOracleParameter(":2", OracleType.VarChar, 100, processInstance.ProcessId), 
     				OracleHelper.NewOracleParameter(":3", OracleType.Int32, processInstance.Version), 
@@ -72,9 +72,19 @@ namespace FireWorkflow.Net.Persistence.OracleDAL
     				OracleHelper.NewOracleParameter(":13", OracleType.VarChar, 50, processInstance.ParentProcessInstanceId), 
     				OracleHelper.NewOracleParameter(":14", OracleType.VarChar, 50, processInstance.ParentTaskInstanceId)
     			};
-    			if (OracleHelper.ExecuteNonQuery(connectionString, CommandType.Text, insert, insertParms) != 1)
-    				return false;
-    			else return true;
+            if (OracleHelper.ExecuteNonQuery(connectionString, CommandType.Text, insert, insertParms) != 1)
+                return false;
+            else return true;
+        }
+        /// <summary>
+        /// 插入或者更新ProcessInstance流程实例
+        /// </summary>
+        public bool SaveOrUpdateProcessInstance(IProcessInstance processInstance)
+        {
+            if (String.IsNullOrEmpty(processInstance.Id))
+            {
+                processInstance.Id = Guid.NewGuid().ToString("N");
+                return SaveProcessInstance(processInstance);
             }
             else
             {

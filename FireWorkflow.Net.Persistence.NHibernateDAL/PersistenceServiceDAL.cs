@@ -15,7 +15,12 @@ namespace FireWorkflow.Net.Persistence.NHibernateDAL
 		}
 		
 		public RuntimeContext RuntimeContext {get;set;}
-		
+
+        public bool SaveProcessInstance(IProcessInstance processInstance)
+        {
+            throw new NotImplementedException();
+        }
+
 		public bool SaveOrUpdateProcessInstance(IProcessInstance processInstance)
 		{
 			throw new NotImplementedException();

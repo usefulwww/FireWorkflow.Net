@@ -32,7 +32,7 @@ namespace WebDemo.Example.WorkflowExtension
 
         public void Sdate_Refresh(object sender, StoreRefreshDataEventArgs e)
         {
-            List<IWorkItem> iwis = RuntimeContextExamples.GetRuntimeContext().getWorkflowSession().findMyTodoWorkItems(this.User.Identity.Name);
+            IList<IWorkItem> iwis = RuntimeContextExamples.GetRuntimeContext().PersistenceService.FindTodoWorkItems(this.User.Identity.Name);
             Sdate.DataSource = iwis;
             Sdate.DataBind();
         }
@@ -40,9 +40,9 @@ namespace WebDemo.Example.WorkflowExtension
         [DirectMethod]
         public bool claim(String workItemId)
         {
-            IWorkflowSession wflsession = RuntimeContextExamples.GetRuntimeContext().getWorkflowSession();
-            IWorkItem wi = wflsession.findWorkItemById(workItemId);
-
+            //IWorkflowSession wflsession = RuntimeContextExamples.GetRuntimeContext().getWorkflowSessionByWorkItemId(workItemId);
+            IWorkItem wi = RuntimeContextExamples.GetRuntimeContext().PersistenceService.FindWorkItemById(workItemId);
+            
             try
             {
                 if (wi != null)
@@ -66,9 +66,9 @@ namespace WebDemo.Example.WorkflowExtension
         [DirectMethod]
         public void complete(String workItemId)
         {
-            IWorkflowSession wflsession = RuntimeContextExamples.GetRuntimeContext().getWorkflowSession();
-            IWorkItem wi = wflsession.findWorkItemById(workItemId);
-
+             IWorkItem wi = RuntimeContextExamples.GetRuntimeContext().PersistenceService.FindWorkItemById(workItemId);
+             //IWorkflowSession wflsession = RuntimeContextExamples.GetRuntimeContext().getWorkflowSessionByWorkItemId(wi.ProcessInstanceId);
+           
             try
             {
                 if (wi != null)

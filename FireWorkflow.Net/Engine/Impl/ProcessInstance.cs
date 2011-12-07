@@ -41,7 +41,7 @@ namespace FireWorkflow.Net.Engine.Impl
 		
 //		public RuntimeContext RuntimeContext { get; set; }
 
-		public IWorkflowSession CurrentWorkflowSession { get; set; }
+		//public IWorkflowSession CurrentWorkflowSession { get; set; }
 
 		public ProcessInstance()
 		{
