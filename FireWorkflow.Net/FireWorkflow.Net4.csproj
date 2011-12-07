@@ -115,6 +115,7 @@
     <Compile Include="Engine\Definition\WorkflowDefinition.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Engine\Definition\WorkflowDefinitionHelper.cs" />
     <Compile Include="Engine\Definition\WorkflowDefinitionInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -128,15 +129,21 @@
     <Compile Include="Engine\Event\TaskInstanceEvent.cs" />
     <Compile Include="Engine\Impl\ClassIWorkflowSessionCallbacks.cs" />
     <Compile Include="Engine\Impl\ProcessInstance.cs" />
+    <Compile Include="Engine\Impl\ProcessInstanceHelper.cs" />
     <Compile Include="Engine\Impl\ProcessInstanceTrace.cs" />
     <Compile Include="Engine\Impl\ProcessInstanceVar.cs" />
     <Compile Include="Engine\Impl\ProcessInstanceVarPk.cs" />
     <Compile Include="Engine\Impl\TaskInstance.cs" />
+    <Compile Include="Engine\Impl\TaskInstanceHelper.cs" />
     <Compile Include="Engine\Impl\WorkflowSession.cs" />
     <Compile Include="Engine\Impl\WorkItem.cs" />
+    <Compile Include="Engine\Impl\WorkItemHelper.cs" />
     <Compile Include="Engine\IProcessInstance.cs" />
+    <Compile Include="Engine\IProcessInstanceTrace.cs" />
+    <Compile Include="Engine\IProcessInstanceVar.cs" />
     <Compile Include="Engine\IRuntimeContextAware.cs" />
     <Compile Include="Engine\ITaskInstance.cs" />
+    <Compile Include="Engine\IWorkflowDefinition.cs" />
     <Compile Include="Engine\IWorkflowSession.cs" />
     <Compile Include="Engine\IWorkflowSessionAware.cs" />
     <Compile Include="Engine\IWorkflowSessionCallback.cs" />

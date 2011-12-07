@@ -53,14 +53,14 @@
     <Reference Include="Common.Logging">
       <HintPath>..\DLL\Spring.net\Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Coolite.Ext.Web">
-      <HintPath>..\DLL\Coolite.Ext\Coolite.Ext.Web.dll</HintPath>
+    <Reference Include="Ext.Net">
+      <HintPath>..\DLL\Ext.net\Ext.Net.dll</HintPath>
     </Reference>
-    <Reference Include="Coolite.Utilities">
-      <HintPath>..\DLL\Coolite.Ext\Coolite.Utilities.dll</HintPath>
+    <Reference Include="Ext.Net.Utilities">
+      <HintPath>..\DLL\Ext.net\Ext.Net.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\DLL\Coolite.Ext\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\DLL\Ext.net\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Spring.Core">
       <HintPath>..\DLL\Spring.net\Spring.Core.dll</HintPath>
@@ -229,20 +229,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FireWorkflow.Net.Persistence.OracleDAL\FireWorkflow.Net.Persistence.OracleDAL.csproj">
-      <Project>{36D872DC-8503-4DBD-B580-2C69D851B4F5}</Project>
-      <Name>FireWorkflow.Net.Persistence.OracleDAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FireWorkflow.Net.Persistence.SqlServerDAL\FireWorkflow.Net.Persistence.SqlServerDAL.csproj">
-      <Project>{21520687-37FB-47DC-87DA-67D840E70201}</Project>
-      <Name>FireWorkflow.Net.Persistence.SqlServerDAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FireWorkflow.Net\FireWorkflow.Net.csproj">
-      <Project>{10D41B1F-AB41-4A4F-A2FA-415BF23869A9}</Project>
-      <Name>FireWorkflow.Net</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="ClientBin\FireWorkflow.Net.Designer.View.xap" />
     <Content Include="DesignerService.svc" />
     <Content Include="Example\GoodsDeliverProcess\Payment.aspx" />
@@ -275,6 +261,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Fireflow_Process_Definition_Language.dtd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FireWorkflow.Net.Persistence.SqlServerDAL\FireWorkflow.Net.Persistence.SqlServerDAL.Net4.csproj">
+      <Project>{21520687-37FB-47DC-87DA-67D840E70201}</Project>
+      <Name>FireWorkflow.Net.Persistence.SqlServerDAL.Net4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FireWorkflow.Net\FireWorkflow.Net4.csproj">
+      <Project>{10D41B1F-AB41-4A4F-A2FA-415BF23869A9}</Project>
+      <Name>FireWorkflow.Net4</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!--<Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
