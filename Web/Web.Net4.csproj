@@ -263,6 +263,10 @@
     <None Include="Fireflow_Process_Definition_Language.dtd" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FireWorkflow.Net.Persistence.OracleDAL\FireWorkflow.Net.Persistence.OracleDAL.Net4.csproj">
+      <Project>{36D872DC-8503-4DBD-B580-2C69D851B4F5}</Project>
+      <Name>FireWorkflow.Net.Persistence.OracleDAL.Net4</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FireWorkflow.Net.Persistence.SqlServerDAL\FireWorkflow.Net.Persistence.SqlServerDAL.Net4.csproj">
       <Project>{21520687-37FB-47DC-87DA-67D840E70201}</Project>
       <Name>FireWorkflow.Net.Persistence.SqlServerDAL.Net4</Name>
