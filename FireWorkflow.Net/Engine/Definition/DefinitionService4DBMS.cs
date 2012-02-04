@@ -16,7 +16,7 @@
 // @Revision to .NET 无忧 lwz0721@gmail.com 2010-02
 using System;
 using System.Collections.Generic;
-using System.Linq;
+//using System.Linq;
 using System.Text;
 using FireWorkflow.Net.Engine;
 

@@ -10,7 +10,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FireWorkflow.Net</RootNamespace>
     <AssemblyName>FireWorkflow.Net</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -42,16 +41,22 @@
     <RunCodeAnalysis>False</RunCodeAnalysis>
     <RunSourceAnalysis>False</RunSourceAnalysis>
     <TargetFrameworkProfile />
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>Full</DebugType>
+    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <StartAction>Project</StartAction>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -61,6 +66,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
@@ -75,25 +83,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\BeanUtils.cs" />
@@ -128,7 +121,7 @@
     <Compile Include="Engine\Impl\ClassIWorkflowSessionCallbacks.cs" />
     <Compile Include="Engine\Impl\ProcessInstance.cs" />
     <Compile Include="Engine\Impl\ProcessInstanceHelper.cs" />
-    <Compile Include="Engine\Impl\ProcessInstanceTrace.cs" />
+    <Compile Include="Engine\Impl\ProcessInstanceTraceV2.cs" />
     <Compile Include="Engine\Impl\ProcessInstanceVar.cs" />
     <Compile Include="Engine\Impl\ProcessInstanceVarPk.cs" />
     <Compile Include="Engine\Impl\TaskInstance.cs" />
@@ -137,7 +130,7 @@
     <Compile Include="Engine\Impl\WorkItem.cs" />
     <Compile Include="Engine\Impl\WorkItemHelper.cs" />
     <Compile Include="Engine\IProcessInstance.cs" />
-    <Compile Include="Engine\IProcessInstanceTrace.cs" />
+    <Compile Include="Engine\IProcessInstanceTraceV2.cs" />
     <Compile Include="Engine\IProcessInstanceVar.cs" />
     <Compile Include="Engine\IRuntimeContextAware.cs" />
     <Compile Include="Engine\ITaskInstance.cs" />
@@ -213,8 +206,8 @@
     <Compile Include="Model\EventListener.cs" />
     <Compile Include="Model\ExtendedAttributeNames.cs" />
     <Compile Include="Model\FormTask.cs" />
-    <Compile Include="Model\Io\Dom4JFPDLParser.cs" />
-    <Compile Include="Model\Io\Dom4JFPDLSerializer.cs" />
+    <Compile Include="Model\Io\Dom4JFPDLParserV2.cs" />
+    <Compile Include="Model\Io\Dom4JFPDLSerializerV2.cs" />
     <Compile Include="Model\Io\FPDLNames.cs" />
     <Compile Include="Model\Io\FPDLParserException.cs" />
     <Compile Include="Model\Io\IFPDLParser.cs" />

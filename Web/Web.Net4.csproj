@@ -50,9 +50,6 @@
     <StartProgram>D:\software\develop\CassiniDev\Release\CassiniDev.exe</StartProgram>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging">
-      <HintPath>..\DLL\Spring.net\Common.Logging.dll</HintPath>
-    </Reference>
     <Reference Include="Ext.Net">
       <HintPath>..\DLL\Ext.net\Ext.Net.dll</HintPath>
     </Reference>
@@ -61,9 +58,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\DLL\Ext.net\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Spring.Core">
-      <HintPath>..\DLL\Spring.net\Spring.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

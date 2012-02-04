@@ -19,16 +19,28 @@
 using System;
 using System.Collections.Generic;
 //using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
-namespace FireWorkflow.Net.Kernel.Plugin
-{
-    public interface IPlugable
-    {
-        String ExtensionTargetName { get; }
-        List<String> ExtensionPointNames { get; }
+using FireWorkflow.Net.Engine.Impl;
 
-        //TODO extesion是单态还是多实例？单态应该效率高一些。
-        void registExtension(IKernelExtension extension);// throws RuntimeException;
-    }
+namespace FireWorkflow.Net.Engine
+{
+	public interface IProcessInstanceTrace
+	{
+		string Id { get; set; }
+		string ProcessInstanceId { get; set; }
+		int StepNumber { get; set; }
+		int MinorNumber { get; set; }
+		ProcessInstanceTraceEnum Type { get; set; }
+		//TODO 修改为Net2.0
+		//[DataMemberAttribute()]
+		string EdgeId { get; set; }
+		//TODO 修改为Net2.0
+		//[DataMemberAttribute()]
+		string FromNodeId { get; set; }
+		//TODO 修改为Net2.0
+		//[DataMemberAttribute()]
+		string ToNodeId { get; set; }
+	}
 }
