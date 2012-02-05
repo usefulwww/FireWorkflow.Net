@@ -25,3 +25,10 @@
 /FireWorkflow.Net.Persistence.NHibernateDAL/bin
 /FireWorkflow.Net.Persistence.NHibernateDAL/obj
 /DLL/DomCache
+/FireWorkflow.Net/FireWorkflow.Net.pidb
+/FireWorkflow.Net/FireWorkflow.Net4.PartCover.Settings
+/FireWorkflow.Net/FireWorkflow.Net4.pidb
+/FireWorkflow.Net/Settings.SourceAnalysis
+/FireWorkflow.Net.Persistence.OracleDAL/Settings.SourceAnalysis
+/FireWorkflow.Net.Persistence.SqlServerDAL/Settings.SourceAnalysis
+/Web/Settings.SourceAnalysis
