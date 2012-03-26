@@ -2,7 +2,6 @@
 *.svn
 *.user
 *.suo
-
 /FireWorkflow.Net/bin
 /FireWorkflow.Net/obj
 /FireWorkflow.Net.Persistence.OracleDAL/bin
@@ -18,7 +17,6 @@
 /DLL/Spring.net
 /DLL/Coolite.Ext
 /DLL/Ext.net
-
 /DomCache
 /FireWorkflow.Net/FireWorkflow.Net.PartCover.Settings
 /DLL/NHibernate
@@ -32,3 +30,4 @@
 /FireWorkflow.Net.Persistence.OracleDAL/Settings.SourceAnalysis
 /FireWorkflow.Net.Persistence.SqlServerDAL/Settings.SourceAnalysis
 /Web/Settings.SourceAnalysis
+/FireWorkflow.Net4.userprefs
