@@ -81,17 +81,21 @@ namespace FireWorkflow.Net.Model.Io
 //					new XDeclaration("1.0", "utf-8", "yes"),
 //					workflowProcessToDom(workflowProcess)
 //				);
-			XmlDocument inventoryDoc = new XmlDocument();
-			inventoryDoc.AppendChild(workflowProcessToDom(workflowProcess));
+			//XmlDocument inventoryDoc = new XmlDocument();
 			
-			XmlElement root = inventoryDoc.DocumentElement;
-			inventoryDoc.InsertBefore(inventoryDoc.CreateXmlDeclaration("1.0", "utf-8", "yes"),root);
 			
+			//XmlElement root = xmldoc.DocumentElement;
+			//XmlElement root = xmldoc.CreateElement(FPDL_NS_PREFIX,WORKFLOW_PROCESS,FPDL_URI);
+			//xmldoc.InsertBefore(xmldoc.CreateXmlDeclaration("1.0", "utf-8", "yes"),root);
+			xmldoc.AppendChild(xmldoc.CreateXmlDeclaration("1.0", "utf-8", "yes"));
+			var dtype = xmldoc.CreateDocumentType(FPDL_NS_PREFIX+":"+WORKFLOW_PROCESS,PUBLIC_ID,SYSTEM_ID,string.Empty);
+			xmldoc.AppendChild(dtype);
+			workflowProcessToDom(xmldoc,workflowProcess);
 			
 			XmlWriter writer = XmlWriter.Create(swout);
 			if (writer != null)
 			{
-				inventoryDoc.Save(writer);
+				xmldoc.Save(writer);
 				writer.Close();
 			}
 			swout.Position = 0;
@@ -100,16 +104,28 @@ namespace FireWorkflow.Net.Model.Io
 		public string serialize(WorkflowProcess workflowProcess)
 		{
 			//XDocument inventoryDoc =new XDocument(new XDeclaration("1.0", "utf-8", "yes"),workflowProcessToDom(workflowProcess));
-			XmlDocument inventoryDoc = new XmlDocument();
-			inventoryDoc.AppendChild(workflowProcessToDom(workflowProcess));
+			//XmlDocument inventoryDoc = new XmlDocument();
 			
-			XmlElement root = inventoryDoc.DocumentElement;
-			inventoryDoc.InsertBefore(inventoryDoc.CreateXmlDeclaration("1.0", "utf-8", "yes"),root);
+			//XmlElement root = xmldoc.DocumentElement;
+			//XmlElement root = xmldoc.CreateElement(FPDL_NS_PREFIX,WORKFLOW_PROCESS,FPDL_URI);
+			//xmldoc.InsertBefore(xmldoc.CreateXmlDeclaration("1.0", "utf-8", "yes"),root);
+			xmldoc.AppendChild(xmldoc.CreateXmlDeclaration("1.0", "utf-8", "yes"));
+			var dtype = xmldoc.CreateDocumentType(FPDL_NS_PREFIX+":"+WORKFLOW_PROCESS,PUBLIC_ID,SYSTEM_ID,string.Empty);
+			xmldoc.AppendChild(dtype);
+			workflowProcessToDom(xmldoc,workflowProcess);
 			
-			return inventoryDoc.ToString();
+			return xmldoc.OuterXml;
 		}
 
-		private XmlElement workflowProcessToDom(WorkflowProcess workflowProcess)
+		XmlDocument xmldoc = new XmlDocument();
+		
+		private XmlElement CreateElement(string name )
+		{
+			XmlElement el = xmldoc.CreateElement(FPDL_NS_PREFIX,name,FPDL_URI);
+			return el;
+		}
+		
+		private void workflowProcessToDom(XmlDocument xdoc,WorkflowProcess workflowProcess)
 		{
 			//            XNamespace aw = FPDL_URI;
 			//            XmlElement root = new XmlElement(
@@ -123,15 +139,15 @@ namespace FireWorkflow.Net.Model.Io
 			//                new XElement(xN + DESCRIPTION, workflowProcess.Description)
 			//                );
 			
-			XmlDocument xmldoc = new XmlDocument();
+			
 
-			XmlElement root = xmldoc.CreateElement(FPDL_NS_PREFIX,WORKFLOW_PROCESS,FPDL_URI);
+			XmlElement root = CreateElement(WORKFLOW_PROCESS);
 			root.SetAttribute(ID,workflowProcess.Id);
 			root.SetAttribute(NAME,workflowProcess.Name);
 			root.SetAttribute(DISPLAY_NAME,workflowProcess.DisplayName);
 			root.SetAttribute(RESOURCE_FILE,workflowProcess.ResourceFile);
 			root.SetAttribute(RESOURCE_MANAGER,workflowProcess.ResourceManager);
-			XmlElement desc = xmldoc.CreateElement(DESCRIPTION);
+			XmlElement desc = CreateElement(DESCRIPTION);
 			desc.InnerText = workflowProcess.Description;
 			root.AppendChild(desc);
 			
@@ -160,29 +176,29 @@ namespace FireWorkflow.Net.Model.Io
 				root.SetAttribute(TOOL_TASK_INSTANCE_COMPLETION_EVALUATOR, workflowProcess.ToolTaskInstanceCompletionEvaluator);
 			}
 			if (!String.IsNullOrEmpty(workflowProcess.SubflowTaskInstanceCompletionEvaluator))
-			    {
-			    	root.SetAttribute(SUBFLOW_TASK_INSTANCE_COMPLETION_EVALUATOR, workflowProcess.SubflowTaskInstanceCompletionEvaluator);
-			    }
-			    root.AppendChild(writeDataFields(workflowProcess.DataFields));
-			    root.AppendChild(writeStartNode(workflowProcess.StartNode));
-			    root.AppendChild(writeTasks(workflowProcess.Tasks));
-			    root.AppendChild(writeActivities(workflowProcess.Activities));
-			    root.AppendChild(writeSynchronizers(workflowProcess.Synchronizers));
-			    root.AppendChild(writeEndNodes(workflowProcess.EndNodes));
-			    root.AppendChild(writeTransitions(workflowProcess.Transitions));
-			    root.AppendChild(writeLoops(workflowProcess.Loops));
-			    root.AppendChild(writeEventListeners(workflowProcess.EventListeners));
-			    root.AppendChild(writeExtendedAttributes(workflowProcess.ExtendedAttributes));
-
-			    return root;
+			{
+				root.SetAttribute(SUBFLOW_TASK_INSTANCE_COMPLETION_EVALUATOR, workflowProcess.SubflowTaskInstanceCompletionEvaluator);
 			}
+			writeDataFields(root,workflowProcess.DataFields);
+			writeStartNode(root,workflowProcess.StartNode);
+			writeTasks(root,workflowProcess.Tasks);
+			writeActivities(root,workflowProcess.Activities);
+			writeSynchronizers(root,workflowProcess.Synchronizers);
+			writeEndNodes(root,workflowProcess.EndNodes);
+			writeTransitions(root,workflowProcess.Transitions);
+			writeLoops(root,workflowProcess.Loops);
+			writeEventListeners(root,workflowProcess.EventListeners);
+			writeExtendedAttributes(root,workflowProcess.ExtendedAttributes);
+
+			xdoc.AppendChild( root);
+		}
 
 
 		#region 序列化Dictionary＜string, string＞类型数据
 
-		private XmlElement writeEventListeners(List<EventListener> eventListeners)
+		private void writeEventListeners(XmlElement parent,List<EventListener> eventListeners)
 		{
-			if (eventListeners == null || eventListeners.Count <= 0) { return null; }
+			if (eventListeners == null || eventListeners.Count <= 0) { return ; }
 
 //			XElement eventListenersElm = new XElement(xN + EVENT_LISTENERS);
 //
@@ -193,25 +209,25 @@ namespace FireWorkflow.Net.Model.Io
 //				);
 //			}
 			
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement eventListenersElm = xmldoc.CreateElement(EVENT_LISTENERS);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement eventListenersElm = CreateElement(EVENT_LISTENERS);
 			foreach (EventListener listener in eventListeners)
 			{
-				XmlElement elm = xmldoc.CreateElement(EVENT_LISTENER);
+				XmlElement elm = CreateElement(EVENT_LISTENER);
 				elm.SetAttribute(CLASS_NAME, listener.ClassName);
 				eventListenersElm.AppendChild(elm);
 			}
-			return eventListenersElm;
+			parent.AppendChild( eventListenersElm);
 		}
 
 		/// <summary>序列化Dictionary＜string, string＞类型数据</summary>
 		/// <param name="extendedAttributes"></param>
 		/// <param name="parent"></param>
-		private XmlElement writeExtendedAttributes(Dictionary<string, string> extendedAttributes)
+		private void writeExtendedAttributes(XmlElement parent,Dictionary<string, string> extendedAttributes)
 		{
 			if (extendedAttributes == null || extendedAttributes.Count <= 0)
 			{
-				return null;
+				return ;
 			}
 
 //			XElement extendedAttributesElement = new XElement(xN + EXTENDED_ATTRIBUTES);
@@ -225,26 +241,26 @@ namespace FireWorkflow.Net.Model.Io
 //				       ));
 //			}
 			
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement extendedAttributesElement = xmldoc.CreateElement(EXTENDED_ATTRIBUTES);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement extendedAttributesElement = CreateElement(EXTENDED_ATTRIBUTES);
 			foreach (String key in extendedAttributes.Keys)
 			{
-				XmlElement elm = xmldoc.CreateElement(EXTENDED_ATTRIBUTE);
+				XmlElement elm = CreateElement(EXTENDED_ATTRIBUTE);
 				elm.SetAttribute(NAME, key);
 				elm.SetAttribute(VALUE, extendedAttributes[key]);
 				extendedAttributesElement.AppendChild(elm);
 			}
-			return extendedAttributesElement;
+			parent.AppendChild( extendedAttributesElement);
 		}
 		#endregion
 
 		#region DataField
-		private XmlElement writeDataFields(List<DataField> dataFields)
+		private void writeDataFields(XmlElement parent,List<DataField> dataFields)
 		{
-//			if (dataFields == null || dataFields.Count <= 0)
-//			{
-//				return null;
-//			}
+			if (dataFields == null || dataFields.Count <= 0)
+			{
+				return ;
+			}
 //			XElement dataFieldsElement = new XElement(xN + DATA_FIELDS);
 //
 //			foreach (DataField dataField in dataFields)
@@ -260,29 +276,29 @@ namespace FireWorkflow.Net.Model.Io
 //					             writeExtendedAttributes(dataField.ExtendedAttributes)
 //					            ));
 //			}
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement dataFieldsElement =  xmldoc.CreateElement(DATA_FIELDS);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement dataFieldsElement =  CreateElement(DATA_FIELDS);
 			foreach (DataField dataField in dataFields)
 			{
-				XmlElement elm = xmldoc.CreateElement(DATA_FIELD);
+				XmlElement elm = CreateElement(DATA_FIELD);
 				elm.SetAttribute(ID, dataField.Id);
 				elm.SetAttribute(NAME, dataField.Name);
 				elm.SetAttribute(DISPLAY_NAME, dataField.DisplayName);
 				elm.SetAttribute(DATA_TYPE, dataField.DataType.ToString());
 				elm.SetAttribute(INITIAL_VALUE, dataField.InitialValue);
-				XmlElement elm1=xmldoc.CreateElement(DESCRIPTION);
+				XmlElement elm1=CreateElement(DESCRIPTION);
 				elm1.InnerText=dataField.Description;
-				elm1.AppendChild(writeExtendedAttributes(dataField.ExtendedAttributes));
+				writeExtendedAttributes(elm1,dataField.ExtendedAttributes);
 				elm.AppendChild(elm1);
 			}
-			return dataFieldsElement;
+			parent.AppendChild( dataFieldsElement);
 		}
 		#endregion
 
 		#region StartNode
-		private XmlElement writeStartNode(StartNode startNode)
+		private void writeStartNode(XmlElement parent,StartNode startNode)
 		{
-			if (startNode == null) { return null; }
+			if (startNode == null) { return ; }
 
 //			XmlElement dataFieldsElement = new XmlElement(
 //				xN + START_NODE,
@@ -292,39 +308,43 @@ namespace FireWorkflow.Net.Model.Io
 //				new XElement(xN + DESCRIPTION, startNode.Description),
 //				writeExtendedAttributes(startNode.ExtendedAttributes)
 //			);
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement dataFieldsElement = xmldoc.CreateElement(START_NODE);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement dataFieldsElement = CreateElement(START_NODE);
 			dataFieldsElement.SetAttribute(ID, startNode.Id);
 			dataFieldsElement.SetAttribute(NAME, startNode.Name);
 			dataFieldsElement.SetAttribute(DISPLAY_NAME, startNode.DisplayName);
-			XmlElement elm= xmldoc.CreateElement(DESCRIPTION);
+			XmlElement elm= CreateElement(DESCRIPTION);
 			elm.InnerText=startNode.Description;
-			elm.AppendChild(writeExtendedAttributes(startNode.ExtendedAttributes));
+			writeExtendedAttributes(elm,startNode.ExtendedAttributes);
 			dataFieldsElement.AppendChild(elm);
-			return dataFieldsElement;
+			parent.AppendChild( dataFieldsElement);
 		}
 		#endregion
 
 		#region Tasks
-		private XmlElement writeTasks(List<Task> tasks)
+		private void writeTasks(XmlElement parent,List<Task> tasks)
 		{
+			if(tasks==null|| tasks.Count<1)
+				return ;
 //			XElement tasksElement = new XElement(xN + TASKS);
 //
 //			foreach (Task item in tasks)
 //			{
 //				tasksElement.Add(writeTask(item));
 //			}
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement tasksElement = xmldoc.CreateElement(TASKS);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement tasksElement = CreateElement(TASKS);
 			foreach (Task item in tasks)
 			{
-				tasksElement.AppendChild(writeTask(item));
+				writeTask(tasksElement,item);
 			}
-			return tasksElement;
+			parent.AppendChild( tasksElement);
 		}
 
-		private XmlElement writeTask(Task task)
+		private void writeTask(XmlElement parent,Task task)
 		{
+			if(task==null)
+				return;
 //			XElement taskElement = new XElement(
 //				xN + TASK,
 //				new XAttribute(ID, task.Id),
@@ -333,8 +353,8 @@ namespace FireWorkflow.Net.Model.Io
 //				new XAttribute(TYPE, task.TaskType.ToString())//,
 //				//new XElement(xN + DESCRIPTION, startNode.Description),
 //			);
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement taskElement = xmldoc.CreateElement(TASK);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement taskElement = CreateElement(TASK);
 			taskElement.SetAttribute(ID, task.Id);
 			taskElement.SetAttribute(NAME, task.Name);
 			taskElement.SetAttribute(DISPLAY_NAME, task.DisplayName);
@@ -343,30 +363,32 @@ namespace FireWorkflow.Net.Model.Io
 			TaskTypeEnum type = task.TaskType;
 			if (task is FormTask)
 			{
-				taskElement.AppendChild(this.writePerformer(((FormTask)task).Performer));
+				writePerformer(taskElement,((FormTask)task).Performer);
+				
 
 				taskElement.SetAttribute(COMPLETION_STRATEGY, ((FormTask)task).AssignmentStrategy.ToString());
 				taskElement.SetAttribute(DEFAULT_VIEW, ((FormTask)task).DefaultView.ToString());
 
-				taskElement.AppendChild(this.writeForm(EDIT_FORM, ((FormTask)task).EditForm));
-				taskElement.AppendChild(this.writeForm(VIEW_FORM, ((FormTask)task).ViewForm));
-				taskElement.AppendChild(this.writeForm(LIST_FORM, ((FormTask)task).ListForm));
+				writeForm(taskElement,EDIT_FORM, ((FormTask)task).EditForm);
+				writeForm(taskElement,VIEW_FORM, ((FormTask)task).ViewForm);
+				writeForm(taskElement,LIST_FORM, ((FormTask)task).ListForm);
+				
 			}
 			else if (task is ToolTask)
 			{
-				taskElement.AppendChild(this.writeApplication(((ToolTask)task).Application));
+				writeApplication(taskElement,((ToolTask)task).Application);
 				//taskElement.Add(new XAttribute(EXECUTION), ((ToolTask)task).Execution.ToString()));
 			}
 			else if (task is SubflowTask)
 			{
-				taskElement.AppendChild(this.writeSubWorkflowProcess(((SubflowTask)task).SubWorkflowProcess));
+				writeSubWorkflowProcess(taskElement,((SubflowTask)task).SubWorkflowProcess);
 			}
 
 			taskElement.SetAttribute(PRIORITY, task.Priority.ToString());
 
-			taskElement.AppendChild(writeDuration(task.Duration));
+			writeDuration(taskElement,task.Duration);
 
-			XmlElement elm_desc = xmldoc.CreateElement(DESCRIPTION);
+			XmlElement elm_desc = CreateElement(DESCRIPTION);
 			elm_desc.InnerText=task.Description;
 			taskElement.AppendChild(elm_desc);
 
@@ -385,15 +407,15 @@ namespace FireWorkflow.Net.Model.Io
 
 			taskElement.SetAttribute(LOOP_STRATEGY, task.LoopStrategy.ToString());
 
-			taskElement.AppendChild(writeEventListeners(task.EventListeners));
-			taskElement.AppendChild(writeExtendedAttributes(task.ExtendedAttributes));
-
-			return taskElement;
+			writeEventListeners(taskElement,task.EventListeners);
+			writeExtendedAttributes(taskElement,task.ExtendedAttributes);
+			
+			parent.AppendChild( taskElement);
 		}
 
-		private XmlElement writePerformer(Participant participant)
+		private void writePerformer(XmlElement parent,Participant participant)
 		{
-			if (participant == null) { return null; }
+			if (participant == null) { return; }
 //			XElement participantElement = new XElement(
 //				xN + PERFORMER,
 //				new XAttribute(NAME, participant.Name),
@@ -402,23 +424,23 @@ namespace FireWorkflow.Net.Model.Io
 //				new XElement(xN + DESCRIPTION, participant.Description),
 //				new XElement(xN + ASSIGNMENT_HANDLER, participant.AssignmentHandler)
 //			);
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement participantElement = xmldoc.CreateElement(PERFORMER);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement participantElement = CreateElement(PERFORMER);
 			participantElement.SetAttribute(NAME, participant.Name);
 			participantElement.SetAttribute(DISPLAY_NAME, participant.DisplayName);
 			participantElement.SetAttribute(ASSIGNMENT_TYPE, participant.AssignmentType.ToString()); //201004 add lwz 参与者通过业务接口实现默认获取用户
-			XmlElement elm1 = xmldoc.CreateElement(DESCRIPTION);
+			XmlElement elm1 = CreateElement(DESCRIPTION);
 			elm1.InnerText = participant.Description;
-			XmlElement elm2 = xmldoc.CreateElement(ASSIGNMENT_HANDLER);
+			XmlElement elm2 = CreateElement(ASSIGNMENT_HANDLER);
 			elm2.InnerText = participant.AssignmentHandler;
 			participantElement.AppendChild(elm1);
 			participantElement.AppendChild(elm2);
-			return participantElement;
+			parent.AppendChild( participantElement);
 		}
 
-		private XmlElement writeForm(String formName, Form form)
+		private void writeForm(XmlElement parent,String formName, Form form)
 		{
-			if (form == null) { return null; }
+			if (form == null) { return ; }
 //			XElement editFormElement = new XElement(
 //				xN + formName,
 //				new XAttribute(NAME, form.Name),
@@ -426,22 +448,22 @@ namespace FireWorkflow.Net.Model.Io
 //				new XElement(xN + DESCRIPTION, form.Description),
 //				new XElement(xN + URI, form.Uri)
 //			);
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement editFormElement = xmldoc.CreateElement(formName);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement editFormElement = CreateElement(formName);
 			editFormElement.SetAttribute(NAME, form.Name);
 			editFormElement.SetAttribute(DISPLAY_NAME, form.DisplayName);
-			XmlElement elm1 = xmldoc.CreateElement(DESCRIPTION);
+			XmlElement elm1 = CreateElement(DESCRIPTION);
 			elm1.InnerText = form.Description;
-			XmlElement elm2 = xmldoc.CreateElement(URI);
+			XmlElement elm2 = CreateElement(URI);
 			elm2.InnerText = form.Uri;
 			editFormElement.AppendChild(elm1);
 			editFormElement.AppendChild(elm2);
-			return editFormElement;
+			parent.AppendChild( editFormElement);
 		}
 
-		private XmlElement writeApplication(Application application)
+		private void writeApplication(XmlElement parent,Application application)
 		{
-			if (application == null) { return null; }
+			if (application == null) { return ; }
 //			XElement applicationElement = new XElement(
 //				xN + APPLICATION,
 //				new XAttribute(NAME, application.Name),
@@ -449,22 +471,22 @@ namespace FireWorkflow.Net.Model.Io
 //				new XElement(xN + DESCRIPTION, application.Description),
 //				new XElement(xN + HANDLER, application.Handler)
 //			);
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement applicationElement = xmldoc.CreateElement(APPLICATION);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement applicationElement = CreateElement(APPLICATION);
 			applicationElement.SetAttribute(NAME, application.Name);
 			applicationElement.SetAttribute(DISPLAY_NAME, application.DisplayName);
-			XmlElement elm1 = xmldoc.CreateElement(DESCRIPTION);
+			XmlElement elm1 = CreateElement(DESCRIPTION);
 			elm1.InnerText = application.Description;
-			XmlElement elm2 = xmldoc.CreateElement(HANDLER);
+			XmlElement elm2 = CreateElement(HANDLER);
 			elm2.InnerText = application.Handler;
 			applicationElement.AppendChild(elm1);
 			applicationElement.AppendChild(elm2);
-			return applicationElement;
+			parent.AppendChild( applicationElement);
 		}
 
-		private XmlElement writeSubWorkflowProcess(SubWorkflowProcess subWorkflowProcess)
+		private void writeSubWorkflowProcess(XmlElement parent,SubWorkflowProcess subWorkflowProcess)
 		{
-			if (subWorkflowProcess == null) { return null; }
+			if (subWorkflowProcess == null) { return ; }
 //			XElement subflowElement = new XElement(
 //				xN + SUB_WORKFLOW_PROCESS,
 //				new XAttribute(NAME, subWorkflowProcess.Name),
@@ -472,22 +494,22 @@ namespace FireWorkflow.Net.Model.Io
 //				new XElement(xN + DESCRIPTION, subWorkflowProcess.Description),
 //				new XElement(xN + WORKFLOW_PROCESS_ID, subWorkflowProcess.WorkflowProcessId)
 //			);
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement subflowElement = xmldoc.CreateElement(SUB_WORKFLOW_PROCESS);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement subflowElement = CreateElement(SUB_WORKFLOW_PROCESS);
 			subflowElement.SetAttribute(NAME, subWorkflowProcess.Name);
 			subflowElement.SetAttribute(DISPLAY_NAME, subWorkflowProcess.DisplayName);
-			XmlElement elm1 = xmldoc.CreateElement(DESCRIPTION);
+			XmlElement elm1 = CreateElement(DESCRIPTION);
 			elm1.InnerText = subWorkflowProcess.Description;
-			XmlElement elm2 = xmldoc.CreateElement(WORKFLOW_PROCESS_ID);
+			XmlElement elm2 = CreateElement(WORKFLOW_PROCESS_ID);
 			elm2.InnerText = subWorkflowProcess.WorkflowProcessId;
 			subflowElement.AppendChild(elm1);
 			subflowElement.AppendChild(elm2);
-			return subflowElement;
+			parent.AppendChild( subflowElement);
 		}
 
-		private XmlElement writeDuration(Duration duration)
+		private void writeDuration(XmlElement parent,Duration duration)
 		{
-			if (duration == null) { return null; }
+			if (duration == null) { return ; }
 
 //			XElement durationElement = new XElement(
 //				xN + DURATION,
@@ -495,33 +517,34 @@ namespace FireWorkflow.Net.Model.Io
 //				new XAttribute(UNIT, duration.Unit.ToString()),
 //				new XAttribute(IS_BUSINESS_TIME, duration.IsBusinessTime.ToString())
 //			);
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement durationElement = xmldoc.CreateElement(DURATION);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement durationElement = CreateElement(DURATION);
 			durationElement.SetAttribute(VALUE, duration.Value.ToString());
 			durationElement.SetAttribute(UNIT, duration.Unit.ToString());
 			durationElement.SetAttribute(IS_BUSINESS_TIME, duration.IsBusinessTime.ToString());
-			return durationElement;
+			parent.AppendChild( durationElement);
 		}
 		#endregion
 
 		#region Activitie
-		private XmlElement writeActivities(List<Activity> activities)
+		private void writeActivities(XmlElement parent,List<Activity> activities)
 		{
-			if (activities == null || activities.Count <= 0) { return null; }
+			if (activities == null || activities.Count <= 0) { return ; }
 
 			//XElement activitiesElement = new XElement(xN + ACTIVITIES);
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement activitiesElement = xmldoc.CreateElement(ACTIVITIES);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement activitiesElement = CreateElement(ACTIVITIES);
 			foreach (Activity item in activities)
 			{
-				activitiesElement.AppendChild(writeActivity(item));
+				writeActivity(activitiesElement,item);
 			}
-			return activitiesElement;
+			parent.AppendChild(activitiesElement);
+			//return activitiesElement;
 		}
 
-		private XmlElement writeActivity(Activity activity)
+		private void writeActivity(XmlElement parent,Activity activity)
 		{
-			if (activity == null) { return null; }
+			if (activity == null) { return ; }
 
 //			XElement activityElement = new XElement(
 //				xN + ACTIVITY,
@@ -536,62 +559,64 @@ namespace FireWorkflow.Net.Model.Io
 //				writeTaskRefs(activity.TaskRefs)
 //			);
 			
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement activityElement = xmldoc.CreateElement(ACTIVITY);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement activityElement = CreateElement(ACTIVITY);
 			activityElement.SetAttribute(ID, activity.Id);
 			activityElement.SetAttribute(NAME, activity.Name);
 			activityElement.SetAttribute(DISPLAY_NAME, activity.DisplayName);
 			activityElement.SetAttribute(COMPLETION_STRATEGY, activity.CompletionStrategy.ToString());
-			XmlElement elm = xmldoc.CreateElement( DESCRIPTION);
+			XmlElement elm = CreateElement( DESCRIPTION);
 			elm.InnerText = activity.Description;
 			activityElement.AppendChild(elm);
-			activityElement.AppendChild(writeEventListeners(activity.EventListeners));
-			activityElement.AppendChild(writeExtendedAttributes(activity.ExtendedAttributes));
-			activityElement.AppendChild(writeTasks(activity.InlineTasks));
-			activityElement.AppendChild(writeTaskRefs(activity.TaskRefs));
-			return activityElement;
+			writeEventListeners(activityElement,activity.EventListeners);
+			writeExtendedAttributes(activityElement,activity.ExtendedAttributes);
+			writeTasks(activityElement,activity.InlineTasks);
+			writeTaskRefs(activityElement,activity.TaskRefs);
+			parent.AppendChild(activityElement);
 		}
 
-		private XmlElement writeTaskRefs(List<TaskRef> taskRefs)
+		private void writeTaskRefs(XmlElement parent,List<TaskRef> taskRefs)
 		{
+			if(taskRefs==null || taskRefs.Count<1)
+				return ;
 //			XElement taskRefsElement = new XElement(xN + TASKREFS);
 //
 //			foreach (TaskRef taskRef in taskRefs)
 //			{
 //				taskRefsElement.Add(new XElement(xN + TASKREF, new XAttribute(REFERENCE, taskRef.ReferencedTask.Id)));
 //			}
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement taskRefsElement = xmldoc.CreateElement(TASKREFS);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement taskRefsElement = CreateElement(TASKREFS);
 			foreach (TaskRef taskRef in taskRefs) {
-				XmlElement elm = xmldoc.CreateElement(TASKREF);
+				XmlElement elm = CreateElement(TASKREF);
 				elm.SetAttribute (REFERENCE,taskRef.ReferencedTask.Id);
 				taskRefsElement.AppendChild(elm);
 			}
-			return taskRefsElement;
+			parent.AppendChild( taskRefsElement);
 		}
 		#endregion
 
 		#region Synchronizer
-		private XmlElement writeSynchronizers(List<Synchronizer> synchronizers)
+		private void writeSynchronizers(XmlElement parent,List<Synchronizer> synchronizers)
 		{
-			if (synchronizers == null || synchronizers.Count <= 0) { return null; }
+			if (synchronizers == null || synchronizers.Count <= 0) { return ; }
 //			XElement synchronizersElement = new XElement(xN + SYNCHRONIZERS);
 //
 //			foreach (Synchronizer item in synchronizers)
 //			{
 //				synchronizersElement.Add(writeSynchronizer(item));
 //			}
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement synchronizersElement = xmldoc.CreateElement(SYNCHRONIZERS);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement synchronizersElement = CreateElement(SYNCHRONIZERS);
 			foreach(Synchronizer item in synchronizers){
-				synchronizersElement.AppendChild(writeSynchronizer(item));
+				writeSynchronizer(synchronizersElement,item);
 			}
-			return synchronizersElement;
+			parent.AppendChild( synchronizersElement);
 		}
 
-		private XmlElement writeSynchronizer(Synchronizer synchronizer)
+		private void writeSynchronizer(XmlElement parent,Synchronizer synchronizer)
 		{
-			if (synchronizer == null) { return null; }
+			if (synchronizer == null) { return ; }
 
 //			XElement synchronizerElement = new XElement(
 //				xN + SYNCHRONIZER,
@@ -601,41 +626,41 @@ namespace FireWorkflow.Net.Model.Io
 //				new XElement(xN + DESCRIPTION, synchronizer.Description),
 //				writeExtendedAttributes(synchronizer.ExtendedAttributes)
 //			);
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement synchronizerElement = xmldoc.CreateElement(SYNCHRONIZER);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement synchronizerElement = CreateElement(SYNCHRONIZER);
 			synchronizerElement.SetAttribute(ID, synchronizer.Id);
 			synchronizerElement.SetAttribute(NAME, synchronizer.Name);
 			synchronizerElement.SetAttribute(DISPLAY_NAME, synchronizer.DisplayName);
-			XmlElement elm = xmldoc.CreateElement(DESCRIPTION);
+			XmlElement elm = CreateElement(DESCRIPTION);
 			elm.InnerText = synchronizer.Description;
 			synchronizerElement.AppendChild(elm);
-			synchronizerElement.AppendChild(writeExtendedAttributes(synchronizer.ExtendedAttributes));
+			writeExtendedAttributes(synchronizerElement,synchronizer.ExtendedAttributes);
 			
-			return synchronizerElement;
+			parent.AppendChild( synchronizerElement);
 		}
 		#endregion
 
 		#region EndNode
-		private XmlElement writeEndNodes(List<EndNode> endNodes)
+		private void writeEndNodes(XmlElement parent,List<EndNode> endNodes)
 		{
-			if (endNodes == null || endNodes.Count <= 0) { return null; }
+			if (endNodes == null || endNodes.Count <= 0) { return ; }
 //			XElement endNodesElement = new XElement(xN + END_NODES);
 //
 //			foreach (EndNode item in endNodes)
 //			{
 //				endNodesElement.Add(writeEndNode(item));
 //			}
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement endNodesElement = xmldoc.CreateElement(END_NODES);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement endNodesElement = CreateElement(END_NODES);
 			foreach (EndNode item in endNodes) {
-				endNodesElement.AppendChild(writeEndNode(item));
+				writeEndNode(endNodesElement,item);
 			}
-			return endNodesElement;
+			parent.AppendChild( endNodesElement);
 		}
 
-		private XmlElement writeEndNode(EndNode endNode)
+		private void writeEndNode(XmlElement parent,EndNode endNode)
 		{
-			if (endNode == null) { return null; }
+			if (endNode == null) { return ; }
 
 //			XElement endNodeElement = new XElement(
 //				xN + END_NODE,
@@ -645,23 +670,24 @@ namespace FireWorkflow.Net.Model.Io
 //				new XElement(xN + DESCRIPTION, endNode.Description),
 //				writeExtendedAttributes(endNode.ExtendedAttributes)
 //			);
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement endNodeElement = xmldoc.CreateElement(END_NODE);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement endNodeElement = CreateElement(END_NODE);
 			endNodeElement.SetAttribute(ID, endNode.Id);
 			endNodeElement.SetAttribute(NAME, endNode.Name);
 			endNodeElement.SetAttribute(DISPLAY_NAME, endNode.DisplayName);
-			XmlElement elm = xmldoc.CreateElement(DESCRIPTION);
+			XmlElement elm = CreateElement(DESCRIPTION);
 			elm.InnerText = endNode.Description;
 			endNodeElement.AppendChild(elm);
-			endNodeElement.AppendChild(writeExtendedAttributes(endNode.ExtendedAttributes));
-			return endNodeElement;
+			writeExtendedAttributes(endNodeElement,endNode.ExtendedAttributes);
+			
+			parent.AppendChild( endNodeElement);
 		}
 		#endregion
 
 		#region Transitions
-		private XmlElement writeTransitions(List<Transition> transitions)
+		private void writeTransitions(XmlElement parent,List<Transition> transitions)
 		{
-			if (transitions == null || transitions.Count <= 0) { return null; }
+			if (transitions == null || transitions.Count <= 0) { return ; }
 
 //			XElement transitionsElement = new XElement(xN + TRANSITIONS);
 //
@@ -669,17 +695,17 @@ namespace FireWorkflow.Net.Model.Io
 //			{
 //				transitionsElement.Add(writeTransition(item));
 //			}
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement transitionsElement = xmldoc.CreateElement(TRANSITIONS);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement transitionsElement = CreateElement(TRANSITIONS);
 			foreach(Transition item in transitions){
-				transitionsElement.AppendChild(writeTransition(item));
+				writeTransition(transitionsElement,item);
 			}
-			return transitionsElement;
+			parent.AppendChild( transitionsElement);
 		}
 
-		private XmlElement writeTransition(Transition transition)
+		private void writeTransition(XmlElement parent,Transition transition)
 		{
-			if (transition == null) { return null; }
+			if (transition == null) { return ; }
 
 //			XElement transitionElement = new XElement(
 //				xN + TRANSITION,
@@ -693,24 +719,25 @@ namespace FireWorkflow.Net.Model.Io
 //			);
 			
 			XmlDocument xmldoc  =new XmlDocument();
-			XmlElement transitionElement = xmldoc.CreateElement(TRANSITION);
+			XmlElement transitionElement = CreateElement(TRANSITION);
 			transitionElement.SetAttribute(ID, transition.Id);
 			transitionElement.SetAttribute(FROM, transition.FromNode.Id);
 			transitionElement.SetAttribute(TO, transition.ToNode.Id);
 			transitionElement.SetAttribute(NAME, transition.Name);
 			transitionElement.SetAttribute(DISPLAY_NAME, transition.DisplayName);
-			XmlElement elm = xmldoc.CreateElement(CONDITION);
+			XmlElement elm = CreateElement(CONDITION);
 			elm.InnerText = transition.Condition;
 			transitionElement.AppendChild(elm);
-			transitionElement.AppendChild(writeExtendedAttributes(transition.ExtendedAttributes));
-			return transitionElement;
+			writeExtendedAttributes(transitionElement,transition.ExtendedAttributes);
+			
+			parent.AppendChild( transitionElement);
 		}
 		#endregion
 
 		#region Loops
-		private XmlElement writeLoops(List<Loop> loops)
+		private void writeLoops(XmlElement parent,List<Loop> loops)
 		{
-			if (loops == null || loops.Count <= 0) { return null; }
+			if (loops == null || loops.Count <= 0) { return ; }
 //			XElement transitionsElement = new XElement(xN + LOOPS);
 //
 //			foreach (Loop loop in loops)
@@ -726,22 +753,23 @@ namespace FireWorkflow.Net.Model.Io
 //					writeExtendedAttributes(loop.ExtendedAttributes)
 //				));
 //			}
-			XmlDocument xmldoc = new XmlDocument();
-			XmlElement transitionsElement = xmldoc.CreateElement(LOOPS);
+			//XmlDocument xmldoc = new XmlDocument();
+			XmlElement transitionsElement = CreateElement(LOOPS);
 			foreach (Loop loop in loops)
 			{
-				XmlElement transitionElement = xmldoc.CreateElement(LOOP);
+				XmlElement transitionElement = CreateElement(LOOP);
 				transitionElement.SetAttribute(ID, loop.Id);
 				transitionElement.SetAttribute(FROM, loop.FromNode.Id);
 				transitionElement.SetAttribute(TO, loop.ToNode.Id);
 				transitionElement.SetAttribute(NAME, loop.Name);
 				transitionElement.SetAttribute(DISPLAY_NAME, loop.DisplayName);
-				XmlElement elm = xmldoc.CreateElement(CONDITION);
+				XmlElement elm = CreateElement(CONDITION);
 				elm.InnerText = loop.Condition;
 				transitionsElement.AppendChild(elm);
-				transitionsElement.AppendChild(writeExtendedAttributes(loop.ExtendedAttributes));
+				writeExtendedAttributes(transitionElement,loop.ExtendedAttributes);
+				
 			}
-			return transitionsElement;
+			parent.AppendChild( transitionsElement);
 		}
 		#endregion
 

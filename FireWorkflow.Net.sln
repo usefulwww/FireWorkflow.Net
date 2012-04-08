@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireWorkflow.Net.Persistence.SqlServerDAL", "FireWorkflow.Net.Persistence.SqlServerDAL\FireWorkflow.Net.Persistence.SqlServerDAL.csproj", "{21520687-37FB-47DC-87DA-67D840E70201}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireWorkflow.Net.Persistence.NHibernateDAL", "FireWorkflow.Net.Persistence.NHibernateDAL\FireWorkflow.Net.Persistence.NHibernateDAL.csproj", "{FD8FFDCF-235D-44CF-A70C-26813B0FBE9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireWorkflow.Net.Persistence.SQLiteDAL", "FireWorkflow.Net.Persistence.SqliteDAL\FireWorkflow.Net.Persistence.SQLiteDAL.csproj", "{CE1D3F38-392C-42C6-9839-008A1528D3A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +38,22 @@ Global
 		{21520687-37FB-47DC-87DA-67D840E70201}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21520687-37FB-47DC-87DA-67D840E70201}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21520687-37FB-47DC-87DA-67D840E70201}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD8FFDCF-235D-44CF-A70C-26813B0FBE9D}.Debug|Any CPU.Build.0 = Debug|x86
+		{FD8FFDCF-235D-44CF-A70C-26813B0FBE9D}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FD8FFDCF-235D-44CF-A70C-26813B0FBE9D}.Debug|x86.Build.0 = Debug|x86
+		{FD8FFDCF-235D-44CF-A70C-26813B0FBE9D}.Debug|x86.ActiveCfg = Debug|x86
+		{FD8FFDCF-235D-44CF-A70C-26813B0FBE9D}.Release|Any CPU.Build.0 = Release|x86
+		{FD8FFDCF-235D-44CF-A70C-26813B0FBE9D}.Release|Any CPU.ActiveCfg = Release|x86
+		{FD8FFDCF-235D-44CF-A70C-26813B0FBE9D}.Release|x86.Build.0 = Release|x86
+		{FD8FFDCF-235D-44CF-A70C-26813B0FBE9D}.Release|x86.ActiveCfg = Release|x86
+		{CE1D3F38-392C-42C6-9839-008A1528D3A2}.Debug|Any CPU.Build.0 = Debug|x86
+		{CE1D3F38-392C-42C6-9839-008A1528D3A2}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{CE1D3F38-392C-42C6-9839-008A1528D3A2}.Debug|x86.Build.0 = Debug|x86
+		{CE1D3F38-392C-42C6-9839-008A1528D3A2}.Debug|x86.ActiveCfg = Debug|x86
+		{CE1D3F38-392C-42C6-9839-008A1528D3A2}.Release|Any CPU.Build.0 = Release|x86
+		{CE1D3F38-392C-42C6-9839-008A1528D3A2}.Release|Any CPU.ActiveCfg = Release|x86
+		{CE1D3F38-392C-42C6-9839-008A1528D3A2}.Release|x86.Build.0 = Release|x86
+		{CE1D3F38-392C-42C6-9839-008A1528D3A2}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

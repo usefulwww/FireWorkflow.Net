@@ -18,17 +18,20 @@
     <SccProvider>SubversionScc</SccProvider>
     <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Administrator\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <StartArguments>/path:"${ProjectDir}" /ipMode:Any</StartArguments>
-    <StartWorkingDirectory>${StartupPath}</StartWorkingDirectory>
+    <StartWorkingDirectory>${ProjectDir}</StartWorkingDirectory>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
     <TargetFrameworkProfile />
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>Full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -47,7 +50,15 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <StartAction>Program</StartAction>
-    <StartProgram>D:\software\develop\CassiniDev\Release\CassiniDev.exe</StartProgram>
+    <StartProgram>CassiniDev.exe</StartProgram>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ext.Net">
@@ -62,6 +73,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\DLL\Sqlite.Net\System.Data.SQLite.DLL</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -212,6 +226,10 @@
       <Project>{36D872DC-8503-4DBD-B580-2C69D851B4F5}</Project>
       <Name>FireWorkflow.Net.Persistence.OracleDAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FireWorkflow.Net.Persistence.SqliteDAL\FireWorkflow.Net.Persistence.SQLiteDAL.csproj">
+      <Project>{CE1D3F38-392C-42C6-9839-008A1528D3A2}</Project>
+      <Name>FireWorkflow.Net.Persistence.SQLiteDAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FireWorkflow.Net.Persistence.SqlServerDAL\FireWorkflow.Net.Persistence.SqlServerDAL.csproj">
       <Project>{21520687-37FB-47DC-87DA-67D840E70201}</Project>
       <Name>FireWorkflow.Net.Persistence.SqlServerDAL</Name>
@@ -254,6 +272,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Fireflow_Process_Definition_Language.dtd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!--<Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />

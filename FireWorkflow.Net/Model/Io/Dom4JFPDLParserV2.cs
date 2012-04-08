@@ -114,6 +114,7 @@ namespace FireWorkflow.Net.Model.Io
 				//XmlElement xele = XmlElement.Load(System.Xml.XmlReader.Create(srin, xrs, filedtd));
 				
 				XmlDocument xmldoc = new XmlDocument();
+				//xmldoc.Load(System.Xml.XmlReader.Create(srin, xrs));
 				xmldoc.Load(System.Xml.XmlReader.Create(srin, xrs, filedtd));
 				XmlElement xele = xmldoc.DocumentElement;
 				
@@ -132,7 +133,7 @@ namespace FireWorkflow.Net.Model.Io
 		}
 		private string GetElementValue(XmlElement xele, string name)
 		{
-			XmlElement elem = xele[name];
+			XmlElement elem = xele[FPDL_NS_PREFIX+":"+name];
 			if (elem==null) return String.Empty;
 			return elem.Value;
 		}
@@ -141,13 +142,13 @@ namespace FireWorkflow.Net.Model.Io
 		private IEnumerable<XmlElement> GetXElements(XmlElement xele, String name)
 		{
 //			var partNos = from item in xele.Descendants("{" + FPDL_URI + "}" + name) select item;
-			var partNos = xele.GetElementsByTagName(name);
-//			IList<XmlElement> list = new List<XmlElement>();
-//			foreach (var item in partNos) {
-//				list.Add((XmlElement)item);
-//			}
-//			return list;
-			return (IEnumerable<XmlElement>) partNos;
+			var partNos = xele.GetElementsByTagName(FPDL_NS_PREFIX+":"+name);
+			IList<XmlElement> list = new List<XmlElement>();
+			foreach (var item in partNos) {
+				list.Add((XmlElement)item);
+			}
+			return list;
+			//return (IEnumerable<XmlElement>) partNos;
 		}
 
 		private WorkflowProcess parse(XmlElement xele)
@@ -167,17 +168,17 @@ namespace FireWorkflow.Net.Model.Io
 
 			wp.Description = GetElementValue(xele, DESCRIPTION);
 
-			loadDataFields(wp, xele[ DATA_FIELDS]);
-			loadStartNode(wp, xele[START_NODE]);
-			loadTasks(wp, wp.Tasks, xele[TASKS]);
-			loadActivities(wp, xele[ACTIVITIES]);
-			loadSynchronizers(wp, xele[SYNCHRONIZERS]);
-			loadEndNodes(wp, xele[END_NODES]);
-			loadTransitions(wp, xele[TRANSITIONS]);
-			loadLoops(wp, xele[LOOPS]);
+			loadDataFields(wp, xele[FPDL_NS_PREFIX+":"+DATA_FIELDS]);
+			loadStartNode(wp, xele[FPDL_NS_PREFIX+":"+START_NODE]);
+			loadTasks(wp, wp.Tasks, xele[FPDL_NS_PREFIX+":"+TASKS]);
+			loadActivities(wp, xele[FPDL_NS_PREFIX+":"+ACTIVITIES]);
+			loadSynchronizers(wp, xele[FPDL_NS_PREFIX+":"+SYNCHRONIZERS]);
+			loadEndNodes(wp, xele[FPDL_NS_PREFIX+":"+END_NODES]);
+			loadTransitions(wp, xele[FPDL_NS_PREFIX+":"+TRANSITIONS]);
+			loadLoops(wp, xele[FPDL_NS_PREFIX+":"+LOOPS]);
 
-			loadEventListeners(wp.EventListeners, xele[EVENT_LISTENERS]);
-			loadExtendedAttributes(wp.ExtendedAttributes, xele[EXTENDED_ATTRIBUTES]);
+			loadEventListeners(wp.EventListeners, xele[FPDL_NS_PREFIX+":"+EVENT_LISTENERS]);
+			loadExtendedAttributes(wp.ExtendedAttributes, xele[FPDL_NS_PREFIX+":"+EXTENDED_ATTRIBUTES]);
 
 			return wp;
 		}
@@ -244,10 +245,10 @@ namespace FireWorkflow.Net.Model.Io
 
 			activity.Description = GetElementValue(xElement, DESCRIPTION);
 
-			loadEventListeners(activity.EventListeners, xElement[EVENT_LISTENERS]);
-			loadExtendedAttributes(activity.ExtendedAttributes, xElement[ EXTENDED_ATTRIBUTES]);
-			loadTasks(activity, activity.InlineTasks, xElement[TASKS]);
-			loadTaskRefs((WorkflowProcess)activity.ParentElement, activity, activity.TaskRefs, xElement[TASKREFS]);
+			loadEventListeners(activity.EventListeners, xElement[FPDL_NS_PREFIX+":"+EVENT_LISTENERS]);
+			loadExtendedAttributes(activity.ExtendedAttributes, xElement[FPDL_NS_PREFIX+":"+ EXTENDED_ATTRIBUTES]);
+			loadTasks(activity, activity.InlineTasks, xElement[FPDL_NS_PREFIX+":"+TASKS]);
+			loadTaskRefs((WorkflowProcess)activity.ParentElement, activity, activity.TaskRefs, xElement[FPDL_NS_PREFIX+":"+TASKREFS]);
 
 			return activity;
 		}
@@ -331,28 +332,28 @@ namespace FireWorkflow.Net.Model.Io
 			task.Priority = priority;
 			if (task is FormTask)
 			{
-				((FormTask)task).Performer = createPerformer(xElement[ PERFORMER]);
+				((FormTask)task).Performer = createPerformer(xElement[FPDL_NS_PREFIX+":"+PERFORMER]);
 
-				((FormTask)task).EditForm = createForm(xElement[EDIT_FORM]);
-				((FormTask)task).ViewForm = createForm(xElement[VIEW_FORM]);
-				((FormTask)task).ListForm = createForm(xElement[LIST_FORM]);
+				((FormTask)task).EditForm = createForm(xElement[FPDL_NS_PREFIX+":"+EDIT_FORM]);
+				((FormTask)task).ViewForm = createForm(xElement[FPDL_NS_PREFIX+":"+VIEW_FORM]);
+				((FormTask)task).ListForm = createForm(xElement[FPDL_NS_PREFIX+":"+LIST_FORM]);
 			}
 
 			if (task is ToolTask)
 			{
-				((ToolTask)task).Application = createApplication(xElement[APPLICATION]);
+				((ToolTask)task).Application = createApplication(xElement[FPDL_NS_PREFIX+":"+APPLICATION]);
 			}
 			if (task is SubflowTask)
 			{
-				((SubflowTask)task).SubWorkflowProcess = createSubWorkflowProcess(xElement[SUB_WORKFLOW_PROCESS]);
+				((SubflowTask)task).SubWorkflowProcess = createSubWorkflowProcess(xElement[FPDL_NS_PREFIX+":"+SUB_WORKFLOW_PROCESS]);
 			}
 
 			task.Description = GetElementValue(xElement,DESCRIPTION);
 
-			task.Duration = createDuration(xElement[DURATION]);
+			task.Duration = createDuration(xElement[FPDL_NS_PREFIX+":"+DURATION]);
 
-			loadExtendedAttributes(task.ExtendedAttributes, xElement[EXTENDED_ATTRIBUTES]);
-			loadEventListeners(task.EventListeners, xElement[EVENT_LISTENERS]);
+			loadExtendedAttributes(task.ExtendedAttributes, xElement[FPDL_NS_PREFIX+":"+EXTENDED_ATTRIBUTES]);
+			loadEventListeners(task.EventListeners, xElement[FPDL_NS_PREFIX+":"+EVENT_LISTENERS]);
 
 			return task;
 		}
@@ -474,7 +475,7 @@ namespace FireWorkflow.Net.Model.Io
 			dataField.InitialValue = GetAttributeValue(xElement, INITIAL_VALUE);
 
 			dataField.Description = GetElementValue(xElement, DESCRIPTION);
-			loadExtendedAttributes(dataField.ExtendedAttributes, xElement[EXTENDED_ATTRIBUTES]);
+			loadExtendedAttributes(dataField.ExtendedAttributes, xElement[FPDL_NS_PREFIX+":"+EXTENDED_ATTRIBUTES]);
 
 			return dataField;
 		}
@@ -491,7 +492,7 @@ namespace FireWorkflow.Net.Model.Io
 			startNode.DisplayName = GetAttributeValue(xElement, DISPLAY_NAME);
 
 			startNode.Description = GetElementValue(xElement,  DESCRIPTION);
-			loadExtendedAttributes(startNode.ExtendedAttributes, xElement[EXTENDED_ATTRIBUTES]);
+			loadExtendedAttributes(startNode.ExtendedAttributes, xElement[FPDL_NS_PREFIX+":"+EXTENDED_ATTRIBUTES]);
 
 			wp.StartNode = startNode;
 		}
@@ -517,8 +518,8 @@ namespace FireWorkflow.Net.Model.Io
 			synchronizer.Sn = Guid.NewGuid().ToString();
 			synchronizer.DisplayName = GetAttributeValue(xElement, DISPLAY_NAME);
 
-			synchronizer.Description = GetElementValue(xElement, "{" + FPDL_URI + "}" + DESCRIPTION);
-			loadExtendedAttributes(synchronizer.ExtendedAttributes, xElement[EXTENDED_ATTRIBUTES]);
+			synchronizer.Description = GetElementValue(xElement, DESCRIPTION);
+			loadExtendedAttributes(synchronizer.ExtendedAttributes, xElement[FPDL_NS_PREFIX+":"+EXTENDED_ATTRIBUTES]);
 
 			return synchronizer;
 		}
@@ -545,7 +546,7 @@ namespace FireWorkflow.Net.Model.Io
 			endNode.DisplayName = GetAttributeValue(xElement, DISPLAY_NAME);
 
 			endNode.Description = GetElementValue(xElement,  DESCRIPTION);
-			loadExtendedAttributes(endNode.ExtendedAttributes, xElement[EXTENDED_ATTRIBUTES]);
+			loadExtendedAttributes(endNode.ExtendedAttributes, xElement[FPDL_NS_PREFIX+":"+EXTENDED_ATTRIBUTES]);
 
 			return endNode;
 		}
@@ -598,7 +599,7 @@ namespace FireWorkflow.Net.Model.Io
 			transition.DisplayName = GetAttributeValue(xElement, DISPLAY_NAME);
 
 			transition.Description = GetElementValue(xElement,DESCRIPTION);
-			loadExtendedAttributes(transition.ExtendedAttributes, xElement[EXTENDED_ATTRIBUTES]);
+			loadExtendedAttributes(transition.ExtendedAttributes, xElement[FPDL_NS_PREFIX+":"+EXTENDED_ATTRIBUTES]);
 			transition.Condition = GetElementValue(xElement, CONDITION);
 
 			return transition;
@@ -642,7 +643,7 @@ namespace FireWorkflow.Net.Model.Io
 
 
 			loop.Description = GetElementValue(xElement, DESCRIPTION);
-			loadExtendedAttributes(loop.ExtendedAttributes, xElement[ EXTENDED_ATTRIBUTES]);
+			loadExtendedAttributes(loop.ExtendedAttributes, xElement[FPDL_NS_PREFIX+":"+ EXTENDED_ATTRIBUTES]);
 			loop.Condition = GetElementValue(xElement, CONDITION);
 
 			return loop;

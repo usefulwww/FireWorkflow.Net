@@ -59,7 +59,7 @@
     <ext:ResourceManager ID="ResourceManager1" runat="server" />
     <ext:Viewport ID="ViewPort1" runat="server" Layout="BorderLayout">
         <Items>
-             <ext:Toolbar ID="Toolbar1" runat="server" Region="North" Height="80">
+             <ext:Toolbar ID="Toolbar1" runat="server" Region="North" Height="50">
                 <Items>
                     <ext:Button ID="btnExit" runat="server" Text="退出系统">
                         <DirectEvents>
