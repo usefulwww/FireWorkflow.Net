@@ -30,12 +30,12 @@ namespace FireWorkflow.Net.Engine.Impl
 		public String Name { get; set; }
 		public String DisplayName { get; set; }
 		public ProcessInstanceEnum State { get; set; }
-		public Boolean? Suspended { get; set; }
+		public Boolean Suspended { get; set; }
 		public String CreatorId { get; set; }
-		public DateTime? CreatedTime { get; set; }
-		public DateTime? StartedTime { get; set; }
-		public DateTime? EndTime { get; set; }
-		public DateTime? ExpiredTime { get; set; }
+		public DateTime CreatedTime { get; set; }
+		public DateTime StartedTime { get; set; }
+		public DateTime EndTime { get; set; }
+		public DateTime ExpiredTime { get; set; }
 		public String ParentProcessInstanceId { get; set; }
 		public String ParentTaskInstanceId { get; set; }
 		

@@ -1,6 +1,6 @@
 ﻿/*
  * Copyright 2003-2008 非也
- * All rights reserved. 
+ * All rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -25,22 +25,22 @@ using FireWorkflow.Net.Kernel.Event;
 
 namespace FireWorkflow.Net.Kernel.Impl
 {
-    /// <summary>实现edge的公共方法 ，边有两种，一是transition，二是loop。</summary>
-    public abstract class EdgeInstance : IEdgeInstance
-    {
-        public INodeInstance LeavingNodeInstance { get; set; }
-        public INodeInstance EnteringNodeInstance { get; set; }
-        protected int weight = 0;
-        protected List<IEdgeInstanceEventListener> eventListeners = new List<IEdgeInstanceEventListener>();
+	/// <summary>实现edge的公共方法 ，边有两种，一是transition，二是loop。</summary>
+	public abstract class EdgeInstance : IEdgeInstance
+	{
+		public INodeInstance LeavingNodeInstance { get; set; }
+		public INodeInstance EnteringNodeInstance { get; set; }
+		protected int weight = 0;
+		protected List<IEdgeInstanceEventListener> eventListeners = new List<IEdgeInstanceEventListener>();
 
-        public virtual string Id { get { return String.Empty; } }
+		public virtual string Id { get { return String.Empty; } }
 
-        public virtual int Weight { get { return 0; } }
+		public virtual int Weight { get { return 0; } }
 
-        public virtual bool take(IToken token)
-        {
-            return false;
-        }
-    }
+		public virtual bool take(IToken token)
+		{
+			return false;
+		}
+	}
 
 }

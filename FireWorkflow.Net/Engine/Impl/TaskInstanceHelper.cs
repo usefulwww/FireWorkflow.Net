@@ -15,7 +15,6 @@
  * along with this program. If not, see http://www.gnu.org/licenses. *
  * @author 非也,nychen2000@163.com
  * @Revision to .NET 无忧 lwz0721@gmail.com 2010-02
- * @Revision 蓝天白云远兮 lyun@nashihou.cn 2011-12
  */
 using System;
 using System.Collections.Generic;
@@ -29,7 +28,7 @@ using FireWorkflow.Net.Model.Net;
 namespace FireWorkflow.Net.Engine.Impl
 {
 	/// <summary>
-	/// Description of 
+	/// Description of
 	/// </summary>
 	public class TaskInstanceHelper
 	{
@@ -38,36 +37,36 @@ namespace FireWorkflow.Net.Engine.Impl
 		}
 		
 		/// <summary>
-        /// 将TaskInstance分配给编号为actorId的操作员。即系统只创建一个WorkItem，并分配给编号为actorId的操作员
-        /// 该WorkItem需要签收
-        /// </summary>
-        /// <param name="actorId">操作员Id</param>
-        /// <returns>返回创建的WorkItem</returns>
+		/// 将TaskInstance分配给编号为actorId的操作员。即系统只创建一个WorkItem，并分配给编号为actorId的操作员
+		/// 该WorkItem需要签收
+		/// </summary>
+		/// <param name="actorId">操作员Id</param>
+		/// <returns>返回创建的WorkItem</returns>
 		public static IWorkItem assignToActor(ITaskInstance t,String id)// throws EngineException, KernelException
 		{
 			ITaskInstanceManager taskInstanceMgr = RuntimeContextFactory.getRuntimeContext().TaskInstanceManager;
-            IWorkflowSession workflowSession = RuntimeContextFactory.getRuntimeContext().getWorkflowSession(t.ProcessInstanceId);
-            WorkItem wi = taskInstanceMgr.createWorkItem(workflowSession, getAliveProcessInstance(t), t, id);
+			IWorkflowSession workflowSession = RuntimeContextFactory.getRuntimeContext().getWorkflowSession(t.ProcessInstanceId);
+			WorkItem wi = taskInstanceMgr.createWorkItem(workflowSession, getAliveProcessInstance(t), t, id);
 			return wi;
 		}
 
 		/// <summary>
-        /// 将TaskInstance分配给列表中的操作员。即创建N个WorkItem，每个操作员一个WorkItem，并且这些WorkItem都需要签收。
-        /// 最终由那个操作员执行该任务实例，是由Task的分配策略决定的。
-        /// 如果分配策略为ALL,即会签的情况，则所有的操作员都要完成相应的工单。
-        /// 如果分配策略为ANY，则最先签收的那个操作员完成其工单和任务实例，其他操作员的工单被删除。
-        /// </summary>
-        /// <param name="actorIds">操作员Id</param>
-        /// <returns>返回创建的WorkItem列表</returns>
+		/// 将TaskInstance分配给列表中的操作员。即创建N个WorkItem，每个操作员一个WorkItem，并且这些WorkItem都需要签收。
+		/// 最终由那个操作员执行该任务实例，是由Task的分配策略决定的。
+		/// 如果分配策略为ALL,即会签的情况，则所有的操作员都要完成相应的工单。
+		/// 如果分配策略为ANY，则最先签收的那个操作员完成其工单和任务实例，其他操作员的工单被删除。
+		/// </summary>
+		/// <param name="actorIds">操作员Id</param>
+		/// <returns>返回创建的WorkItem列表</returns>
 		public static IList<IWorkItem> assignToActors(ITaskInstance t,IList<String> ids)// throws EngineException, KernelException
 		{
-            IWorkflowSession currWorkflowSession = RuntimeContextFactory.getRuntimeContext().getWorkflowSession(t.ProcessInstanceId);
+			IWorkflowSession currWorkflowSession = RuntimeContextFactory.getRuntimeContext().getWorkflowSession(t.ProcessInstanceId);
 			//task应该有一个标志(asignToEveryone)，表明asign的规则
 			IList<IWorkItem> workItemList = new List<IWorkItem>();
 			for (int i = 0; ids != null && i < ids.Count; i++)
 			{
 				ITaskInstanceManager taskInstanceMgr = RuntimeContextFactory.getRuntimeContext().TaskInstanceManager;
-                WorkItem wi = taskInstanceMgr.createWorkItem(currWorkflowSession, getAliveProcessInstance(t), t, ids[i]);
+				WorkItem wi = taskInstanceMgr.createWorkItem(currWorkflowSession, getAliveProcessInstance(t), t, ids[i]);
 				//wi.CurrentWorkflowSession = t.CurrentWorkflowSession;
 				workItemList.Add(wi);
 			}
@@ -77,18 +76,18 @@ namespace FireWorkflow.Net.Engine.Impl
 
 		public /*final*/ static void start(ITaskInstance t)
 		{
-            IWorkflowSession currWorkflowSession = RuntimeContextFactory.getRuntimeContext().getWorkflowSession(t.ProcessInstanceId);
+			IWorkflowSession currWorkflowSession = RuntimeContextFactory.getRuntimeContext().getWorkflowSession(t.ProcessInstanceId);
 			
 			ITaskInstanceManager taskInstanceMgr = RuntimeContextFactory.getRuntimeContext().TaskInstanceManager;
-            taskInstanceMgr.startTaskInstance(currWorkflowSession, getAliveProcessInstance(t), t);
+			taskInstanceMgr.startTaskInstance(currWorkflowSession, getAliveProcessInstance(t), t);
 			//        taskInstanceMgr.startTaskInstance(this);
 		}
 
 		public static void complete(ITaskInstance t,IActivityInstance targetActivityInstance)
 		{
-            IWorkflowSession currWorkflowSession = RuntimeContextFactory.getRuntimeContext().getWorkflowSession(t.ProcessInstanceId);
-            ITaskInstanceManager taskInstanceMgr = RuntimeContextFactory.getRuntimeContext().TaskInstanceManager;
-            taskInstanceMgr.completeTaskInstance(currWorkflowSession, getAliveProcessInstance(t), t, targetActivityInstance);
+			IWorkflowSession currWorkflowSession = RuntimeContextFactory.getRuntimeContext().getWorkflowSession(t.ProcessInstanceId);
+			ITaskInstanceManager taskInstanceMgr = RuntimeContextFactory.getRuntimeContext().TaskInstanceManager;
+			taskInstanceMgr.completeTaskInstance(currWorkflowSession, getAliveProcessInstance(t), t, targetActivityInstance);
 			//        taskInstanceMgr.completeTaskInstance(this, targetActivityInstance);
 		}
 		
@@ -160,14 +159,14 @@ namespace FireWorkflow.Net.Engine.Impl
 		/// <param name="dynamicAssignmentHandler"></param>
 		public static void abort(ITaskInstance t,String targetActivityId, DynamicAssignmentHandler dynamicAssignmentHandler)
 		{
-            IWorkflowSession currWorkflowSession = RuntimeContextFactory.getRuntimeContext().getWorkflowSession(t.ProcessInstanceId);
-            
-            //if (t.CurrentWorkflowSession == null)
-            //{
-            //    new EngineException(t.ProcessInstanceId,
-            //                        getWorkflowProcess(t), t.TaskId,
-            //                        "The current workflow session is null.");
-            //}
+			IWorkflowSession currWorkflowSession = RuntimeContextFactory.getRuntimeContext().getWorkflowSession(t.ProcessInstanceId);
+			
+			//if (t.CurrentWorkflowSession == null)
+			//{
+			//    new EngineException(t.ProcessInstanceId,
+			//                        getWorkflowProcess(t), t.TaskId,
+			//                        "The current workflow session is null.");
+			//}
 //			if (t.RuntimeContext == null)
 //			{
 //				new EngineException(t.ProcessInstanceId,
@@ -185,12 +184,12 @@ namespace FireWorkflow.Net.Engine.Impl
 
 			if (dynamicAssignmentHandler != null)
 			{
-                currWorkflowSession.setDynamicAssignmentHandler(dynamicAssignmentHandler);
+				currWorkflowSession.setDynamicAssignmentHandler(dynamicAssignmentHandler);
 			}
 
 
 			ITaskInstanceManager taskInstanceMgr = RuntimeContextFactory.getRuntimeContext().TaskInstanceManager;
-            taskInstanceMgr.abortTaskInstance(currWorkflowSession, getAliveProcessInstance(t), t, targetActivityId);
+			taskInstanceMgr.abortTaskInstance(currWorkflowSession, getAliveProcessInstance(t), t, targetActivityId);
 
 		}
 
@@ -204,13 +203,13 @@ namespace FireWorkflow.Net.Engine.Impl
 		/// <param name="dynamicAssignmentHandler"></param>
 		public static void abortEx(ITaskInstance t,String targetActivityId, DynamicAssignmentHandler dynamicAssignmentHandler)
 		{
-            IWorkflowSession currWorkflowSession = RuntimeContextFactory.getRuntimeContext().getWorkflowSession(t.ProcessInstanceId);
-            //if (t.CurrentWorkflowSession == null)
-            //{
-            //    new EngineException(t.ProcessInstanceId,
-            //                        getWorkflowProcess(t), t.TaskId,
-            //                        "The current workflow session is null.");
-            //}
+			IWorkflowSession currWorkflowSession = RuntimeContextFactory.getRuntimeContext().getWorkflowSession(t.ProcessInstanceId);
+			//if (t.CurrentWorkflowSession == null)
+			//{
+			//    new EngineException(t.ProcessInstanceId,
+			//                        getWorkflowProcess(t), t.TaskId,
+			//                        "The current workflow session is null.");
+			//}
 //			if (t.RuntimeContext == null)
 //			{
 //				new EngineException(t.ProcessInstanceId,
@@ -227,10 +226,10 @@ namespace FireWorkflow.Net.Engine.Impl
 
 			if (dynamicAssignmentHandler != null)
 			{
-                currWorkflowSession.setDynamicAssignmentHandler(dynamicAssignmentHandler);
+				currWorkflowSession.setDynamicAssignmentHandler(dynamicAssignmentHandler);
 			}
 			ITaskInstanceManager taskInstanceMgr = RuntimeContextFactory.getRuntimeContext().TaskInstanceManager;
-            taskInstanceMgr.abortTaskInstanceEx(currWorkflowSession, getAliveProcessInstance(t), t, targetActivityId);
+			taskInstanceMgr.abortTaskInstanceEx(currWorkflowSession, getAliveProcessInstance(t), t, targetActivityId);
 		}
 		
 		private static Dictionary<string,IProcessInstance> processInsatances = new Dictionary<string, IProcessInstance>();
@@ -241,22 +240,22 @@ namespace FireWorkflow.Net.Engine.Impl
 			{
 				//if (t.RuntimeContext != null)
 				//{
-					IPersistenceService persistenceService = RuntimeContextFactory.getRuntimeContext().PersistenceService;
-					//this.processInsatance = persistenceService.FindAliveProcessInstanceById(this.ProcessInstanceId); //解决流程结束任务未完成无法继续问题。
-					processInsatances[t.Id] = persistenceService.FindProcessInstanceById(t.ProcessInstanceId);//获取存在的流程
+				IPersistenceService persistenceService = RuntimeContextFactory.getRuntimeContext().PersistenceService;
+				//this.processInsatance = persistenceService.FindAliveProcessInstanceById(this.ProcessInstanceId); //解决流程结束任务未完成无法继续问题。
+				processInsatances[t.Id] = persistenceService.FindProcessInstanceById(t.ProcessInstanceId);//获取存在的流程
 				//}
 			}
-            //if (processInsatances.ContainsKey(t.Id)&&processInsatances[t.Id]!=null)
-            //{
-                //if (t.CurrentWorkflowSession != null)
-                //{
-                //    processInsatances[t.Id].CurrentWorkflowSession = t.CurrentWorkflowSession;
-                //}
+			//if (processInsatances.ContainsKey(t.Id)&&processInsatances[t.Id]!=null)
+			//{
+			//if (t.CurrentWorkflowSession != null)
+			//{
+			//    processInsatances[t.Id].CurrentWorkflowSession = t.CurrentWorkflowSession;
+			//}
 //				if (t.RuntimeContext != null)
 //				{
 //					processInsatances[t.Id].RuntimeContext = t.RuntimeContext;
 //				}
-            //}
+			//}
 			return processInsatances[t.Id];
 			
 		}

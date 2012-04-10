@@ -11,11 +11,15 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WebDemo</RootNamespace>
     <AssemblyName>WebDemo</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <SccProjectName>Svn</SccProjectName>
-    <SccLocalPath>Svn</SccLocalPath>
-    <SccAuxPath>Svn</SccAuxPath>
-    <SccProvider>SubversionScc</SccProvider>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
     <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Administrator\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <StartArguments>/path:"${ProjectDir}"</StartArguments>
     <StartWorkingDirectory>${StartupPath}</StartWorkingDirectory>
@@ -65,6 +69,10 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\Sqlite.Net\System.Data.SQLite.DLL</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -260,6 +268,10 @@
     <ProjectReference Include="..\FireWorkflow.Net.Persistence.OracleDAL\FireWorkflow.Net.Persistence.OracleDAL.Net4.csproj">
       <Project>{36D872DC-8503-4DBD-B580-2C69D851B4F5}</Project>
       <Name>FireWorkflow.Net.Persistence.OracleDAL.Net4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FireWorkflow.Net.Persistence.SqliteDAL\FireWorkflow.Net.Persistence.SQLiteDAL.Newt4.csproj">
+      <Project>{CE1D3F38-392C-42C6-9839-008A1528D3A2}</Project>
+      <Name>FireWorkflow.Net.Persistence.SQLiteDAL.Newt4</Name>
     </ProjectReference>
     <ProjectReference Include="..\FireWorkflow.Net.Persistence.SqlServerDAL\FireWorkflow.Net.Persistence.SqlServerDAL.Net4.csproj">
       <Project>{21520687-37FB-47DC-87DA-67D840E70201}</Project>

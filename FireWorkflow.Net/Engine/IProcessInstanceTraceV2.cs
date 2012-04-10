@@ -1,6 +1,6 @@
 ﻿/*
  * Copyright 2003-2008 非也
- * All rights reserved. 
+ * All rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -33,14 +33,8 @@ namespace FireWorkflow.Net.Engine
 		int StepNumber { get; set; }
 		int MinorNumber { get; set; }
 		ProcessInstanceTraceEnum Type { get; set; }
-		//TODO 修改为Net2.0
-		//[DataMemberAttribute()]
 		string EdgeId { get; set; }
-		//TODO 修改为Net2.0
-		//[DataMemberAttribute()]
 		string FromNodeId { get; set; }
-		//TODO 修改为Net2.0
-		//[DataMemberAttribute()]
 		string ToNodeId { get; set; }
 	}
 }

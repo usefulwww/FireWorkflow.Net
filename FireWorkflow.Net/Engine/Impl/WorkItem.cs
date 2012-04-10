@@ -1,6 +1,6 @@
 ﻿/*
  * Copyright 2003-2008 非也
- * All rights reserved. 
+ * All rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -28,84 +28,54 @@ using FireWorkflow.Net.Model.Net;
 namespace FireWorkflow.Net.Engine.Impl
 {
 
-    [Serializable]
-    public class WorkItem : IWorkItem
-    {
-        public String ActorId { get; set; }
-        public String Id { get; set; }
-        public WorkItemEnum State { get; set; }
-        public DateTime CreatedTime { get; set; }
+	[Serializable]
+	public class WorkItem : IWorkItem
+	{
+		public String ActorId { get; set; }
+		public String Id { get; set; }
+		public WorkItemEnum State { get; set; }
+		public DateTime CreatedTime { get; set; }
 
-        /// <summary>签收时间</summary>
-        public DateTime? ClaimedTime { get; set; }
-        /// <summary>结束时间</summary>
-        public DateTime? EndTime { get; set; }
-        public String Comments { get; set; }
-        public ITaskInstance TaskInstance { get; set; }
+		/// <summary>签收时间</summary>
+		public DateTime ClaimedTime { get; set; }
+		/// <summary>结束时间</summary>
+		public DateTime EndTime { get; set; }
+		public String Comments { get; set; }
+		public ITaskInstance TaskInstance { get; set; }
 
-        public string Name { get { return TaskInstance.Name; } }//lwz 2010-3-3 add
-        public string DisplayName { get { return TaskInstance.DisplayName; } }//lwz 2010-3-3 add
-        public String ProcessInstanceId { get { return TaskInstance.ProcessInstanceId; } }//lwz 2010-3-3 add
-        public String BizInfo { get { return TaskInstance.BizInfo; } }//lwz 2010-3-3 add
-        /// <summary>返回对应的流程的Id</summary>
-        public String ProcessId { get { return TaskInstance.ProcessId; } }
+		public string Name { get { return TaskInstance.Name; } }//lwz 2010-3-3 add
+		public string DisplayName { get { return TaskInstance.DisplayName; } }//lwz 2010-3-3 add
+		public String ProcessInstanceId { get { return TaskInstance.ProcessInstanceId; } }//lwz 2010-3-3 add
+		public String BizInfo { get { return TaskInstance.BizInfo; } }//lwz 2010-3-3 add
+		/// <summary>返回对应的流程的Id</summary>
+		public String ProcessId { get { return TaskInstance.ProcessId; } }
 
-        /// <summary>返回流程的版本</summary>
-        public Int32 Version { get { return TaskInstance.Version; } }
+		/// <summary>返回流程的版本</summary>
+		public Int32 Version { get { return TaskInstance.Version; } }
 
-        /// <summary>added by wangmj 20090922 供springjdbc实现类使用</summary>
-        public String TaskInstanceId { get; set; }
+		/// <summary>added by wangmj 20090922 供springjdbc实现类使用</summary>
+		public String TaskInstanceId { get; set; }
 
-//        protected RuntimeContext _runtimeContext;
-//        public RuntimeContext RuntimeContext
-//        {
-//            get { return _runtimeContext; }
-//            set
-//            {
-//                _runtimeContext = value;
-//                if (this.TaskInstance != null)
-//                {
-//                    TaskInstance.RuntimeContext = _runtimeContext;
-//                }
-//            }
-//        }
+		public WorkItem()
+		{
+		}
 
-        //protected IWorkflowSession _workflowSession = null;
-       /// TODO Debug
-       // public IWorkflowSession CurrentWorkflowSession { get; set; }
-        //public IWorkflowSession CurrentWorkflowSession
-        //{
-        //    get { return this._workflowSession; }
-        //    set
-        //    {
-        //        this._workflowSession = value;
-        //        if (this.TaskInstance != null)
-        //        {
-        //            TaskInstance.CurrentWorkflowSession = this._workflowSession;
-        //        }
-        //    }
-        //}
+		public WorkItem(ITaskInstance taskInstance)
+		{
+			this.TaskInstance = taskInstance;
+		}
 
-        public WorkItem()
-        {
-        }
-
-        public WorkItem(ITaskInstance taskInstance)
-        {
-            this.TaskInstance = taskInstance;
-        }
-
-        public WorkItem(WorkItemEnum state, DateTime createdTime, DateTime? signedTm,
-                DateTime? endTime, String comments, ITaskInstance taskInstance)
-        {
-            this.State = state;
-            this.CreatedTime = createdTime;
-            this.ClaimedTime = signedTm;
-            this.EndTime = endTime;
-            this.Comments = comments;
-            this.TaskInstance = taskInstance;
-        }
+		public WorkItem(WorkItemEnum state, DateTime createdTime, DateTime signedTm,
+		                DateTime endTime, String comments, ITaskInstance taskInstance)
+		{
+			this.State = state;
+			this.CreatedTime = createdTime;
+			this.ClaimedTime = signedTm;
+			this.EndTime = endTime;
+			this.Comments = comments;
+			this.TaskInstance = taskInstance;
+		}
 
 
-    }
+	}
 }

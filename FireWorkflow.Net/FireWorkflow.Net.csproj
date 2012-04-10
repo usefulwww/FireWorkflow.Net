@@ -119,7 +119,6 @@
     <Compile Include="Engine\Impl\ProcessInstanceHelper.cs" />
     <Compile Include="Engine\Impl\ProcessInstanceTraceV2.cs" />
     <Compile Include="Engine\Impl\ProcessInstanceVar.cs" />
-    <Compile Include="Engine\Impl\ProcessInstanceVarPk.cs" />
     <Compile Include="Engine\Impl\TaskInstance.cs" />
     <Compile Include="Engine\Impl\TaskInstanceHelper.cs" />
     <Compile Include="Engine\Impl\WorkflowSession.cs" />

@@ -15,7 +15,6 @@
  * along with this program. If not, see http://www.gnu.org/licenses. *
  * @author 非也,nychen2000@163.com
  * @Revision to .NET 无忧 lwz0721@gmail.com 2010-02
- * @Revision 蓝天白云远兮 lyun@nashihou.cn 2011-12
  */
 using System;
 using System.Collections.Generic;

@@ -49,7 +49,9 @@ CREATE TABLE [T_FF_HIST_TRACE] (
 
 --流程变量表
 CREATE TABLE [T_FF_RT_PROCINST_VAR] (
+  [id] varchar(50) PRIMARY KEY NOT NULL,
   [processinstance_id] varchar(50) NOT NULL,
+  [value_type] varchar(10) NULL,
   [value] varchar(255) NULL,
   [name] varchar(255) NOT NULL
 );

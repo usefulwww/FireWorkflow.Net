@@ -1,6 +1,6 @@
 ﻿/*
  * Copyright 2003-2008 非也
- * All rights reserved. 
+ * All rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -38,43 +38,31 @@ namespace FireWorkflow.Net.Engine.Impl
 		WITHDRAW_TYPE,
 		// = "Withdraw";
 		REJECT_TYPE
-		// = "Reject";
+			// = "Reject";
 	}
 
 	[Serializable()]
-	//TODO 修改为Net2.0
-	//[DataContract()]
 	public class ProcessInstanceTrace : IProcessInstanceTrace
 	{
 		public String Id { get; set; }
 
 		/// <summary>流程实例ID</summary>
-		//[DataMember]
 		public String ProcessInstanceId { get; set; }
 
 		/// <summary>步骤</summary>
-		//[DataMember]
 		public Int32 StepNumber { get; set; }
 
 		/// <summary>子步骤</summary>
-		//[DataMember]
 		public Int32 MinorNumber { get; set; }
 
 		/// <summary>类型</summary>
-		//[DataMember]
 		public ProcessInstanceTraceEnum Type { get; set; }
 
 		/// <summary>连接ID</summary>
-		//TODO 修改为Net2.0
-		//[DataMember()]
 		public String EdgeId { get; set; }
 
-		//TODO 修改为Net2.0
-		//[DataMember()]
 		public String FromNodeId { get; set; }
 
-		//TODO 修改为Net2.0
-		//[DataMember()]
 		public String ToNodeId { get; set; }
 	}
 }

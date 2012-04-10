@@ -1,6 +1,6 @@
 ﻿/*
  * Copyright 2003-2008 非也
- * All rights reserved. 
+ * All rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -23,8 +23,8 @@ using System.Text;
 
 namespace FireWorkflow.Net.Engine
 {
-    public interface IWorkflowSessionCallback
-    {
-        Object doInWorkflowSession(RuntimeContext ctx);// throws EngineException, KernelException;
-    }
+	public interface IWorkflowSessionCallback
+	{
+		Object doInWorkflowSession(RuntimeContext ctx);// throws EngineException, KernelException;
+	}
 }

@@ -1,6 +1,6 @@
 ﻿/*
  * Copyright 2003-2008 非也
- * All rights reserved. 
+ * All rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -23,43 +23,43 @@ using System.Text;
 
 namespace FireWorkflow.Net.Engine.Impl
 {
-    public class ProcessInstanceVarPk
-    {
-	    private  const long serialVersionUID = 1441383685880577012L;
-        public String ProcessInstanceId { get; set; }
-        public String Name { get; set; }
-        
-        public override Boolean Equals(Object obj)
-        {
-            if (obj == this) return true;
-            if (obj == null) return false;
-            if (!(obj is ProcessInstanceVarPk)) return false;
-            ProcessInstanceVarPk other = (ProcessInstanceVarPk)obj;
+	public class ProcessInstanceVarPk
+	{
+		private  const long serialVersionUID = 1441383685880577012L;
+		public String ProcessInstanceId { get; set; }
+		public String Name { get; set; }
+		
+		public override Boolean Equals(Object obj)
+		{
+			if (obj == this) return true;
+			if (obj == null) return false;
+			if (!(obj is ProcessInstanceVarPk)) return false;
+			ProcessInstanceVarPk other = (ProcessInstanceVarPk)obj;
 
-            if (Name == null)
-            {
-                if (other.Name != null)
-                    return false;
-            }
-            else if (!Name.Equals(other.Name))
-                return false;
-            if (ProcessInstanceId == null)
-            {
-                if (other.ProcessInstanceId != null)
-                    return false;
-            }
-            else if (!ProcessInstanceId.Equals(other.ProcessInstanceId))
-                return false;
-            return true;
-        }
+			if (Name == null)
+			{
+				if (other.Name != null)
+					return false;
+			}
+			else if (!Name.Equals(other.Name))
+				return false;
+			if (ProcessInstanceId == null)
+			{
+				if (other.ProcessInstanceId != null)
+					return false;
+			}
+			else if (!ProcessInstanceId.Equals(other.ProcessInstanceId))
+				return false;
+			return true;
+		}
 
-        public override int GetHashCode()
-        {
-            int prime = 31;
-            int result = 1;
-            result = prime * result + ((Name == null) ? 0 : Name.GetHashCode());
-            result = prime * result + ((ProcessInstanceId == null) ? 0 : ProcessInstanceId.GetHashCode());
-            return result;
-        }
-    }
+		public override int GetHashCode()
+		{
+			int prime = 31;
+			int result = 1;
+			result = prime * result + ((Name == null) ? 0 : Name.GetHashCode());
+			result = prime * result + ((ProcessInstanceId == null) ? 0 : ProcessInstanceId.GetHashCode());
+			return result;
+		}
+	}
 }

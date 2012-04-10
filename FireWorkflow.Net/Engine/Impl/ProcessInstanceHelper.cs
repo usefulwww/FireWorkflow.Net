@@ -15,7 +15,6 @@
  * along with this program. If not, see http://www.gnu.org/licenses. *
  * @author 非也,nychen2000@163.com
  * @Revision to .NET 无忧 lwz0721@gmail.com 2010-02
- * @Revision 蓝天白云远兮 lyun@nashihou.cn 2011-12
  */
 using System;
 using System.Collections.Generic;
@@ -168,7 +167,8 @@ namespace FireWorkflow.Net.Engine.Impl
 				{
 					foreach (ProcessInstanceVar theVar in allVars)
 					{
-						getProcessInstanceVariables(p).Add(theVar.VarPrimaryKey.Name, theVar.Value);
+						var v = getProcessInstanceVarValue(theVar.StringValue,theVar.ValueType);
+						getProcessInstanceVariables(p).Add(theVar.Name,v);
 					}
 				}
 			}
@@ -190,16 +190,15 @@ namespace FireWorkflow.Net.Engine.Impl
 				{
 					foreach (ProcessInstanceVar theVar in allVars)
 					{
-						getProcessInstanceVariables(p).Add(theVar.VarPrimaryKey.Name, theVar.Value);
+						var v = getProcessInstanceVarValue(theVar.StringValue,theVar.ValueType);
+						getProcessInstanceVariables(p).Add(theVar.Name  , v );
 					}
 				}
 			}
 			ProcessInstanceVar procInstVar = new ProcessInstanceVar();
-			ProcessInstanceVarPk pk = new ProcessInstanceVarPk();
-			pk.ProcessInstanceId=p.Id;
-			pk.Name=name;
-			procInstVar.VarPrimaryKey=pk;
-			procInstVar.Value = value.ToString();
+			procInstVar.ProcessInstanceId=p.Id;
+			procInstVar.Name=name;
+			procInstVar.StringValue = value.ToString();
 			procInstVar.ValueType=value.GetType().Name;
 			
 			if (getProcessInstanceVariables(p).ContainsKey(name))
@@ -318,10 +317,12 @@ namespace FireWorkflow.Net.Engine.Impl
 			{
 				throw new EngineException(p, getWorkflowProcess(p), "The process instance can not be restored,the state of this process instance is " + p.State);
 			}
-			if (!(p.Suspended != null && (bool)p.Suspended))
+			
+			if (p.Suspended == false)
 			{
 				return;
 			}
+			
 			IPersistenceService persistenceService = RuntimeContextFactory.getRuntimeContext().PersistenceService;
 			persistenceService.RestoreProcessInstance(p);
 		}
@@ -347,6 +348,37 @@ namespace FireWorkflow.Net.Engine.Impl
 		
 		
 		private static Dictionary<String,Dictionary<String, Object>> _processInstanceVariables = new Dictionary<string, Dictionary<string, object>>();
+		
+		/// <summary>
+		/// 获取或设置变量值
+		/// </summary>
+		public static object getProcessInstanceVarValue(string StringValue,string ValueType){
+			switch (ValueType) {
+				case "Int32":
+					return Int32.Parse(StringValue);
+				case "Int64":
+					return Int64.Parse(StringValue);
+				case "String":
+					return StringValue;
+				case "Single":
+					return Single.Parse(StringValue);
+				case "Double":
+					return Double.Parse(StringValue);
+				case "Boolean":
+					return Boolean.Parse(StringValue);
+				case "DateTime":
+					try {
+						return DateTime.Parse(StringValue);
+					} catch {
+						return null;
+					}
+				default:
+					throw new Exception("Fireflow不支持数据类型" + ValueType);
+					;
+			}
+			
+		}
+		
 		public static Dictionary<String, Object> getProcessInstanceVariables(IProcessInstance p)
 		{
 			IPersistenceService persistenceService = RuntimeContextFactory.getRuntimeContext().PersistenceService;
@@ -359,7 +391,8 @@ namespace FireWorkflow.Net.Engine.Impl
 				{
 					foreach (ProcessInstanceVar theVar in allVars)
 					{
-						pvs.Add(theVar.VarPrimaryKey.Name, theVar.Value);
+						var v=getProcessInstanceVarValue(theVar.StringValue,theVar.ValueType);
+						pvs.Add(theVar.Name, v);
 					}
 				}
 				_processInstanceVariables[p.Id] = pvs;
@@ -371,165 +404,165 @@ namespace FireWorkflow.Net.Engine.Impl
 		public static void setProcessInstanceVariables(IProcessInstance p,Dictionary<String, Object> dic)
 		{
 			_processInstanceVariables[p.Id] = dic;
-        }
+		}
 
-        #region 创建流程实例
-        /// <summary>
-        /// 创建流程实例。如果流程定义了流程变量(DataField）,则自动把流程变量初始化成流程实例变量。
-        /// </summary>
-        /// <param name="workflowProcessName">流程的Name属性，在Fire workflow中，流程的Name和Id是相等的而且都是唯一的。</param>
-        /// <param name="parentTaskInstance">父TaskInstance</param>
-        /// <returns>新创建的流程实例</returns>
-        public static IProcessInstance createProcessInstance(String workflowProcessName, ITaskInstance parentTaskInstance)
-        {
-            return _createProcessInstance(workflowProcessName, parentTaskInstance.Id,
-                parentTaskInstance.ProcessInstanceId, parentTaskInstance.Id);
-        }
+		#region 创建流程实例
+		/// <summary>
+		/// 创建流程实例。如果流程定义了流程变量(DataField）,则自动把流程变量初始化成流程实例变量。
+		/// </summary>
+		/// <param name="workflowProcessName">流程的Name属性，在Fire workflow中，流程的Name和Id是相等的而且都是唯一的。</param>
+		/// <param name="parentTaskInstance">父TaskInstance</param>
+		/// <returns>新创建的流程实例</returns>
+		public static IProcessInstance createProcessInstance(String workflowProcessName, ITaskInstance parentTaskInstance)
+		{
+			return _createProcessInstance(workflowProcessName, parentTaskInstance.Id,
+			                              parentTaskInstance.ProcessInstanceId, parentTaskInstance.Id);
+		}
 
-        /// <summary>创建一个新的流程实例 (create a new process instance )</summary>
-        /// <param name="workflowProcessId">流程定义ID</param>
-        /// <param name="creatorId">创建人ID</param>
-        /// <param name="parentProcessInstanceId">父流程实例ID</param>
-        /// <param name="parentTaskInstanceId">父任务实例ID</param>
-        protected static IProcessInstance _createProcessInstance(String workflowProcessId, String creatorId, String parentProcessInstanceId, String parentTaskInstanceId)
-        {
-            String wfprocessId = workflowProcessId;
+		/// <summary>创建一个新的流程实例 (create a new process instance )</summary>
+		/// <param name="workflowProcessId">流程定义ID</param>
+		/// <param name="creatorId">创建人ID</param>
+		/// <param name="parentProcessInstanceId">父流程实例ID</param>
+		/// <param name="parentTaskInstanceId">父任务实例ID</param>
+		protected static IProcessInstance _createProcessInstance(String workflowProcessId, String creatorId, String parentProcessInstanceId, String parentTaskInstanceId)
+		{
+			String wfprocessId = workflowProcessId;
 
-            IWorkflowDefinition workflowDef = RuntimeContextFactory.getRuntimeContext().DefinitionService.GetTheLatestVersionOfWorkflowDefinition(wfprocessId);
-            WorkflowProcess wfProcess = WorkflowDefinitionHelper.getWorkflowProcess(workflowDef);
+			IWorkflowDefinition workflowDef = RuntimeContextFactory.getRuntimeContext().DefinitionService.GetTheLatestVersionOfWorkflowDefinition(wfprocessId);
+			WorkflowProcess wfProcess = WorkflowDefinitionHelper.getWorkflowProcess(workflowDef);
 
-            if (wfProcess == null)
-            {
-                throw new Exception("Workflow process NOT found,id=[" + wfprocessId + "]");
-            }
-            string processInstanceId = Guid.NewGuid().ToString("N");
-            IWorkflowSession worksession = RuntimeContextFactory.getRuntimeContext().getWorkflowSession(processInstanceId);
-            IProcessInstance processInstance = (IProcessInstance)worksession.execute(
-                new WorkflowSessionIProcessInstanceCreateProcessInstance(processInstanceId,creatorId, wfProcess, workflowDef, parentProcessInstanceId, parentTaskInstanceId));
+			if (wfProcess == null)
+			{
+				throw new Exception("Workflow process NOT found,id=[" + wfprocessId + "]");
+			}
+			string processInstanceId = Guid.NewGuid().ToString("N");
+			IWorkflowSession worksession = RuntimeContextFactory.getRuntimeContext().getWorkflowSession(processInstanceId);
+			IProcessInstance processInstance = (IProcessInstance)worksession.execute(
+				new WorkflowSessionIProcessInstanceCreateProcessInstance(processInstanceId,creatorId, wfProcess, workflowDef, parentProcessInstanceId, parentTaskInstanceId));
 
-            // 初始化流程变量
-            ProcessInstanceHelper.setProcessInstanceVariables(processInstance, new Dictionary<String, Object>());
+			// 初始化流程变量
+			ProcessInstanceHelper.setProcessInstanceVariables(processInstance, new Dictionary<String, Object>());
 
-            List<DataField> datafields = wfProcess.DataFields;
-            for (int i = 0; datafields != null && i < datafields.Count; i++)
-            {
-                DataField df = datafields[i];
-                if (df.DataType == DataTypeEnum.STRING)
-                {
-                    if (df.InitialValue != null)
-                    {
-                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, df.InitialValue);
-                    }
-                    else
-                    {
-                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, "");
-                    }
-                }
-                else if (df.DataType == DataTypeEnum.INTEGER)
-                {
-                    if (df.InitialValue != null)
-                    {
-                        try
-                        {
-                            int intValue = int.Parse(df.InitialValue);
-                            ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, intValue);
-                        }
-                        catch { }
-                    }
-                    else
-                    {
-                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, 0);
-                    }
-                }
-                else if (df.DataType == DataTypeEnum.LONG)
-                {
-                    if (df.InitialValue != null)
-                    {
-                        try
-                        {
-                            long longValue = long.Parse(df.InitialValue);
-                            ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, longValue);
-                        }
-                        catch { }
-                    }
-                    else
-                    {
-                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, (long)0);
-                    }
-                }
-                else if (df.DataType == DataTypeEnum.FLOAT)
-                {
-                    if (df.InitialValue != null)
-                    {
-                        float floatValue = float.Parse(df.InitialValue);
-                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, floatValue);
-                    }
-                    else
-                    {
-                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, (float)0);
-                    }
-                }
-                else if (df.DataType == DataTypeEnum.DOUBLE)
-                {
-                    if (df.InitialValue != null)
-                    {
-                        Double doubleValue = Double.Parse(df.InitialValue);
-                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, doubleValue);
-                    }
-                    else
-                    {
-                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, (Double)0);
-                    }
-                }
-                else if (df.DataType == DataTypeEnum.BOOLEAN)
-                {
-                    if (df.InitialValue != null)
-                    {
-                        Boolean booleanValue = Boolean.Parse(df.InitialValue);
-                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, booleanValue);
-                    }
-                    else
-                    {
-                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, false);
-                    }
-                }
-                else if (df.DataType == DataTypeEnum.DATETIME)
-                {
-                    // TODO 需要完善一下
-                    if (df.InitialValue != null && df.DataPattern != null)
-                    {
-                        try
-                        {
-                            DateTime dateTmp = DateTime.Parse(df.InitialValue);
-                            ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, dateTmp);
-                        }
-                        catch
-                        {
-                            ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, null);
-                        }
-                    }
-                    else
-                    {
-                        ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, null);
-                    }
-                }
-            }
-            return processInstance;
-        }
+			List<DataField> datafields = wfProcess.DataFields;
+			for (int i = 0; datafields != null && i < datafields.Count; i++)
+			{
+				DataField df = datafields[i];
+				if (df.DataType == DataTypeEnum.STRING)
+				{
+					if (df.InitialValue != null)
+					{
+						ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, df.InitialValue);
+					}
+					else
+					{
+						ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, "");
+					}
+				}
+				else if (df.DataType == DataTypeEnum.INTEGER)
+				{
+					if (df.InitialValue != null)
+					{
+						try
+						{
+							int intValue = int.Parse(df.InitialValue);
+							ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, intValue);
+						}
+						catch { }
+					}
+					else
+					{
+						ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, 0);
+					}
+				}
+				else if (df.DataType == DataTypeEnum.LONG)
+				{
+					if (df.InitialValue != null)
+					{
+						try
+						{
+							long longValue = long.Parse(df.InitialValue);
+							ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, longValue);
+						}
+						catch { }
+					}
+					else
+					{
+						ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, (long)0);
+					}
+				}
+				else if (df.DataType == DataTypeEnum.FLOAT)
+				{
+					if (df.InitialValue != null)
+					{
+						float floatValue = float.Parse(df.InitialValue);
+						ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, floatValue);
+					}
+					else
+					{
+						ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, (float)0);
+					}
+				}
+				else if (df.DataType == DataTypeEnum.DOUBLE)
+				{
+					if (df.InitialValue != null)
+					{
+						Double doubleValue = Double.Parse(df.InitialValue);
+						ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, doubleValue);
+					}
+					else
+					{
+						ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, (Double)0);
+					}
+				}
+				else if (df.DataType == DataTypeEnum.BOOLEAN)
+				{
+					if (df.InitialValue != null)
+					{
+						Boolean booleanValue = Boolean.Parse(df.InitialValue);
+						ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, booleanValue);
+					}
+					else
+					{
+						ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, false);
+					}
+				}
+				else if (df.DataType == DataTypeEnum.DATETIME)
+				{
+					// TODO 需要完善一下
+					if (df.InitialValue != null && df.DataPattern != null)
+					{
+						try
+						{
+							DateTime dateTmp = DateTime.Parse(df.InitialValue);
+							ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, dateTmp);
+						}
+						catch
+						{
+							ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, null);
+						}
+					}
+					else
+					{
+						ProcessInstanceHelper.setProcessInstanceVariable(processInstance, df.Name, null);
+					}
+				}
+			}
+			return processInstance;
+		}
 
-        /// <summary>
-        /// <para>创建流程实例，并将creatorId填充到ProcessInstance的CreatorId字段。</para>
-        /// 如果流程定义了流程变量(DataField）,则自动把流程变量初始化成流程实例变量。
-        /// </summary>
-        /// <param name="workflowProcessName">流程定义的名称</param>
-        /// <param name="creatorId">创建者Id</param>
-        /// <returns>新创建的流程实例</returns>
-        public static IProcessInstance createProcessInstance(String workflowProcessId, String creatorId)
-        {
-            return _createProcessInstance(workflowProcessId, creatorId, null, null);
-        }
+		/// <summary>
+		/// <para>创建流程实例，并将creatorId填充到ProcessInstance的CreatorId字段。</para>
+		/// 如果流程定义了流程变量(DataField）,则自动把流程变量初始化成流程实例变量。
+		/// </summary>
+		/// <param name="workflowProcessName">流程定义的名称</param>
+		/// <param name="creatorId">创建者Id</param>
+		/// <returns>新创建的流程实例</returns>
+		public static IProcessInstance createProcessInstance(String workflowProcessId, String creatorId)
+		{
+			return _createProcessInstance(workflowProcessId, creatorId, null, null);
+		}
 
-        #endregion
+		#endregion
 
-    }
+	}
 }
