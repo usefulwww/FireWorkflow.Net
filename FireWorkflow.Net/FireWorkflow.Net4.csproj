@@ -50,7 +50,7 @@
     <ProjectGuid>{2B157D48-F075-4E05-8066-4ACE891BB351}</ProjectGuid>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <ErrorReport>prompt</ErrorReport>
